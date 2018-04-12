@@ -45,6 +45,12 @@ public class UserController {
 		model.setViewName("UserForm");
 		return model;
 	}
+	
+	@RequestMapping(value = "/back", method = RequestMethod.GET)
+	public ModelAndView back(ModelAndView model) {
+		return new ModelAndView("redirect:/user/list");
+			
+	}
 
 	@RequestMapping(value = "/saveUser", method = RequestMethod.POST)
 	public ModelAndView saveUser(@ModelAttribute User user) {
@@ -52,7 +58,9 @@ public class UserController {
 			// user other updating the user
 			userService.addUser(user);
 			return new ModelAndView("redirect:/user/list");
-		} else {
+		}
+		
+		else {
 				//userService.updateUser(user);
 			ModelAndView model = new ModelAndView();
 			model.addObject("msg", "Account already exist!");
@@ -60,6 +68,7 @@ public class UserController {
 			return model;
 			
 		}
+		//return new ModelAndView("redirect:/user/list");
 		//return new ModelAndView("redirect:/user/list");
 	}
 
@@ -74,10 +83,17 @@ public class UserController {
 	public ModelAndView editContact(HttpServletRequest request) {
 		String userId = request.getParameter("id");
 		User user = userService.getUser(userId);
-		ModelAndView model = new ModelAndView("UserForm");
+		ModelAndView model = new ModelAndView("editUser");
 		model.addObject("user", user);
 
 		return model;
+	}
+	
+	@RequestMapping(value = "/saveUpdate", method = RequestMethod.POST)
+	public ModelAndView saveUpdate(@ModelAttribute User user) {
+			userService.updateUser(user);
+			return new ModelAndView("redirect:/user/list");
+
 	}
 	
 	@RequestMapping(value = "/login")

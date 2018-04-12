@@ -173,8 +173,9 @@
 													<td><a href="editUser?id=${user.id}"><button
 																type="button" class="btn btn-round btn-primary">Edit</button></a>
 														&nbsp;&nbsp;&nbsp;&nbsp; <a
-														href="deleteUser?id=${user.id}"><button type="button"
-																class="btn btn-round btn-primary">Delete</button></a></td>
+														href="javascript:if(confirm('Do you want to delete this user?'))location='deleteUser?id=${user.id}'"><button type="button"
+																class="btn btn-round btn-primary">Delete</button></a>
+													
 												</tr>
 											</c:forEach>
 										</tbody>

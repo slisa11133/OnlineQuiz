@@ -16,6 +16,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.b3.model.User;
 import com.b3.service.UserService;
 
+import com.b3.model.Ability;
+
+import com.b3.model.UserAbility;
+import com.b3.service.UserAbilityService;
+
+
 @Controller
 @RequestMapping("/user")
 public class UserController {
@@ -29,6 +35,11 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	
+
+	
+	@Autowired
+	private UserAbilityService userAbilityService;
 
 	@RequestMapping(value = "/list")
 	public ModelAndView listUser(ModelAndView model) throws IOException {
@@ -45,12 +56,6 @@ public class UserController {
 		model.setViewName("UserForm");
 		return model;
 	}
-	
-	@RequestMapping(value = "/back", method = RequestMethod.GET)
-	public ModelAndView back(ModelAndView model) {
-		return new ModelAndView("redirect:/user/list");
-			
-	}
 
 	@RequestMapping(value = "/saveUser", method = RequestMethod.POST)
 	public ModelAndView saveUser(@ModelAttribute User user) {
@@ -58,9 +63,7 @@ public class UserController {
 			// user other updating the user
 			userService.addUser(user);
 			return new ModelAndView("redirect:/user/list");
-		}
-		
-		else {
+		} else {
 				//userService.updateUser(user);
 			ModelAndView model = new ModelAndView();
 			model.addObject("msg", "Account already exist!");
@@ -68,7 +71,6 @@ public class UserController {
 			return model;
 			
 		}
-		//return new ModelAndView("redirect:/user/list");
 		//return new ModelAndView("redirect:/user/list");
 	}
 
@@ -83,22 +85,24 @@ public class UserController {
 	public ModelAndView editContact(HttpServletRequest request) {
 		String userId = request.getParameter("id");
 		User user = userService.getUser(userId);
-		ModelAndView model = new ModelAndView("editUser");
+		ModelAndView model = new ModelAndView("UserForm");
 		model.addObject("user", user);
 
 		return model;
 	}
 	
-	@RequestMapping(value = "/saveUpdate", method = RequestMethod.POST)
-	public ModelAndView saveUpdate(@ModelAttribute User user) {
-			userService.updateUser(user);
-			return new ModelAndView("redirect:/user/list");
-
-	}
-	
 	@RequestMapping(value = "/login")
 	public ModelAndView login() {
 		return new ModelAndView("redirect:/");
+	}
+	
+	@RequestMapping(value = "/getAbilitiesResults", method = RequestMethod.GET)
+	public ModelAndView getUserAbilitiesResults(HttpServletRequest request) {
+		String userId = request.getParameter("id");
+		List<UserAbility> userAbilitiesResults = userAbilityService.getUserAbilities(userId);
+		ModelAndView model = new ModelAndView("UserAbilitiesResults");
+		model.addObject("userAbilitiesResults", userAbilitiesResults);
+		return model;
 	}
 
 }

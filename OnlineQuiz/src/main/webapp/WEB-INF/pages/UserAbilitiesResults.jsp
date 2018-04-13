@@ -152,29 +152,19 @@
 										class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<th>Account</th>
-												<th>Password</th>
-												<th>Name</th>
-												<th>Grade</th>
-												<th>Role</th>
-												<th>State</th>
-												<th>Action</th>
+												<th>User ID</th>
+												<th>User Name</th>
+												<th>Ability Name</th>
+												<th>Ability Result</th>
 											</tr>
 										</thead>
 										<tbody>
-											<c:forEach var="user" items="${listUser}">
+											<c:forEach var="user" items="${userAbilitiesResults}">
 												<tr>
-													<td>${user.id}</td>
-													<td>${user.pwd}</td>
-													<td>${user.name}</td>
-													<td>${user.grade}</td>
-													<td>${user.role}</td>
-													<td>${user.is_open}</td>
-													<td><a href="editUser?id=${user.id}"><button
-																type="button" class="btn btn-round btn-primary">Edit</button></a>
-														&nbsp;&nbsp;&nbsp;&nbsp; <a
-														href="deleteUser?id=${user.id}"><button type="button"
-																class="btn btn-round btn-primary">Delete</button></a></td>
+													<td>${user.userD.getId()}</td>
+													<td>${user.userD.getName()}</td>
+													<td>${user.ability.getFullName()}</td>
+													<td>${user.result}</td>
 												</tr>
 											</c:forEach>
 										</tbody>

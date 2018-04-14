@@ -140,10 +140,10 @@
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
 								<div class="x_title">
-									<h2>User List</h2>
+									<h2>User Abilities</h2>
 									<div class="pull-right">
-										<a href="newUser"><button type="button"
-												class="btn btn-round btn-primary">Add New User</button></a>
+										<a href="back"><button type="button"
+												class="btn btn-round btn-primary">Back to User List</button></a>
 									</div>
 									<div class="clearfix"></div>
 								</div>

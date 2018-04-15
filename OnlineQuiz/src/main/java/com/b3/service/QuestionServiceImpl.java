@@ -9,7 +9,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.b3.dao.QuestionDAO;
 import com.b3.model.Question;
-import com.b3.dao.QuestionAbilityDAO;
 import com.b3.dao.OptionDAO;
 
 @Service
@@ -18,8 +17,6 @@ public class QuestionServiceImpl implements QuestionService {
 
 	@Autowired
 	private QuestionDAO questionDAO;
-	@Autowired
-	private QuestionAbilityDAO questionabilityDAO;
 	@Autowired
 	private OptionDAO optionDAO;
 
@@ -42,7 +39,6 @@ public class QuestionServiceImpl implements QuestionService {
 	public void deleteQuestionById(Integer questionId) {
 		questionDAO.deleteQuestionById(questionId);
 		optionDAO.deleteOptionByQ(questionId);
-		questionabilityDAO.deleteQuestionAbilityByQ(questionId);
 	}
 
 	public Question getQuestion(int questionid) {

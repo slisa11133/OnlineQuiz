@@ -11,7 +11,6 @@ import com.b3.dao.SubjectDAO;
 import com.b3.model.Subject;
 import com.b3.dao.QuestionDAO;
 import com.b3.dao.OptionDAO;
-import com.b3.dao.QuestionAbilityDAO;
 
 @Service
 @Transactional
@@ -21,8 +20,6 @@ public class SubjectServiceImpl implements SubjectService {
 	private SubjectDAO subjectDAO;
 	@Autowired
 	private QuestionDAO questionDAO;
-	@Autowired
-	private QuestionAbilityDAO questionabilityDAO;
 	@Autowired
 	private OptionDAO optionDAO;
 
@@ -51,7 +48,6 @@ public class SubjectServiceImpl implements SubjectService {
 	public void deleteSubject(Integer subjectId) {
 		subjectDAO.deleteSubject(subjectId);
 		questionDAO.deleteQuestionBySub(subjectId);
-		questionabilityDAO.deleteQuestionAbilityByS(subjectId);
 		optionDAO.deleteOptionBySub(subjectId);
 	}
 

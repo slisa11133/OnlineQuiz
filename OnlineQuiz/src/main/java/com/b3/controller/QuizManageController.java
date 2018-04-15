@@ -1,7 +1,11 @@
 package com.b3.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,6 +21,10 @@ import com.b3.model.Subject;
 import com.b3.service.SubjectService;
 import com.b3.model.Question;
 import com.b3.service.QuestionService;
+import com.b3.model.QuestionAbility;
+import com.b3.service.QuestionAbilityService;
+import com.b3.model.Ability;
+import com.b3.service.AbilityService;
 import com.b3.model.Options;
 import com.b3.service.OptionService;
 
@@ -24,9 +32,7 @@ import com.b3.service.OptionService;
 @RequestMapping("/QuizManage")
 public class QuizManageController {
 	int s_id = 0;
-	String s_name = "";
 	int q_id = 0;
-	String q_content = "";
 	private static final Logger logger = Logger.getLogger(QuizManageController.class);
 
 	public QuizManageController() {
@@ -96,31 +102,59 @@ public class QuizManageController {
 
 	@Autowired
 	private QuestionService questionService;
+	@Autowired
+	private QuestionAbilityService questionabilityService;
+	@Autowired
+	private AbilityService abilityService;
 
 	@RequestMapping(value = "/QuestionList", method = RequestMethod.GET)
 	public ModelAndView listQuestion(HttpServletRequest request) {
 		int subjectId = Integer.parseInt(request.getParameter("s_id"));
-		String subjectName = request.getParameter("s_name");
 		s_id = subjectId;
-		s_name = subjectName;
+		Subject subject = subjectService.getSubject(s_id);
+		String s_name = subject.getName();
 		List<Question> listQuestion = questionService.getAllQuestionsBySub(subjectId);
 		ModelAndView model = new ModelAndView("QuizForm");
 		model.addObject("type", "Question");
 		model.addObject("s_id", subjectId);
-		model.addObject("s_name", subjectName);
+		model.addObject("s_name", s_name);
 		model.addObject("listQuestion", listQuestion);
 		model.setViewName("QuizManage");
+
+		// List<QuestionAbility> listQuestionAbility =
+		// questionabilityService.getAllQuestionAbilitiesByQ(questionId);
 		return model;
 	}
 
 	@RequestMapping(value = "/newQuestion", method = RequestMethod.GET)
 	public ModelAndView newQuestion(ModelAndView model) {
+		Subject subject = subjectService.getSubject(s_id);
+		String s_name = subject.getName();
 		Question question = new Question();
 		model.addObject("question", question);
 		model.addObject("type", "Question");
 		model.addObject("operation", "Add New Question");
 		model.addObject("s_name", s_name);
 		model.setViewName("QuizForm");
+
+		Map<String, String> Qtypes = new LinkedHashMap<String, String>();
+		Qtypes.put("BFQ", "blank filling question(BFQ)");
+		Qtypes.put("TFQ", "true-false question(TFQ)");
+		Qtypes.put("MCQ", "multiple-choice question(MCQ)");
+		model.addObject("Qtypes", Qtypes);
+		Map<String, String> Qgrades = new LinkedHashMap<String, String>();
+		Qgrades.put("1", "1");
+		Qgrades.put("2", "2");
+		Qgrades.put("3", "3");
+		Qgrades.put("4", "4");
+		model.addObject("Qgrades", Qgrades);
+		Map<String, String> Qability = new LinkedHashMap<String, String>();
+		Qability.put("1", "ana_think");
+		Qability.put("2", "cal_ability");
+		Qability.put("3", "cap_memo");
+		Qability.put("4", "infor_integ");
+		model.addObject("Qability", Qability);
+
 		return model;
 	}
 
@@ -129,33 +163,85 @@ public class QuizManageController {
 		question.setSubId(s_id);
 		// if true then creating the subject, false showing "already exist" message
 		if (question.getId() == 0) { // add
-			// List<Integer> abilityList = null;
-			// questionService.addQuestion(question, abilityList);
 			questionService.addQuestion(question);
 		} else { // update
 			questionService.updateQuestion(question);
 
 		}
-		return new ModelAndView("redirect:/QuizManage/QuestionList?s_id=" + s_id + "&s_name=" + s_name);
+		return new ModelAndView("redirect:/QuizManage/QuestionList?s_id=" + s_id);
 	}
 
 	@RequestMapping(value = "/deleteQuestion", method = RequestMethod.GET)
 	public ModelAndView deleteQuestion(HttpServletRequest request) {
 		int questionId = Integer.parseInt(request.getParameter("id"));
 		questionService.deleteQuestionById(questionId);
-		return new ModelAndView("redirect:/QuizManage/QuestionList?s_id=" + s_id + "&s_name=" + s_name);
+		return new ModelAndView("redirect:/QuizManage/QuestionList?s_id=" + s_id);
 	}
 
 	@RequestMapping(value = "/editQuestion", method = RequestMethod.GET)
 	public ModelAndView editQuestion(HttpServletRequest request) {
 		int questionId = Integer.parseInt(request.getParameter("id"));
 		Question question = questionService.getQuestion(questionId);
+		Subject subject = subjectService.getSubject(s_id);
+		String s_name = subject.getName();
 		ModelAndView model = new ModelAndView("QuizForm");
 		model.addObject("question", question);
 		model.addObject("type", "Question");
-		model.addObject("s_name", s_name);
 		model.addObject("operation", "Edit Question");
+		model.addObject("s_name", s_name);
+		/** question type options **/
+		Map<String, String> Qtypes = new LinkedHashMap<String, String>();
+		Qtypes.put("BFQ", "blank filling question(BFQ)");
+		Qtypes.put("TFQ", "true-false question(TFQ)");
+		Qtypes.put("MCQ", "multiple-choice question(MCQ)");
+		model.addObject("Qtypes", Qtypes);
+		/** question grade options **/
+		Map<String, String> Qgrades = new LinkedHashMap<String, String>();
+		Qgrades.put("1", "1");
+		Qgrades.put("2", "2");
+		Qgrades.put("3", "3");
+		Qgrades.put("4", "4");
+		model.addObject("Qgrades", Qgrades);
 		return model;
+	}
+
+	@RequestMapping(value = "/QuestionAbility", method = RequestMethod.GET)
+	public ModelAndView QuestionAbility(HttpServletRequest request) {
+		int questionId = Integer.parseInt(request.getParameter("q_id"));
+		q_id = questionId;
+		List<String> listAbility = questionabilityService.getAllQuestionAbilities(questionId);
+		QuestionAbility questionability = new QuestionAbility();
+		questionability.setAbility(listAbility);
+
+		Subject subject = subjectService.getSubject(s_id);
+		String s_name = subject.getName();
+		Question question = questionService.getQuestion(questionId);
+		String q_content = question.getQuestion();
+		ModelAndView model = new ModelAndView("QuizForm");
+		model.addObject("questionability", questionability);
+		model.addObject("type", "QuestionAbility");
+		model.addObject("operation", "Edit Question Ability");
+		model.addObject("s_name", s_name);
+		model.addObject("q_content", q_content);
+		/** question ability options **/
+		List<Ability> listAbilityOptions = abilityService.getAllAbility();
+		Map<String, String> Qability = new LinkedHashMap<String, String>();
+		for (int i = 0; i < listAbilityOptions.size(); i++) {
+			String a_id = String.valueOf(listAbilityOptions.get(i).getId());
+			String fullName = listAbilityOptions.get(i).getFullName();
+			Qability.put(a_id, fullName);
+		}
+		model.addObject("Qability", Qability);
+		return model;
+	}
+
+	@RequestMapping(value = "/saveQuestionAbility", method = RequestMethod.POST)
+	public ModelAndView saveQuestionAbility(@ModelAttribute QuestionAbility questionability) {
+		questionability.setSId(s_id);
+		questionability.setQId(q_id);
+		// delete before add
+		questionabilityService.addQuestionAbility(questionability);
+		return new ModelAndView("redirect:/QuizManage/QuestionList?s_id=" + s_id);
 	}
 
 	@Autowired
@@ -164,16 +250,18 @@ public class QuizManageController {
 	@RequestMapping(value = "/OptionList", method = RequestMethod.GET)
 	public ModelAndView listOption(HttpServletRequest request) {
 		int questionId = Integer.parseInt(request.getParameter("q_id"));
-		String question = request.getParameter("q_content");
 		q_id = questionId;
-		q_content = question;
+		Subject subject = subjectService.getSubject(s_id);
+		String s_name = subject.getName();
+		Question question = questionService.getQuestion(q_id);
+		String q_content = question.getQuestion();
 		List<Options> listOption = optionService.getAllOptionsByQ(questionId);
 		ModelAndView model = new ModelAndView("QuizForm");
 		model.addObject("type", "Option");
 		model.addObject("s_id", s_id);
-		model.addObject("s_name", s_name);
 		model.addObject("q_id", questionId);
-		model.addObject("q_content", question);
+		model.addObject("s_name", s_name);
+		model.addObject("q_content", q_content);
 		model.addObject("listOption", listOption);
 		model.setViewName("QuizManage");
 		return model;
@@ -181,6 +269,10 @@ public class QuizManageController {
 
 	@RequestMapping(value = "/newOption", method = RequestMethod.GET)
 	public ModelAndView newOption(ModelAndView model) {
+		Subject subject = subjectService.getSubject(s_id);
+		String s_name = subject.getName();
+		Question question = questionService.getQuestion(q_id);
+		String q_content = question.getQuestion();
 		Options option = new Options();
 		model.addObject("option", option);
 		model.addObject("type", "Option");
@@ -204,28 +296,30 @@ public class QuizManageController {
 			optionService.updateOption(option);
 
 		}
-		return new ModelAndView("redirect:/QuizManage/OptionList?s_id=" + s_id + "&s_name=" + s_name + "&q_id=" + q_id
-				+ "&q_content=" + q_content);
+		return new ModelAndView("redirect:/QuizManage/OptionList?s_id=" + s_id + "&q_id=" + q_id);
 	}
 
 	@RequestMapping(value = "/deleteOption", method = RequestMethod.GET)
 	public ModelAndView deleteOption(HttpServletRequest request) {
 		int optionId = Integer.parseInt(request.getParameter("id"));
 		optionService.deleteOptionById(optionId);
-		return new ModelAndView("redirect:/QuizManage/OptionList?s_id=" + s_id + "&s_name=" + s_name + "&q_id=" + q_id
-				+ "&q_content=" + q_content);
+		return new ModelAndView("redirect:/QuizManage/OptionList?s_id=" + s_id + "&q_id=" + q_id);
 	}
 
 	@RequestMapping(value = "/editOption", method = RequestMethod.GET)
 	public ModelAndView editOption(HttpServletRequest request) {
 		int optionId = Integer.parseInt(request.getParameter("id"));
+		Subject subject = subjectService.getSubject(s_id);
+		String s_name = subject.getName();
+		Question question = questionService.getQuestion(q_id);
+		String q_content = question.getQuestion();
 		Options option = optionService.getOption(optionId);
 		ModelAndView model = new ModelAndView("QuizForm");
 		model.addObject("option", option);
 		model.addObject("type", "Option");
+		model.addObject("operation", "Edit Option");
 		model.addObject("s_name", s_name);
 		model.addObject("q_content", q_content);
-		model.addObject("operation", "Edit Option");
 		return model;
 	}
 
@@ -236,10 +330,11 @@ public class QuizManageController {
 		if (type.equals("Subject")) {
 			url = "redirect:/QuizManage/SubjectList";
 		} else if (type.equals("Question")) {
-			url = "redirect:/QuizManage/QuestionList?s_id=" + s_id + "&s_name=" + s_name;
+			url = "redirect:/QuizManage/QuestionList?s_id=" + s_id;
+		} else if (type.equals("QuestionAbility")) {
+			url = "redirect:/QuizManage/QuestionList?s_id=" + s_id;
 		} else if (type.equals("Option")) {
-			url = "redirect:/QuizManage/OptionList?s_id=" + s_id + "&s_name=" + s_name + "&q_id=" + q_id + "&q_content="
-					+ q_content;
+			url = "redirect:/QuizManage/OptionList?s_id=" + s_id + "&q_id=" + q_id;
 		}
 		return new ModelAndView(url);
 	}

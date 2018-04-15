@@ -50,18 +50,8 @@
 										User Management </a></li>
 								<li><a href="../QuizManage/SubjectList"><i
 										class="fa fa-edit"></i> Quiz Management </a></li>
-								<li><a><i class="fa fa-table"></i> Tables <span
-										class="fa fa-chevron-down"></span></a>
-									<ul class="nav child_menu">
-										<li><a href="tables.html">Tables</a></li>
-										<li><a href="tables_dynamic.html">Table Dynamic</a></li>
-									</ul></li>
-								<li><a><i class="fa fa-clone"></i>Layouts <span
-										class="fa fa-chevron-down"></span></a>
-									<ul class="nav child_menu">
-										<li><a href="fixed_sidebar.html">Fixed Sidebar</a></li>
-										<li><a href="fixed_footer.html">Fixed Footer</a></li>
-									</ul></li>
+								<li><a href="../AbilityManage/AbilityList"><i class="fa fa-edit"></i>
+										Ability Management </a></li>
 							</ul>
 						</div>
 

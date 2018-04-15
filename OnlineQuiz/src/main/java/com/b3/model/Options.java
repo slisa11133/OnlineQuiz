@@ -4,9 +4,12 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -30,6 +33,7 @@ public class Options implements Serializable {
 	
 	@Column
 	private String is_answer;
+	
 	
 
 	public int getId() {
@@ -71,5 +75,6 @@ public class Options implements Serializable {
 	public void setIs_answer(String is_answer) {
 		this.is_answer = is_answer;
 	}
+	
 
 }

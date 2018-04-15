@@ -4,9 +4,12 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -30,6 +33,7 @@ public class Question implements Serializable {
 	
 	@Column
 	private String grade;
+	
 
 
 	public int getId() {
@@ -71,6 +75,7 @@ public class Question implements Serializable {
 	public void setGrade(String grade) {
 		this.grade = grade;
 	}
+	
 
 
 }

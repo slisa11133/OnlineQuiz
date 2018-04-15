@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html lang="en">
 <head>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!-- Meta, title, CSS, favicons, etc. -->
 <meta charset="utf-8">
@@ -131,11 +132,6 @@
 					<div class="page-title">
 						<div class="title_left">
 							<h3>User Management</h3>
-							<br/><br/>
-							<form method="GET">
-								<input name="id" type="text" placeholder="Enter User ID" style="padding:7px"/>
-							</form>
-							<br/><br/>
 						</div>
 					</div>
 
@@ -146,42 +142,69 @@
 							<div class="x_panel">
 								<div class="x_title">
 									<h2>User List</h2>
+									<br/><br/>
+									<form method="GET">
+										<input name="id" type="text" placeholder="Enter User ID" style="padding:7px"/>
+									</form>
+									<br/><br/>
 									<div class="pull-right">
-										<a href="getAbilitiesResultsDiagram"><button type="button"
-												class="btn btn-round btn-primary">Show Diagram</button></a>
+										<a href="getAbilitiesResults"><button type="button"
+												class="btn btn-round btn-primary">Back</button></a>
 									</div>
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
-									<table id="datatable"
-										class="table table-striped table-bordered">
-										<thead>
-											<tr>
-												<th>User ID</th>
-												<th>User Name</th>
-												<th>Ability Name</th>
-												<th>Ability Result</th>
-											</tr>
-										</thead>
-										<tbody>
-											<c:forEach var="user" items="${userAbilitiesResults}">
-												<tr>
-													<td>${user.userD.getId()}</td>
-													<td>${user.userD.getName()}</td>
-													<td>${user.ability.getFullName()}</td>
-													<td>${user.result}</td>
-												</tr>
-											</c:forEach>
-										</tbody>
-									</table>
+									<script type="text/javascript">
+									
+										 google.charts.load("current", {packages:['corechart']});
+										 google.charts.setOnLoadCallback(drawChart);
+										 function drawChart() {
+										     var c = [["Element", "Result", { role: "style" }]];
+										     
+										     <c:forEach var="user" items="${userAbilitiesResults}">
+												c.push(["${user.ability.getFullName().toString()}", parseFloat(${user.result}), 'orange']);
+												console.log(c);
+											 </c:forEach>
+											 if(c.length > 1){
+											 var data = google.visualization.arrayToDataTable(c);
+										     var view = new google.visualization.DataView(data);
+										     view.setColumns([0, 1,
+											      { calc: "stringify",
+													sourceColumn: 1,
+													type: "string",
+													role: "none" },
+											  	    2]);
+								
+									   	 	var options = {
+											annotations: {
+										    	 textStyle: {
+													 fontName: 'Times-Roman',
+													 fontSize: 11,
+										    	 },
+											 },
+											title: "Abilites Digram",
+										 	width: 900,
+										 	height: 400,
+										 	bar: {groupWidth: "20%"},
+										 	legend: { position: "none" },
+									     };
+									     var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+									     chart.draw(view, options);
+											 }
+									 }
+							
+									</script>
+									<div id="columnchart_values" style="width: 900px; height: 300px;"></div>
 								</div>
 							</div>
 						</div>
-
+						
 					</div>
 				</div>
 			</div>
+			<br/><br/><br/><br/>
 		</div>
+		<br/><br/><br/><br/>
 		<!-- /page content -->
 
 		<!-- footer content -->

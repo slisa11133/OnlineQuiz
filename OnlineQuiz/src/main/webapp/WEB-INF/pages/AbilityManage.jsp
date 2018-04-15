@@ -33,7 +33,7 @@
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="login" class="site_title"><i class="fa fa-paw"></i> <span>Online
+						<a href="../" class="site_title"><i class="fa fa-paw"></i> <span>Online
 								Quiz</span></a>
 					</div>
 
@@ -46,22 +46,12 @@
 						class="main_menu_side hidden-print main_menu">
 						<div class="menu_section">
 							<ul class="nav side-menu">
-								<li><a href="list"><i class="fa fa-home"></i>
+								<li><a href="../user/list"><i class="fa fa-home"></i>
 										User Management </a></li>
-										<li><a href="../QuizManage/SubjectList"><i class="fa fa-edit"></i>
-										Quiz Management </a></li>
-								<li><a><i class="fa fa-table"></i> Tables <span
-										class="fa fa-chevron-down"></span></a>
-									<ul class="nav child_menu">
-										<li><a href="tables.html">Tables</a></li>
-										<li><a href="tables_dynamic.html">Table Dynamic</a></li>
-									</ul></li>
-								<li><a><i class="fa fa-clone"></i>Layouts <span
-										class="fa fa-chevron-down"></span></a>
-									<ul class="nav child_menu">
-										<li><a href="fixed_sidebar.html">Fixed Sidebar</a></li>
-										<li><a href="fixed_footer.html">Fixed Footer</a></li>
-									</ul></li>
+								<li><a href="../QuizManage/SubjectList"><i
+										class="fa fa-edit"></i> Quiz Management </a></li>
+								<li><a href="AbilityList"><i class="fa fa-edit"></i>
+										Ability Management </a></li>
 							</ul>
 						</div>
 
@@ -130,12 +120,7 @@
 				<div class="">
 					<div class="page-title">
 						<div class="title_left">
-							<h3>User Management</h3>
-							<br/><br/>
-							<form method="GET">
-								<input name="id" type="text" placeholder="Enter User ID" style="padding:7px"/>
-							</form>
-							<br/><br/>
+							<h3>Ability Management</h3>
 						</div>
 					</div>
 
@@ -145,10 +130,10 @@
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
 								<div class="x_title">
-									<h2>User List</h2>
+									<h2>Ability List</h2>
 									<div class="pull-right">
-										<a href="getAbilitiesResultsDiagram"><button type="button"
-												class="btn btn-round btn-primary">Show Diagram</button></a>
+										<a href="newAbility"><button type="button"
+												class="btn btn-round btn-primary">Add New Ability</button></a>
 									</div>
 									<div class="clearfix"></div>
 								</div>
@@ -157,19 +142,23 @@
 										class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<th>User ID</th>
-												<th>User Name</th>
-												<th>Ability Name</th>
-												<th>Ability Result</th>
+												<th>Id</th>
+												<th>Short Name</th>
+												<th>Full Name</th>
+												<th>Action</th>
 											</tr>
 										</thead>
 										<tbody>
-											<c:forEach var="user" items="${userAbilitiesResults}">
+											<c:forEach var="ability" items="${listAbility}">
 												<tr>
-													<td>${user.userD.getId()}</td>
-													<td>${user.userD.getName()}</td>
-													<td>${user.ability.getFullName()}</td>
-													<td>${user.result}</td>
+													<td>${ability.id}</td>
+													<td>${ability.shortName}</td>
+													<td>${ability.fullName}</td>
+													<td><a href="editAbility?id=${ability.id}"><button
+																type="button" class="btn btn-round btn-primary">Edit</button></a>
+														&nbsp;&nbsp;&nbsp;&nbsp; <a
+														href="javascript:if(confirm('Do you want to delete this ability?'))location='deleteAbility?id=${ability.id}'"><button
+																type="button" class="btn btn-round btn-primary">Delete</button></a>
 												</tr>
 											</c:forEach>
 										</tbody>
@@ -216,6 +205,5 @@
 
 	<!-- Custom Theme Scripts -->
 	<script src="<c:url value="../template/build/js/custom.min.js" />"></script>
-
 </body>
 </html>

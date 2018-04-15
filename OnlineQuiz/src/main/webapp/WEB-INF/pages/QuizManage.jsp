@@ -50,18 +50,8 @@
 										User Management </a></li>
 								<li><a href="SubjectList"><i class="fa fa-edit"></i>
 										Quiz Management </a></li>
-								<li><a><i class="fa fa-table"></i> Tables <span
-										class="fa fa-chevron-down"></span></a>
-									<ul class="nav child_menu">
-										<li><a href="tables.html">Tables</a></li>
-										<li><a href="tables_dynamic.html">Table Dynamic</a></li>
-									</ul></li>
-								<li><a><i class="fa fa-clone"></i>Layouts <span
-										class="fa fa-chevron-down"></span></a>
-									<ul class="nav child_menu">
-										<li><a href="fixed_sidebar.html">Fixed Sidebar</a></li>
-										<li><a href="fixed_footer.html">Fixed Footer</a></li>
-									</ul></li>
+								<li><a href="../AbilityManage/AbilityList"><i class="fa fa-edit"></i>
+										Ability Management </a></li>
 							</ul>
 						</div>
 
@@ -169,10 +159,10 @@
 															<td><a href="editSubject?id=${subject.id}"><button
 																		type="button" class="btn btn-round btn-primary">Edit</button></a>
 																&nbsp;&nbsp;&nbsp;&nbsp; <a
-																href="deleteSubject?id=${subject.id}"><button
+																href="javascript:if(confirm('Do you want to delete this subject?'))location='deleteSubject?id=${subject.id}'"><button
 																		type="button" class="btn btn-round btn-primary">Delete</button></a>
 																&nbsp;&nbsp;&nbsp;&nbsp;<a
-																href="QuestionList?s_id=${subject.id}&s_name=${subject.name}"><button
+																href="QuestionList?s_id=${subject.id}"><button
 																		type="button" class="btn btn-round btn-primary">Questions</button></a></td>
 														</tr>
 													</c:forEach>
@@ -202,24 +192,30 @@
 																	<th>Question</th>
 																	<th>Type</th>
 																	<th>Grade</th>
+																	<th>Abilities</th>
 																	<th>Action</th>
 																</tr>
 															</thead>
 															<tbody>
 																<c:forEach var="question" items="${listQuestion}">
 																	<tr>
-																		<td>${question.id}</td>
-																		<td>${question.question}</td>
-																		<td>${question.type}</td>
-																		<td>${question.grade}</td>
-																		<td><a href="editQuestion?id=${question.id}"><button
+																		<td>${question[0]}</td>
+																		<td>${question[1]}</td>
+																		<td>${question[2]}</td>
+																		<td>${question[3]}</td>
+																		<td>${question[4]}</td>
+																		<td><a href="editQuestion?id=${question[0]}"><button
 																					type="button" class="btn btn-round btn-primary">Edit</button></a>
 																			&nbsp;&nbsp;&nbsp;&nbsp; <a
-																			href="deleteQuestion?id=${question.id}"><button
+																			href="javascript:if(confirm('Do you want to delete this question?'))location='deleteQuestion?id=${question[0]}'"><button
 																					type="button" class="btn btn-round btn-primary">Delete</button></a>
 																			&nbsp;&nbsp;&nbsp;&nbsp;<a
-																			href="OptionList?q_id=${question.id}&q_content=${question.question}"><button
-																					type="button" class="btn btn-round btn-primary">Options</button></a></td>
+																			href="OptionList?q_id=${question[0]}"><button
+																					type="button" class="btn btn-round btn-primary">Options</button></a>
+																			&nbsp;&nbsp;&nbsp;&nbsp; <a
+																			href="QuestionAbility?q_id=${question[0]}"><button
+																					type="button" class="btn btn-round btn-primary">Ability</button></a>
+																		</td>
 																	</tr>
 																</c:forEach>
 															</tbody>
@@ -243,7 +239,7 @@
 																		</h2>
 																		<h2>
 																			Question: ${q_content} <a
-																				href="QuestionList?s_id=${s_id}&s_name=${s_name}"><button
+																				href="QuestionList?s_id=${s_id}"><button
 																					type="button" class="btn btn-round btn-primary">QuestionList</button></a>
 																		</h2>
 
@@ -264,7 +260,7 @@
 																					<td><a href="editOption?id=${option.id}"><button
 																								type="button" class="btn btn-round btn-primary">Edit</button></a>
 																						&nbsp;&nbsp;&nbsp;&nbsp; <a
-																						href="deleteOption?id=${option.id}"><button
+																						href="javascript:if(confirm('Do you want to delete this option?'))location='deleteOption?id=${option.id}'"><button
 																								type="button" class="btn btn-round btn-primary">Delete</button></a>
 																					</td>
 																				</tr>

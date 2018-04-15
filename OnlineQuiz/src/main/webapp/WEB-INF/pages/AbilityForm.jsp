@@ -22,8 +22,10 @@
 <!-- Custom Theme Style -->
 <link href="<c:url value="../template/build/css/custom.min.css" />"
 	rel="stylesheet">
-	<!-- iCheck -->
-    <link href="<c:url value="../template/vendors/iCheck/skins/flat/green.css"/>" rel="stylesheet">
+<!-- iCheck -->
+<link
+	href="<c:url value="../template/vendors/iCheck/skins/flat/green.css"/>"
+	rel="stylesheet">
 </head>
 
 <body class="nav-md">
@@ -50,8 +52,8 @@
 										User Management </a></li>
 								<li><a href="../QuizManage/SubjectList"><i
 										class="fa fa-edit"></i> Quiz Management </a></li>
-								<li><a href="../AbilityManage/AbilityList"><i class="fa fa-edit"></i>
-										Ability Management </a></li>
+								<li><a href="../AbilityManage/AbilityList"><i
+										class="fa fa-edit"></i> Ability Management </a></li>
 							</ul>
 						</div>
 
@@ -112,12 +114,13 @@
 				</div>
 			</div>
 			<!-- /top navigation -->
+
 			<!-- page content -->
 			<div class="right_col" role="main">
 				<div class="">
 					<div class="page-title">
 						<div class="title_left">
-							<h3>User Management</h3>
+							<h3>Ability Form</h3>
 						</div>
 
 						<div class="title_right">
@@ -139,116 +142,49 @@
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
 								<div class="x_title">
-									<h2>Add New User</h2>
+									<h2>${operation}</h2>
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
-
-
-									<h2>${msg}</h2>
-									<form:form action="saveUser" method="post"
-										modelAttribute="user" class="form-horizontal form-label-left">
+									<form:form action="saveAbility" method="post"
+										modelAttribute="ability"
+										class="form-horizontal form-label-left">
 										<form:hidden path="" />
-
-										<!-- Account -->
 										<div class="item form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12"
-												for="name">Account <span class="required">*</span>
-											</label>
+												for="name">Id </label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
 												<form:input path="id" id="id"
 													class="form-control col-md-7 col-xs-12" name="id"
-													placeholder="please enter account" required="required"
-													type="text" maxlength="30" />
+													readonly="true" type="text" />
 											</div>
 										</div>
-										<!-- Password -->
 										<div class="item form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12"
-												for="name">Password <span class="required">*</span>
+												for="name">Short Name <span class="required">*</span>
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<form:input path="pwd" id="pwd"
-													class="form-control col-md-7 col-xs-12" name="pwd"
-													placeholder="please enter password" required="required"
-													type="text" maxlength="30" />
+												<form:input path="shortName" id="short_name"
+													class="form-control col-md-7 col-xs-12" name="short_name"
+													placeholder="please enter ability short name" required="required"
+													type="text" maxlength="20" />
 											</div>
 										</div>
-
-										<!-- Name -->
 										<div class="item form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12"
-												for="name">Name <span class="required">*</span>
+												for="name">Full Name <span class="required">*</span>
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<form:input path="name" id="name"
-													class="form-control col-md-7 col-xs-12" name="name"
-													placeholder="please enter name" required="required"
-													type="text" maxlength="30" />
+												<form:input path="fullName" id="full_name"
+													class="form-control col-md-7 col-xs-12" name="full_name"
+													placeholder="please enter ability full name" required="required"
+													type="text" maxlength="50" />
 											</div>
-										</div>
-
-										<!-- Grade -->
-										<div class="item form-group">
-											<label class="control-label col-md-3 col-sm-3 col-xs-12"
-												for="name">Grade <span class="required">*</span>
-											</label>
-											<div class="col-md-6 col-sm-6 col-xs-12">
-												<form:select path="grade" id="grade"
-													class="form-control col-md-7 col-xs-12" name="grade"
-													placeholder="please enter subject name" required="required"
-													type="text" maxlength="30">
-													<option value="1">1</option>
-													<option value="2">2</option>
-													<option value="3">3</option>
-													<option value="4">4</option>
-												</form:select>
-											</div>
-										</div>
-
-										<!-- Role -->
-										<div class="item form-group">
-											<label class="control-label col-md-3 col-sm-3 col-xs-12"
-												for="name">Role <span class="required">*</span>
-											</label>
-											<div class="col-md-6 col-sm-6 col-xs-12">
-												<form:select path="role" id="role"
-													class="form-control col-md-7 col-xs-12" name="role"
-													placeholder="please enter subject name" required="required"
-													type="text" maxlength="30">
-
-													<option value="student">Student</option>
-													<option value="teacher">Teacher</option>
-													<option value="manager">Manager</option>
-												</form:select>
-
-											</div>
-										</div>
-
-										<!-- State -->
-										<div class="item form-group">
-											<label class="control-label col-md-3 col-sm-3 col-xs-12"
-												for="name">State <span class="required">*</span>
-											</label>
-											<div class="col-md-6 col-sm-6 col-xs-12">
-												<form:radiobutton path="is_open" id="is_open" name="is_open"
-													required="required" value="T" class="flat" checked="true" />
-												Enable
-												<form:radiobutton path="is_open" id="is_open" name="is_open"
-													required="required" value="F" class="flat" />
-												Disable
-
-											</div>
-											
-											
-							
-																						
-											
 										</div>
 										<div class="ln_solid"></div>
 										<div class="form-group">
 											<div class="col-md-6 col-md-offset-3">
-												<a href="back"><button type="button"
+												<a href="cancel"><button type="button"
 														class="btn btn-primary">Cancel</button></a>
 												<button id="send" type="submit" class="btn btn-success">Submit</button>
 											</div>
@@ -258,18 +194,19 @@
 							</div>
 						</div>
 					</div>
-					<!-- /page content -->
-					<!-- footer content -->
-					<footer>
-						<div class="pull-right">
-							Gentelella - Bootstrap Admin Template by <a
-								href="https://colorlib.com">Colorlib</a>
-						</div>
-						<div class="clearfix"></div>
-					</footer>
-					<!-- /footer content -->
 				</div>
 			</div>
+			<!-- /page content -->
+
+			<!-- footer content -->
+			<footer>
+				<div class="pull-right">
+					Gentelella - Bootstrap Admin Template by <a
+						href="https://colorlib.com">Colorlib</a>
+				</div>
+				<div class="clearfix"></div>
+			</footer>
+			<!-- /footer content -->
 		</div>
 	</div>
 
@@ -285,8 +222,9 @@
 	<!-- validator -->
 	<script
 		src="<c:url value="../template/vendors/validator/validator.js" />"></script>
-<!-- iCheck -->
-    <script src="<c:url value="../template/vendors/iCheck/icheck.min.js" />"></script>
+	<!-- iCheck -->
+	<script
+		src="<c:url value="../template/vendors/iCheck/icheck.min.js" />"></script>
 	<!-- Custom Theme Scripts -->
 	<script src="<c:url value="../template/build/js/custom.min.js" />"></script>
 

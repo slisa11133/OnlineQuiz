@@ -29,12 +29,13 @@ public class QuestionDAOImpl implements QuestionDAO {
 		questionID = (Integer) sessionFactory.getCurrentSession().save(question);
 
 		// System.out.print(questionID);
-/**
-		String sql = "INSERT INTO question_ability (u_id, a_id) VALUES (:u_id, :a_id)";
-		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql);
-		query.setParameter("q_id", questionID);
-		query.setParameter("a_id", "1");
-		query.executeUpdate(); **/
+		/**
+		 * String sql = "INSERT INTO question_ability (u_id, a_id) VALUES (:u_id,
+		 * :a_id)"; SQLQuery query =
+		 * sessionFactory.getCurrentSession().createSQLQuery(sql);
+		 * query.setParameter("q_id", questionID); query.setParameter("a_id", "1");
+		 * query.executeUpdate();
+		 **/
 	}
 
 	@SuppressWarnings("unchecked")
@@ -43,10 +44,15 @@ public class QuestionDAOImpl implements QuestionDAO {
 		// return sessionFactory.getCurrentSession().createQuery("from
 		// question").list();
 
-		String sql = "SELECT * FROM question WHERE s_id = :s_id";
+		// String sql = "SELECT * FROM question WHERE s_id = :s_id";
+		String sql = "SELECT a.q_id,a.question,a.type,a.grade, GROUP_CONCAT(c.short_name) ability  FROM question a";
+		sql += " LEFT JOIN question_ability b on a.q_id=b.q_id";
+		sql += " LEFT JOIN ability c on b.a_id=c.a_id";
+		sql += " WHERE a.s_id = :s_id";
+		sql += " GROUP BY a.q_id";
 		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql);
 		query.setParameter("s_id", subjectId);
-		query.addEntity(Question.class);
+		//query.addEntity(Question.class);
 
 		List questions = query.list();
 

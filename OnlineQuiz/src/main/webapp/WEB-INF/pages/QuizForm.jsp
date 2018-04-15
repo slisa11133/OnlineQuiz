@@ -22,6 +22,10 @@
 <!-- Custom Theme Style -->
 <link href="<c:url value="../template/build/css/custom.min.css" />"
 	rel="stylesheet">
+<!-- iCheck -->
+<link
+	href="<c:url value="../template/vendors/iCheck/skins/flat/green.css"/>"
+	rel="stylesheet">
 </head>
 
 <body class="nav-md">
@@ -48,18 +52,8 @@
 										User Management </a></li>
 								<li><a href="../QuizManage/SubjectList"><i
 										class="fa fa-edit"></i> Quiz Management </a></li>
-								<li><a><i class="fa fa-table"></i> Tables <span
-										class="fa fa-chevron-down"></span></a>
-									<ul class="nav child_menu">
-										<li><a href="tables.html">Tables</a></li>
-										<li><a href="tables_dynamic.html">Table Dynamic</a></li>
-									</ul></li>
-								<li><a><i class="fa fa-clone"></i>Layouts <span
-										class="fa fa-chevron-down"></span></a>
-									<ul class="nav child_menu">
-										<li><a href="fixed_sidebar.html">Fixed Sidebar</a></li>
-										<li><a href="fixed_footer.html">Fixed Footer</a></li>
-									</ul></li>
+								<li><a href="../AbilityManage/AbilityList"><i class="fa fa-edit"></i>
+										Ability Management </a></li>
 							</ul>
 						</div>
 
@@ -207,7 +201,7 @@
 													<label class="control-label col-md-3 col-sm-3 col-xs-12"
 														for="name">Subject </label>
 													<div class="col-md-6 col-sm-6 col-xs-12">
-														<input id="subject" value = "${s_name}"
+														<input id="subject" value="${s_name}"
 															class="form-control col-md-7 col-xs-12" name="subject"
 															readonly="true" />
 													</div>
@@ -219,30 +213,77 @@
 													<div class="col-md-6 col-sm-6 col-xs-12">
 														<form:input path="question" id="question"
 															class="form-control col-md-7 col-xs-12" name="question"
-															placeholder="please enter question"
-															required="required" type="text" maxlength="500" />
+															placeholder="please enter question" required="required"
+															type="text" maxlength="500" />
 													</div>
 												</div>
+												<!-- type -->
 												<div class="item form-group">
 													<label class="control-label col-md-3 col-sm-3 col-xs-12"
 														for="name">Type <span class="required">*</span>
 													</label>
 													<div class="col-md-6 col-sm-6 col-xs-12">
-														<form:input path="type" id="type"
+														<form:select path="type" id="type"
 															class="form-control col-md-7 col-xs-12" name="type"
-															placeholder="please enter type"
-															required="required" type="text" maxlength="20" />
+															required="required">
+															<form:options items="${Qtypes}" />
+														</form:select>
+													</div>
+												</div>
+												<!-- grade -->
+												<div class="item form-group">
+													<label class="control-label col-md-3 col-sm-3 col-xs-12"
+														for="name">Grade <span class="required">*</span>
+													</label>
+													<div class="col-md-6 col-sm-6 col-xs-12">
+														<form:select path="grade" id="grade"
+															class="form-control col-md-7 col-xs-12" name="grade"
+															required="required">
+															<form:options items="${Qgrades}" />
+														</form:select>
+													</div>
+												</div>
+												<div class="ln_solid"></div>
+												<div class="form-group">
+													<div class="col-md-6 col-md-offset-3">
+														<a href="cancel?type=${type}"><button type="button"
+																class="btn btn-primary">Cancel</button></a>
+														<button id="send" type="submit" class="btn btn-success">Submit</button>
+													</div>
+												</div>
+											</form:form>
+										</c:when>
+										<c:when test="${type == 'QuestionAbility'}">
+											<form:form action="saveQuestionAbility" method="post"
+												modelAttribute="questionability"
+												class="form-horizontal form-label-left">
+												<div class="item form-group">
+													<label class="control-label col-md-3 col-sm-3 col-xs-12"
+														for="name">Subject </label>
+													<div class="col-md-6 col-sm-6 col-xs-12">
+														<input id="subject" value="${s_name}"
+															class="form-control col-md-7 col-xs-12" name="subject"
+															readonly="true" />
 													</div>
 												</div>
 												<div class="item form-group">
 													<label class="control-label col-md-3 col-sm-3 col-xs-12"
-														for="name">Level <span class="required">*</span>
+														for="name">Question </label>
+													<div class="col-md-6 col-sm-6 col-xs-12">
+														<input id="question" value="${q_content}"
+															class="form-control col-md-7 col-xs-12" name="question"
+															readonly="true" />
+													</div>
+												</div>
+												<!-- ability -->
+												<div class="item form-group">
+													<label class="control-label col-md-3 col-sm-3 col-xs-12"
+														for="name">Ability <span class="required">*</span>
 													</label>
 													<div class="col-md-6 col-sm-6 col-xs-12">
-														<form:input path="grade" id="grade"
-															class="form-control col-md-7 col-xs-12" name="grade"
-															placeholder="please enter Level"
-															required="required" type="text" maxlength="1" />
+														<form:checkboxes path="ability" id="ability"
+															class="form-control col-md-7 col-xs-12 flat" name="ability"
+															items="${Qability}" />
 													</div>
 												</div>
 												<div class="ln_solid"></div>
@@ -273,7 +314,7 @@
 													<label class="control-label col-md-3 col-sm-3 col-xs-12"
 														for="name">Subject </label>
 													<div class="col-md-6 col-sm-6 col-xs-12">
-														<input id="subject" value = "${s_name}"
+														<input id="subject" value="${s_name}"
 															class="form-control col-md-7 col-xs-12" name="subject"
 															readonly="true" />
 													</div>
@@ -282,7 +323,7 @@
 													<label class="control-label col-md-3 col-sm-3 col-xs-12"
 														for="name">Question </label>
 													<div class="col-md-6 col-sm-6 col-xs-12">
-														<input id="question" value = "${q_content}"
+														<input id="question" value="${q_content}"
 															class="form-control col-md-7 col-xs-12" name="subject"
 															readonly="true" />
 													</div>
@@ -294,19 +335,36 @@
 													<div class="col-md-6 col-sm-6 col-xs-12">
 														<form:input path="option" id="option"
 															class="form-control col-md-7 col-xs-12" name="option"
-															placeholder="please enter option"
-															required="required" type="text" maxlength="500" />
+															placeholder="please enter option" required="required"
+															type="text" maxlength="500" />
 													</div>
 												</div>
+												<!-- is_answer -->
 												<div class="item form-group">
 													<label class="control-label col-md-3 col-sm-3 col-xs-12"
 														for="name">Is_Answer <span class="required">*</span>
 													</label>
 													<div class="col-md-6 col-sm-6 col-xs-12">
-														<form:input path="is_answer" id="is_answer"
-															class="form-control col-md-7 col-xs-12" name="is_answer"
-															placeholder="please enter is_answer"
-															required="required" type="text" maxlength="1" />
+														<c:if test="${option.is_answer == 'T'}">
+															<form:radiobutton path="is_answer" id="is_answer"
+																name="is_answer" required="required" value="T"
+																class="flat" checked="true" />
+														Yes
+														<form:radiobutton path="is_answer" id="is_answer"
+																name="is_answer" required="required" value="F"
+																class="flat" />
+														No
+													</c:if>
+														<c:if test="${option.is_answer != 'T'}">
+															<form:radiobutton path="is_answer" id="is_answer"
+																name="is_answer" required="required" value="T"
+																class="flat" />
+														Yes
+														<form:radiobutton path="is_answer" id="is_answer"
+																name="is_answer" required="required" value="F"
+																class="flat" checked="true" />
+														No
+													</c:if>
 													</div>
 												</div>
 												<div class="ln_solid"></div>
@@ -355,7 +413,9 @@
 	<!-- validator -->
 	<script
 		src="<c:url value="../template/vendors/validator/validator.js" />"></script>
-
+	<!-- iCheck -->
+	<script
+		src="<c:url value="../template/vendors/iCheck/icheck.min.js" />"></script>
 	<!-- Custom Theme Scripts -->
 	<script src="<c:url value="../template/build/js/custom.min.js" />"></script>
 

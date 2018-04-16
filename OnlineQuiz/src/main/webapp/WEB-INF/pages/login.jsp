@@ -31,19 +31,21 @@
       <div class="login_wrapper">
         <div class="animate form login_form">
           <section class="login_content">
-            <form>
+            <form action="loginCheck" method="post">
               <h1>Login Form</h1>
               <div>
-                <input type="text" class="form-control" placeholder="Username" required="" />
+                <input type="text" class="form-control" name="username" id="username" placeholder="Username" required="" />
               </div>
               <div>
-                <input type="password" class="form-control" placeholder="Password" required="" />
+                <input type="password" class="form-control" name="pwd" id="pwd" placeholder="Password" required="" />
               </div>
               <div>
-                <a class="btn btn-default submit" href="QuizManage/SubjectList">Log in</a>
-                <a class="reset_pass" href="#">Lost your password?</a>
+                <!-- <a class="btn btn-default submit" href="QuizManage/SubjectList">Log in</a> -->
+                <input type="submit" name="submit" value="  login  "> 
               </div>
-
+              <div>
+			  	<font color="red">${msg}</font>
+			  </div>
               <div class="clearfix"></div>
 
               <div class="separator">
@@ -65,21 +67,30 @@
 
         <div id="register" class="animate form registration_form">
           <section class="login_content">
-            <form>
+            <form action="registerCheck" method="post" >
               <h1>Create Account</h1>
               <div>
-                <input type="text" class="form-control" placeholder="Username" required="" />
+                <input type="text" class="form-control" name="reg_username" id="reg_username" placeholder="Username" required="" />
               </div>
               <div>
-                <input type="email" class="form-control" placeholder="Email" required="" />
+                <input type="text" class="form-control" name="reg_name" id="reg_name" placeholder="Realname" required="" />
               </div>
               <div>
-                <input type="password" class="form-control" placeholder="Password" required="" />
+                <input type="password" class="form-control" name="reg_pwd" id="reg_pwd" placeholder="Password" required="" />
               </div>
               <div>
-                <a class="btn btn-default submit" href="index.html">Submit</a>
+                <!-- <input type="text" class="form-control" name="reg_grade" id="reg_grade" placeholder="Grade" required="" /> -->
+                <select id="grade" class="form-control col-md-7 col-xs-12" name="grade" required="required">
+					<option value="1">1</option>
+					<option value="2">2</option>
+				    <option value="3">3</option>
+					<option value="4">4</option>
+				</select>
               </div>
-
+              <div>
+                <!-- <a class="btn btn-default submit" href="index.html">Submit</a> -->
+                <input type="submit" name="submit" value="register"> 
+              </div>
               <div class="clearfix"></div>
 
               <div class="separator">
@@ -90,10 +101,6 @@
                 <div class="clearfix"></div>
                 <br />
 
-                <div>
-                  <h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
-                  <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
-                </div>
               </div>
             </form>
           </section>

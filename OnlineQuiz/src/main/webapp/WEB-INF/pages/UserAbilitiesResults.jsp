@@ -25,6 +25,8 @@
 <!-- Custom Theme Style -->
 <link href="<c:url value="../template/build/css/custom.min.css" />"
 	rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
 </head>
 
 <body class="nav-md">
@@ -147,33 +149,51 @@
 								<div class="x_title">
 									<h2>User List</h2>
 									<div class="pull-right">
-										<a href="getAbilitiesResultsDiagram"><button type="button"
-												class="btn btn-round btn-primary">Show Diagram</button></a>
+										<a href="getAbilitiesResultsDiagram">
+											<button type="button" class="btn btn-round btn-primary">Show Diagram</button>
+										</a>
+										<button type="button" id="d-pdf" class="btn btn-round btn-primary">Download PDF</button>
+										<script>
+											var pdfDoc = new jsPDF();
+											$('#d-pdf').click(function () {
+											    pdfDoc.fromHTML($('#as-pdf').html(), 15, 15, {
+											        'width': 1000
+											    });
+											    pdfDoc.save('user-abilities-results.pdf');
+											});
+										</script>
+										
 									</div>
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
-									<table id="datatable"
-										class="table table-striped table-bordered">
-										<thead>
-											<tr>
-												<th>User ID</th>
-												<th>User Name</th>
-												<th>Ability Name</th>
-												<th>Ability Result</th>
-											</tr>
-										</thead>
-										<tbody>
-											<c:forEach var="user" items="${userAbilitiesResults}">
+									<div id="as-pdf">
+										<c:if test="${userAbilitiesResults.size() gt 0}">
+										<b>
+											User ID : ${userAbilitiesResults[0].userD.getId()}
+											<br/>
+											User Name : ${userAbilitiesResults[0].userD.getName()}
+										</b>
+										<br/><br/>
+										</c:if>
+										<table id="datatable"
+											class="table table-striped table-bordered">
+											<thead>
 												<tr>
-													<td>${user.userD.getId()}</td>
-													<td>${user.userD.getName()}</td>
-													<td>${user.ability.getFullName()}</td>
-													<td>${user.result}</td>
+													<th>Ability Name</th>
+													<th>Ability Result</th>
 												</tr>
-											</c:forEach>
-										</tbody>
-									</table>
+											</thead>
+											<tbody>
+												<c:forEach var="user" items="${userAbilitiesResults}">
+													<tr>
+														<td>${user.ability.getFullName()}</td>
+														<td>${user.result}</td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
 								</div>
 							</div>
 						</div>

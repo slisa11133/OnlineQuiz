@@ -152,6 +152,7 @@
 										<a href="getAbilitiesResultsDiagram">
 											<button type="button" class="btn btn-round btn-primary">Show Diagram</button>
 										</a>
+										<c:if test="${userAbilitiesResults.size() gt 0}">
 										<button type="button" id="d-pdf" class="btn btn-round btn-primary">Download PDF</button>
 										<script>
 											var pdfDoc = new jsPDF();
@@ -162,7 +163,7 @@
 											    pdfDoc.save('user-abilities-results.pdf');
 											});
 										</script>
-										
+										</c:if>
 									</div>
 									<div class="clearfix"></div>
 								</div>

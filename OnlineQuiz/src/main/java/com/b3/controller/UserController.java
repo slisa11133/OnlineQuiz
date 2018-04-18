@@ -115,5 +115,14 @@ public class UserController {
 		model.addObject("userAbilitiesResults", userAbilitiesResults);
 		return model;
 	}
+	
+	@RequestMapping(value = "/getAbilitiesResultsDiagram", method = RequestMethod.GET)
+	public ModelAndView getUserAbilitiesResultsDiagram(HttpServletRequest request) {
+		String userId = request.getParameter("id");
+		List<UserAbility> userAbilitiesResults = userAbilityService.getUserAbilities(userId);
+		ModelAndView model = new ModelAndView("UserAbilitiesResultsDiagram");
+		model.addObject("userAbilitiesResults", userAbilitiesResults);
+		return model;
+	}
 
 }

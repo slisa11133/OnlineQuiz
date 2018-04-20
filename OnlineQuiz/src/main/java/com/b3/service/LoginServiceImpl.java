@@ -15,7 +15,7 @@ public class LoginServiceImpl implements LoginService{
 	
 	@Override
 	@Transactional
-	public boolean loginCheck(String username, String pwd) {
+	public String loginCheck(String username, String pwd) {
 		return loginDAO.loginCheck(username, pwd);
 	}
 }

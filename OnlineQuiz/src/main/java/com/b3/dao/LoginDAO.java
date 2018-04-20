@@ -1,5 +1,5 @@
 package com.b3.dao;
 
 public interface LoginDAO {
-	public boolean loginCheck(String username, String pwd);
+	public String loginCheck(String username, String pwd);
 }

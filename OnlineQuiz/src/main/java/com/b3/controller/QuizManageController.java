@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.b3.model.Subject;
+import com.b3.model.User;
 import com.b3.service.SubjectService;
 import com.b3.model.Question;
 import com.b3.service.QuestionService;
@@ -43,11 +45,13 @@ public class QuizManageController {
 	private SubjectService subjectService;
 
 	@RequestMapping(value = "/SubjectList")
-	public ModelAndView listSubject(ModelAndView model) throws IOException {
+	public ModelAndView listSubject(ModelAndView model, HttpSession httpsession) throws IOException {
 		List<Subject> listSubject = subjectService.getAllSubjects();
 		model.addObject("type", "Subject");
 		model.addObject("listSubject", listSubject);
 		model.setViewName("QuizManage");
+//		User u=(User) httpsession.getAttribute("current_user");
+//		System.out.println(u.getId());
 		return model;
 	}
 

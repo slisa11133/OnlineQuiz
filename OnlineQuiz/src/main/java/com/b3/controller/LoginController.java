@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.hibernate.SessionFactory;
 import org.jboss.logging.Logger;
@@ -46,16 +47,22 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "/loginCheck", method=RequestMethod.POST)
-	public ModelAndView loginCheck(HttpServletRequest request,ModelAndView model) throws IOException {
+	public ModelAndView loginCheck(HttpSession httpsession, HttpServletRequest request,ModelAndView model) throws IOException {
 		String username = request.getParameter("username");
         String password = request.getParameter("pwd");
-		if(loginService.loginCheck(username, password)) {
-//			List<Subject> listSubject = subjectService.getAllSubjects();
-//			model.addObject("type", "Subject");
-//			model.addObject("listSubject", listSubject);
-//			model.setViewName("QuizManage");
-//			return model;
-			return new ModelAndView("redirect:/QuizManage/SubjectList");
+        
+        String user_role=loginService.loginCheck(username, password);
+		if(!user_role.equals("false")) {
+			
+			httpsession.setAttribute("current_user", userService.getUser(username));
+			
+			if(user_role.equals("student")) {
+				model.setViewName("StudentMainPage");
+				return model;
+			}
+			else {
+				return new ModelAndView("redirect:/QuizManage/SubjectList");
+			}
 		}
 		model.setViewName("login");
 		return model;

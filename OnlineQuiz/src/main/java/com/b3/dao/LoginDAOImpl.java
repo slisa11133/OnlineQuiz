@@ -17,18 +17,20 @@ public class LoginDAOImpl implements LoginDAO{
 	private SessionFactory sessionFactory;
 	
 	@Override
-	public boolean loginCheck(String username, String pwd) {
+	public String loginCheck(String username, String pwd) {
 		String sql = "select * from user where u_id = '" + username + "' and pwd = '" + pwd + "'";
 		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql);
 //		query.setParameter("u_id", username);
 //		query.setParameter("pwd", pwd);
 		query.addEntity(User.class);
 
-		List options = query.list();
-		Iterator iter = options.iterator();
+		List <User> students = query.list();
+		Iterator iter = students.iterator();
 		if(iter.hasNext()){
-			return true;
+			//System.out.println(students.get(0).getRole());
+			return students.get(0).getRole();
 		}
-		return false;
+		
+		return "false";
 	};
 }

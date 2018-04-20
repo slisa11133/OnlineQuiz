@@ -39,7 +39,7 @@ public class AbilityDAOImpl implements AbilityDAO {
 		String sql = "SELECT * FROM ability";
 		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql);
 		query.addEntity(Ability.class);
-		List ability = query.list();
+		List<Ability> ability = query.list();
 
 		return ability; 
 

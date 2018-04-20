@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.b3.model.Subject;
-import com.b3.model.User;
 import com.b3.service.SubjectService;
 import com.b3.model.Question;
 import com.b3.service.QuestionService;
@@ -50,8 +49,8 @@ public class QuizManageController {
 		model.addObject("type", "Subject");
 		model.addObject("listSubject", listSubject);
 		model.setViewName("QuizManage");
-//		User u=(User) httpsession.getAttribute("current_user");
-//		System.out.println(u.getId());
+		//User u=(User) httpsession.getAttribute("current_user");
+		//		System.out.println(u.getId());
 		return model;
 	}
 
@@ -140,27 +139,17 @@ public class QuizManageController {
 		model.addObject("operation", "Add New Question");
 		model.addObject("s_name", s_name);
 		model.setViewName("QuizForm");
-
-		Map<String, String> Qtypes = new LinkedHashMap<String, String>();
-		Qtypes.put("BFQ", "blank filling question(BFQ)");
-		Qtypes.put("TFQ", "true-false question(TFQ)");
-		Qtypes.put("MCQ", "multiple-choice question(MCQ)");
-		model.addObject("Qtypes", Qtypes);
-		Map<String, String> Qgrades = new LinkedHashMap<String, String>();
-		Qgrades.put("1", "1");
-		Qgrades.put("2", "2");
-		Qgrades.put("3", "3");
-		Qgrades.put("4", "4");
-		model.addObject("Qgrades", Qgrades);
-		Map<String, String> Qability = new LinkedHashMap<String, String>();
-		Qability.put("1", "ana_think");
-		Qability.put("2", "cal_ability");
-		Qability.put("3", "cap_memo");
-		Qability.put("4", "infor_integ");
-		model.addObject("Qability", Qability);
+		/** question type options **/
+		model.addObject("Qtypes", questionService.getQtypes());
+		/** question grade options **/
+		model.addObject("Qgrades", questionService.getQgrades());
+		/** question level options **/
+		model.addObject("Qlevels", questionService.getQlevels());
 
 		return model;
 	}
+	
+	
 
 	@RequestMapping(value = "/saveQuestion", method = RequestMethod.POST)
 	public ModelAndView saveQuestion(@ModelAttribute Question question) {
@@ -194,18 +183,11 @@ public class QuizManageController {
 		model.addObject("operation", "Edit Question");
 		model.addObject("s_name", s_name);
 		/** question type options **/
-		Map<String, String> Qtypes = new LinkedHashMap<String, String>();
-		Qtypes.put("BFQ", "blank filling question(BFQ)");
-		Qtypes.put("TFQ", "true-false question(TFQ)");
-		Qtypes.put("MCQ", "multiple-choice question(MCQ)");
-		model.addObject("Qtypes", Qtypes);
+		model.addObject("Qtypes", questionService.getQtypes());
 		/** question grade options **/
-		Map<String, String> Qgrades = new LinkedHashMap<String, String>();
-		Qgrades.put("1", "1");
-		Qgrades.put("2", "2");
-		Qgrades.put("3", "3");
-		Qgrades.put("4", "4");
-		model.addObject("Qgrades", Qgrades);
+		model.addObject("Qgrades", questionService.getQgrades());
+		/** question level options **/
+		model.addObject("Qlevels", questionService.getQlevels());
 		return model;
 	}
 
@@ -228,14 +210,7 @@ public class QuizManageController {
 		model.addObject("s_name", s_name);
 		model.addObject("q_content", q_content);
 		/** question ability options **/
-		List<Ability> listAbilityOptions = abilityService.getAllAbility();
-		Map<String, String> Qability = new LinkedHashMap<String, String>();
-		for (int i = 0; i < listAbilityOptions.size(); i++) {
-			String a_id = String.valueOf(listAbilityOptions.get(i).getId());
-			String fullName = listAbilityOptions.get(i).getFullName();
-			Qability.put(a_id, fullName);
-		}
-		model.addObject("Qability", Qability);
+		model.addObject("Qability", questionService.getQability());
 		return model;
 	}
 

@@ -18,6 +18,10 @@ import com.b3.model.UserAbility;
 import com.b3.service.UserService;
 
 import com.b3.model.Ability;
+import com.b3.model.Report;
+import com.b3.service.BaseReportFactory;
+import com.b3.service.StudentReportFactory;
+import com.b3.service.TeacherReportFactory;
 import com.b3.service.UserAbilityService;
 
 @Controller
@@ -107,12 +111,27 @@ public class UserController {
 		return new ModelAndView("redirect:/");
 	}
 
+	@Autowired
+	private StudentReportFactory StudentreportFactory;
+	@Autowired
+	private TeacherReportFactory TeacherreportFactory;
+	
 	@RequestMapping(value = "/getAbilitiesResults", method = RequestMethod.GET)
 	public ModelAndView getUserAbilitiesResults(HttpServletRequest request) {
 		String userId = request.getParameter("id");
 		List<UserAbility> userAbilitiesResults = userAbilityService.getUserAbilities(userId);
+		BaseReportFactory reportFactory;
+		reportFactory = StudentreportFactory;
+		List<Report> Sreport = reportFactory.createReport(userId);
+		reportFactory = TeacherreportFactory;
+		List<Report> Treport = reportFactory.createReport();
+		
+		
+		
 		ModelAndView model = new ModelAndView("UserAbilitiesResults");
 		model.addObject("userAbilitiesResults", userAbilitiesResults);
+		model.addObject("Sreport", Sreport);
+		model.addObject("Treport", Treport);
 		return model;
 	}
 	

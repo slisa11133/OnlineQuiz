@@ -6,6 +6,7 @@ import com.b3.model.Ability;
 
 public interface AbilityService {
 	
+	
 	public void addAbility(Ability ability);
 
 	public List<Ability> getAllAbility();
@@ -15,4 +16,5 @@ public interface AbilityService {
 	public Ability getAbility(int abilityid);
 
 	public Ability updateAbility(Ability ability);
+	
 }

@@ -34,6 +34,9 @@ public class Question implements Serializable {
 	@Column
 	private String grade;
 	
+	@Column
+	private String level;
+	
 
 
 	public int getId() {
@@ -76,6 +79,12 @@ public class Question implements Serializable {
 		this.grade = grade;
 	}
 	
+	public String getLevel() {
+		return level;
+	}
 
+	public void setLevel(String level) {
+		this.level = level;
+	}
 
 }

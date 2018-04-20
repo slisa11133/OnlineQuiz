@@ -80,7 +80,7 @@
               </div>
               <div>
                 <!-- <input type="text" class="form-control" name="reg_grade" id="reg_grade" placeholder="Grade" required="" /> -->
-                <select id="grade" class="form-control col-md-7 col-xs-12" name="grade" required="required">
+                <select id="reg_grade" class="form-control col-md-7 col-xs-12" name="reg_grade" required="required">
 					<option value="1">1</option>
 					<option value="2">2</option>
 				    <option value="3">3</option>

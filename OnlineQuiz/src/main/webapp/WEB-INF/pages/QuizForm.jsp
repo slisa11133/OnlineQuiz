@@ -34,8 +34,8 @@
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="index.html" class="site_title"><i class="fa fa-paw"></i>
-							<span>Online Quiz</span></a>
+						<a href="../" class="site_title"><i class="fa fa-paw"></i> <span>Online
+								Quiz</span></a>
 					</div>
 
 					<div class="clearfix"></div>
@@ -240,6 +240,19 @@
 															class="form-control col-md-7 col-xs-12" name="grade"
 															required="required">
 															<form:options items="${Qgrades}" />
+														</form:select>
+													</div>
+												</div>
+												<!-- level -->
+												<div class="item form-group">
+													<label class="control-label col-md-3 col-sm-3 col-xs-12"
+														for="name">Level <span class="required">*</span>
+													</label>
+													<div class="col-md-6 col-sm-6 col-xs-12">
+														<form:select path="level" id="level"
+															class="form-control col-md-7 col-xs-12" name="level"
+															required="required">
+															<form:options items="${Qlevels}" />
 														</form:select>
 													</div>
 												</div>

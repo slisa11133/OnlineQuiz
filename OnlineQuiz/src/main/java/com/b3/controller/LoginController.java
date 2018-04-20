@@ -57,8 +57,9 @@ public class LoginController {
 			httpsession.setAttribute("current_user", userService.getUser(username));
 			
 			if(user_role.equals("student")) {
-				model.setViewName("StudentMainPage");
-				return model;
+				//model.setViewName("StudentMainPage");
+				//return model;
+				return new ModelAndView("redirect:/DoTest/chooseTest");
 			}
 			else {
 				return new ModelAndView("redirect:/QuizManage/SubjectList");

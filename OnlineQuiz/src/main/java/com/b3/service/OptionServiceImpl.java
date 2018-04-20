@@ -46,8 +46,8 @@ public class OptionServiceImpl implements OptionService {
 		return optionDAO.updateOption(option);
 	}
 
-	public void setOptionDAO(OptionDAO optionDAO) {
+	/**public void setOptionDAO(OptionDAO optionDAO) {
 		this.optionDAO = optionDAO;
-	}
+	}**/
 
 }

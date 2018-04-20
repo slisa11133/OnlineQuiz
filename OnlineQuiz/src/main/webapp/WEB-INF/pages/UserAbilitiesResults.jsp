@@ -25,8 +25,9 @@
 <!-- Custom Theme Style -->
 <link href="<c:url value="../template/build/css/custom.min.css" />"
 	rel="stylesheet">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
 </head>
 
 <body class="nav-md">
@@ -48,10 +49,10 @@
 						class="main_menu_side hidden-print main_menu">
 						<div class="menu_section">
 							<ul class="nav side-menu">
-								<li><a href="list"><i class="fa fa-home"></i>
-										User Management </a></li>
-										<li><a href="../QuizManage/SubjectList"><i class="fa fa-edit"></i>
-										Quiz Management </a></li>
+								<li><a href="list"><i class="fa fa-home"></i> User
+										Management </a></li>
+								<li><a href="../QuizManage/SubjectList"><i
+										class="fa fa-edit"></i> Quiz Management </a></li>
 								<li><a><i class="fa fa-table"></i> Tables <span
 										class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">
@@ -133,11 +134,14 @@
 					<div class="page-title">
 						<div class="title_left">
 							<h3>User Management</h3>
-							<br/><br/>
+							<br />
+							<br />
 							<form method="GET">
-								<input name="id" type="text" placeholder="Enter User ID" style="padding:7px"/>
+								<input name="id" type="text" placeholder="Enter User ID"
+									style="padding: 7px" />
 							</form>
-							<br/><br/>
+							<br />
+							<br />
 						</div>
 					</div>
 
@@ -150,19 +154,31 @@
 									<h2>User List</h2>
 									<div class="pull-right">
 										<a href="getAbilitiesResultsDiagram">
-											<button type="button" class="btn btn-round btn-primary">Show Diagram</button>
+											<button type="button" class="btn btn-round btn-primary">Show
+												Diagram</button>
 										</a>
 										<c:if test="${userAbilitiesResults.size() gt 0}">
-										<button type="button" id="d-pdf" class="btn btn-round btn-primary">Download PDF</button>
-										<script>
-											var pdfDoc = new jsPDF();
-											$('#d-pdf').click(function () {
-											    pdfDoc.fromHTML($('#as-pdf').html(), 15, 15, {
-											        'width': 1000
-											    });
-											    pdfDoc.save('user-abilities-results.pdf');
-											});
-										</script>
+											<button type="button" id="d-pdf"
+												class="btn btn-round btn-primary">Download PDF</button>
+											<script>
+												var pdfDoc = new jsPDF();
+												$('#d-pdf')
+														.click(
+																function() {
+																	pdfDoc
+																			.fromHTML(
+																					$(
+																							'#as-pdf')
+																							.html(),
+																					15,
+																					15,
+																					{
+																						'width' : 1000
+																					});
+																	pdfDoc
+																			.save('user-abilities-results.pdf');
+																});
+											</script>
 										</c:if>
 									</div>
 									<div class="clearfix"></div>
@@ -170,12 +186,11 @@
 								<div class="x_content">
 									<div id="as-pdf">
 										<c:if test="${userAbilitiesResults.size() gt 0}">
-										<b>
-											User ID : ${userAbilitiesResults[0].userD.getId()}
-											<br/>
-											User Name : ${userAbilitiesResults[0].userD.getName()}
-										</b>
-										<br/><br/>
+											<b> User ID : ${userAbilitiesResults[0].userD.getId()} <br />
+												User Name : ${userAbilitiesResults[0].userD.getName()}
+											</b>
+											<br />
+											<br />
 										</c:if>
 										<table id="datatable"
 											class="table table-striped table-bordered">
@@ -190,6 +205,58 @@
 													<tr>
 														<td>${user.ability.getFullName()}</td>
 														<td>${user.result}</td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+										<h2>Student Report</h2>
+										<table id="datatable2"
+											class="table table-striped table-bordered">
+											<thead>
+												<tr>
+													<th>User ID</th>
+													<th>User Name</th>
+													<th>User Grade</th>
+													<th>User State</th>
+													<th>Ability Name</th>
+													<th>Ability Result</th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach var="Sreport" items="${Sreport}">
+													<tr>
+														<td>${Sreport.u_id}</td>
+														<td>${Sreport.userName}</td>
+														<td>${Sreport.userGrade}</td>
+														<td>${Sreport.userState}</td>
+														<td>${Sreport.abilityName}</td>
+														<td>${Sreport.result}</td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+										<h2>Teacher Report</h2>
+										<table id="datatabl3"
+											class="table table-striped table-bordered">
+											<thead>
+												<tr>
+													<th>User ID</th>
+													<th>User Name</th>
+													<th>User Grade</th>
+													<th>User State</th>
+													<th>Ability Name</th>
+													<th>Ability Result</th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach var="Treport" items="${Treport}">
+													<tr>
+														<td>${Treport.u_id}</td>
+														<td>${Treport.userName}</td>
+														<td>${Treport.userGrade}</td>
+														<td>${Treport.userState}</td>
+														<td>${Treport.abilityName}</td>
+														<td>${Treport.result}</td>
 													</tr>
 												</c:forEach>
 											</tbody>

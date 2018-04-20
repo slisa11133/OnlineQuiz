@@ -50,8 +50,8 @@
 										User Management </a></li>
 								<li><a href="SubjectList"><i class="fa fa-edit"></i>
 										Quiz Management </a></li>
-								<li><a href="../AbilityManage/AbilityList"><i class="fa fa-edit"></i>
-										Ability Management </a></li>
+								<li><a href="../AbilityManage/AbilityList"><i
+										class="fa fa-edit"></i> Ability Management </a></li>
 							</ul>
 						</div>
 
@@ -192,6 +192,7 @@
 																	<th>Question</th>
 																	<th>Type</th>
 																	<th>Grade</th>
+																	<th>Level</th>
 																	<th>Abilities</th>
 																	<th>Action</th>
 																</tr>
@@ -204,6 +205,7 @@
 																		<td>${question[2]}</td>
 																		<td>${question[3]}</td>
 																		<td>${question[4]}</td>
+																		<td>${question[5]}</td>
 																		<td><a href="editQuestion?id=${question[0]}"><button
 																					type="button" class="btn btn-round btn-primary">Edit</button></a>
 																			&nbsp;&nbsp;&nbsp;&nbsp; <a
@@ -267,9 +269,6 @@
 																			</c:forEach>
 																		</tbody>
 																		</c:when>
-																		<c:otherwise>
-    do this when nothing else is true
-  </c:otherwise>
 																		</c:choose>
 
 																	</table>

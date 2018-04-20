@@ -49,8 +49,8 @@ public class AbilityServiceImpl implements AbilityService {
 		return abilityDAO.updateAbility(ability);
 	}
 
-	public void setAbilityDAO(AbilityDAO abilityDAO) {
+	/**public void setAbilityDAO(AbilityDAO abilityDAO) {
 		this.abilityDAO = abilityDAO;
-	}
+	}**/
 
 }

@@ -53,8 +53,8 @@ public class QuestionAbilityServiceImpl implements QuestionAbilityService {
 		return questionabilityDAO.getQuestionAbilityById(questionabilityid);
 	}
 
-	public void setQuestionAbilityDAO(QuestionAbilityDAO questionabilityDAO) {
+	/**public void setQuestionAbilityDAO(QuestionAbilityDAO questionabilityDAO) {
 		this.questionabilityDAO = questionabilityDAO;
-	}
+	}**/
 
 }

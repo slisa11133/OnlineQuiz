@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.hibernate.SQLQuery;
 import org.hibernate.SessionFactory;
+import org.hibernate.SessionFactoryObserver;
+import org.hibernate.cfg.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -27,14 +29,12 @@ public class AbilityDAOImpl implements AbilityDAO {
 		Integer abilityID = null;
 		abilityID = (Integer) sessionFactory.getCurrentSession().save(ability);
 
-
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Ability> getAllAbility() {
 
 		//return sessionFactory.getCurrentSession().createQuery("from ability").list();
-
 		
 		String sql = "SELECT * FROM ability";
 		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql);

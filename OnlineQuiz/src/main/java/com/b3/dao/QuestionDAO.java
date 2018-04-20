@@ -3,6 +3,7 @@ package com.b3.dao;
 import java.util.List;
 
 import com.b3.model.Question;
+import com.b3.model.question.QuestionObject;
 
 public interface QuestionDAO {
 
@@ -18,5 +19,8 @@ public interface QuestionDAO {
 	public Question updateQuestion(Question question);
 
 	public Question getQuestionById(int questionid);
+	
+	public Question getQuestionByType(String type,int s_id,String grade,String level);
+	
 
 }

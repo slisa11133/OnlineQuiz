@@ -91,5 +91,22 @@ public class OptionDAOImpl implements OptionDAO {
 		sessionFactory.getCurrentSession().update(option);
 		return option;
 	}
+	
+	@Override
+	public Options getAnswerByQ(Integer questionId) {
+
+		// return sessionFactory.getCurrentSession().createQuery("from
+		// option").list();
+
+		String sql = "SELECT * FROM options WHERE q_id = :q_id and is_answer = 'T'";
+		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql);
+		query.setParameter("q_id", questionId);
+		query.addEntity(Options.class);
+
+		Options option = (Options)query.list().get(0);
+
+		return option;
+
+	}
 
 }

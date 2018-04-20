@@ -64,8 +64,8 @@ public class SubjectServiceImpl implements SubjectService {
 		return subjectDAO.updateSubject(subject);
 	}
 
-	public void setSubjectDAO(SubjectDAO subjectDAO) {
+	/**public void setSubjectDAO(SubjectDAO subjectDAO) {
 		this.subjectDAO = subjectDAO;
-	}
+	}**/
 
 }

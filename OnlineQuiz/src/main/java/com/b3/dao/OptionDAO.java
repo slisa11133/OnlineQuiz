@@ -20,5 +20,7 @@ public interface OptionDAO {
 	public Options updateOption(Options option);
 
 	public Options getOptionById(int optionid);
+	
+	public Options getAnswerByQ(Integer questionId);
 
 }

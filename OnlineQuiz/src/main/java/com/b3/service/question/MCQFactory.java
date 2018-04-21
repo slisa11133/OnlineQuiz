@@ -33,7 +33,7 @@ public class MCQFactory extends BaseQuestionFactory {
 	}
 	
 	@Override
-	public void clear() {
+	public void clearQuestion() {
 			this.question = null;
 		
 	}

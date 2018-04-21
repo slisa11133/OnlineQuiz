@@ -41,7 +41,7 @@ public class QuestionBFQ extends QuestionObject {
 			questionResult.setQuestion(question.getQuestion());
 			questionResult.setGrade(question.getGrade());
 			questionResult.setLevel(question.getLevel());
-			questionResult.setOptions(new ArrayList<Options>());
+			questionResult.setOptions(new ArrayList<Options>()); //no options
 			questionResult.setAnswer(answer);
 			questionResult.setAbilities(Qabilities);
 		}

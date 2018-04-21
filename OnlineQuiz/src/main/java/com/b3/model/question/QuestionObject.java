@@ -80,7 +80,27 @@ public abstract class QuestionObject {
 	public void setAbilities(List<QuestionAbility> abilities) {
 		this.abilities = abilities;
 	}
-	//public abstract List<QuestionObject> getData();
-    public abstract QuestionObject choose();
+	
+    //public abstract QuestionObject choose();
+	public QuestionObject choose(){
+        throw new UnsupportedOperationException("Cannot return QuestionObject.");
+    };
+    
+    public void add(QuestionObject question){
+        throw new UnsupportedOperationException("Cannot add item to catalog.");
+    }
+ 
+    public void remove(QuestionObject question){
+        throw new UnsupportedOperationException("Cannot remove item from catalog.");
+    }
+    
+    public boolean checkExist(QuestionObject question) {
+    	throw new UnsupportedOperationException("Cannot return bool.");
+	}  
+    
+    public List<QuestionObject> getQuestionSet() {
+    	throw new UnsupportedOperationException("Cannot return Question Set.");
+	} 
+    
 
 }

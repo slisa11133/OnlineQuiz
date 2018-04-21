@@ -31,10 +31,12 @@ import com.b3.model.QuestionAbility;
 import com.b3.model.Report;
 import com.b3.model.User;
 import com.b3.model.UserAbility;
+import com.b3.model.question.Paper;
 import com.b3.model.question.QuestionBFQ;
 import com.b3.service.question.BFQFactory;
 import com.b3.model.Subject;
 import com.b3.service.SubjectService;
+import com.b3.service.question.PaperFactory;
 
 @Controller
 @RequestMapping("/DoTest")
@@ -82,14 +84,15 @@ public class DoTestController {
 	private TFQFactory TFQFactory;
 	@Autowired
 	private BFQFactory BFQFactory;
-	BaseQuestionFactory questionFactory;
+	@Autowired
+	private PaperFactory PaperFactory;
+	BaseQuestionFactory paperFactory;
 
 	@RequestMapping(value = "/generatePaper", method = RequestMethod.POST)
 	public ModelAndView generatePaper(HttpServletRequest request, ModelAndView model) throws IOException {
 		int s_id = Integer.parseInt(request.getParameter("s_id"));
 		String grade = request.getParameter("grade");
 		String level = request.getParameter("level");
-		List<QuestionObject> questions = new ArrayList<QuestionObject>();
 
 		/**questionFactory = MCQFactory;
 		while (questions.size() != 3) {
@@ -101,6 +104,16 @@ public class DoTestController {
 				questionFactory.clear();
 		}**/
 
+		paperFactory = PaperFactory;
+		while(paperFactory.getQuestionSet().size()!=3) {
+			BaseQuestionFactory questionFactory = MCQFactory;
+			QuestionObject question = questionFactory.createQuestion(s_id, grade, level);
+			//if add failed, then clean questonObject
+			if(!paperFactory.addQuestion(question))
+				questionFactory.clearQuestion();
+		}
+		Paper paper = paperFactory.createPaper();
+		/**
 		questionFactory = MCQFactory;
 		QuestionObject question = questionFactory.createQuestion(s_id, grade, level);
 		questionFactory = TFQFactory;
@@ -116,9 +129,9 @@ public class DoTestController {
 			questions.add(question2);
 		if (question3 != null)
 			questions.add(question3);
-
+**/
 		model = new ModelAndView("DoTest");
-		model.addObject("questions", questions);
+		model.addObject("questions", paper.getQuestionSet());
 		return model;
 	}
 
@@ -135,12 +148,15 @@ public class DoTestController {
 
 	@RequestMapping(value = "/cancel", method = RequestMethod.GET)
 	public ModelAndView Cancel(HttpServletRequest request) {
+		paperFactory.clearPaper();
+		/**
 		questionFactory = MCQFactory;
-		questionFactory.clear();
+		questionFactory.clearQuestion();
 		questionFactory = TFQFactory;
-		questionFactory.clear();
+		questionFactory.clearQuestion();
 		questionFactory = BFQFactory;
-		questionFactory.clear();
+		questionFactory.clearQuestion();
+		**/
 		return new ModelAndView("redirect:/DoTest/chooseTest");
 	}
 

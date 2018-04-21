@@ -94,69 +94,59 @@ public class DoTestController {
 		String grade = request.getParameter("grade");
 		String level = request.getParameter("level");
 
-		/**questionFactory = MCQFactory;
-		while (questions.size() != 3) {
-			QuestionObject question = questionFactory.createQuestion(s_id, grade, level);
-			if (question != null && !checkExist(questions, question)) {
-				questions.add(question);
-			}
-			else
-				questionFactory.clear();
-		}**/
-
 		paperFactory = PaperFactory;
-		while(paperFactory.getQuestionSet().size()!=3) {
+
+		/** 4 MCQs **/
+		while (paperFactory.getQuestionSet().size() < 4) {
 			BaseQuestionFactory questionFactory = MCQFactory;
 			QuestionObject question = questionFactory.createQuestion(s_id, grade, level);
-			//if add failed, then clean questonObject
-			if(!paperFactory.addQuestion(question))
+			/** if add failed, then clean questonObject **/
+			if (!paperFactory.addQuestion(question))
 				questionFactory.clearQuestion();
 		}
-		Paper paper = paperFactory.createPaper();
-		/**
-		questionFactory = MCQFactory;
-		QuestionObject question = questionFactory.createQuestion(s_id, grade, level);
-		questionFactory = TFQFactory;
-		QuestionObject question2 = questionFactory.createQuestion(s_id, grade, level);
-		// questionFactory.clear();
-		questionFactory = BFQFactory;
-		QuestionObject question3 = questionFactory.createQuestion(s_id, grade, level);
-		// questionFactory.clear();
+		/** 3 TFQs **/
+		while (paperFactory.getQuestionSet().size() < 7) {
+			BaseQuestionFactory questionFactory = TFQFactory;
+			QuestionObject question = questionFactory.createQuestion(s_id, grade, level);
+			/** if add failed, then clean questonObject **/
+			if (!paperFactory.addQuestion(question))
+				questionFactory.clearQuestion();
+		}
+		/** 3 BFQs **/
+		while (paperFactory.getQuestionSet().size() < 10) {
+			BaseQuestionFactory questionFactory = BFQFactory;
+			QuestionObject question = questionFactory.createQuestion(s_id, grade, level);
+			/** if add failed, then clean questonObject **/
+			if (!paperFactory.addQuestion(question))
+				questionFactory.clearQuestion();
+		}
+		Paper paper = paperFactory.getPaper();
 
-		if (question != null)
-			questions.add(question);
-		if (question2 != null)
-			questions.add(question2);
-		if (question3 != null)
-			questions.add(question3);
-**/
 		model = new ModelAndView("DoTest");
 		model.addObject("questions", paper.getQuestionSet());
 		return model;
 	}
 
-	public boolean checkExist(List<QuestionObject> questions, QuestionObject question) {
-		boolean check = false;
-		for (QuestionObject q : questions) {
-			if (q.getQ_id() == question.getQ_id()) {
-				check = true;
-				break;
-			}
+	@RequestMapping(value = "/submitAnswer", method = RequestMethod.POST)
+	public ModelAndView submitAnswer(HttpServletRequest request, ModelAndView model) throws IOException {
+		Paper paper = paperFactory.getPaper();
+		List<String> answer = new ArrayList<String>();
+		for (int i = 0; i < paper.getQuestionSet().size(); i++) {
+			answer.add(request.getParameter("studentAnswers"+i));
 		}
-		return check;
+		paper.setStudentAnswers(answer);
+
+		model.addObject("questions", paper.getQuestionSet());
+		model.addObject("CorrectAnswers", paper.getQuestionSet());
+		model.addObject("StudentAnswers", paper.getStudentAnswers());
+		model.setViewName("DoTest");
+		return model;
+
 	}
 
 	@RequestMapping(value = "/cancel", method = RequestMethod.GET)
 	public ModelAndView Cancel(HttpServletRequest request) {
 		paperFactory.clearPaper();
-		/**
-		questionFactory = MCQFactory;
-		questionFactory.clearQuestion();
-		questionFactory = TFQFactory;
-		questionFactory.clearQuestion();
-		questionFactory = BFQFactory;
-		questionFactory.clearQuestion();
-		**/
 		return new ModelAndView("redirect:/DoTest/chooseTest");
 	}
 

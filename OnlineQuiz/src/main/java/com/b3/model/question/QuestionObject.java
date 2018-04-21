@@ -97,10 +97,14 @@ public abstract class QuestionObject {
     public boolean checkExist(QuestionObject question) {
     	throw new UnsupportedOperationException("Cannot return bool.");
 	}  
-    
+        
     public List<QuestionObject> getQuestionSet() {
     	throw new UnsupportedOperationException("Cannot return Question Set.");
 	} 
+    
+    public void clearQuestionSet(){
+        throw new UnsupportedOperationException("Cannot clear QuestionSet.");
+    };
     
 
 }

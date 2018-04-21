@@ -40,9 +40,10 @@ public class PaperFactory extends BaseQuestionFactory {
 	public List<QuestionObject> getQuestionSet() {
 		return questionComposite.getQuestionSet();
 	};
+		
 
 	@Override
-	public Paper createPaper() {
+	public Paper getPaper() {
 		if (this.paper == null) {
 			this.paper = new Paper();
 			this.paper.setQuestionSet(questionComposite.getQuestionSet());
@@ -52,6 +53,7 @@ public class PaperFactory extends BaseQuestionFactory {
 
 	@Override
 	public void clearPaper() {
+		questionComposite.clearQuestionSet();
 		this.paper = null;
 	};
 }

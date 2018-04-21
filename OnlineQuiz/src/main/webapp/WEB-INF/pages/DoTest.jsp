@@ -116,7 +116,7 @@
 				<div class="">
 					<div class="page-title">
 						<div class="title_left">
-							<h3>Quiz Form</h3>
+							<h3>Quiz</h3>
 						</div>
 
 						<div class="title_right">
@@ -141,26 +141,66 @@
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
-									<c:forEach var="question" items="${questions}" varStatus="loop">
-										<h2>q_id: ${question.q_id}</h2>
-										<h2>s_id: ${question.s_id}</h2>
-										<h2>Question${loop.count}: ${question.question}</h2>
-										<h2>Grade: ${question.grade}</h2>
-										<h2>Level: ${question.level}</h2>
-										<h2>Answer(o_id/option for BFQ): ${question.answer}</h2>
-										<c:forEach var="options" items="${question.options}" varStatus="loop">
-											<h2>OptionId(o_id): ${options.id}</h2>
-											<h2>(${loop.count}) ${options.option}</h2>
-											<h2>is_answer: ${options.is_answer}</h2>
+									<form action="submitAnswer" method="post">
+										<c:forEach var="question" items="${questions}"
+											varStatus="Qloop">
+											<div class="form-group col-md-12 col-sm-12 col-xs-12">
+												<h2>Q${Qloop.count}: ${question.question}</h2>
+											</div>
+											<div class="form-group col-md-6 col-sm-6 col-xs-12">
+												<c:choose>
+													<c:when test="${!empty question.options}">
+														<c:forEach var="options" items="${question.options}"
+															varStatus="Oloop">
+															<input type="radio" class="form-control flat" required
+																name="studentAnswers${Qloop.index}"
+																id="studentAnswers${Qloop.index}" value="${options.id}" /> ${options.option}
+													<br />
+															<br />
+														</c:forEach>
+													</c:when>
+													<c:otherwise>
+														<div class="form-group">
+															<input id="studentAnswers${Qloop.index}"
+																class="form-control col-md-7 col-xs-12"
+																name="studentAnswers${Qloop.index}" type="text" required />
+														</div>
+													</c:otherwise>
+
+												</c:choose>
+												<c:if test="${StudentAnswers!=null}">
+													<h2>You choose:${StudentAnswers[Qloop.index]}</h2>
+													<h2>Answer:${CorrectAnswers[Qloop.index].answer}</h2>
+												</c:if>
+
+											</div>
+											<div class="ln_solid col-md-12 col-sm-12 col-xs-12"></div>
 										</c:forEach>
-										<c:forEach var="abilities" items="${question.abilities}" varStatus="loop">
-											<h2>QuestionAbilityId(qa_id): ${abilities[0]}</h2>
-											<h2>AbilityId(a_id): ${abilities[3]}</h2>
-										</c:forEach>
-										<div class="ln_solid"></div>
-									</c:forEach>
-									<a href="cancel"><button type="button"
-											class="btn btn-round btn-primary">Cancel</button></a>
+										<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-2">
+											<c:choose>
+												<c:when test="${StudentAnswers==null}">
+													<button id="send" type="submit" class="btn btn-success">Submit</button>
+													<a href="cancel">
+														<button type="button" class="btn btn-round btn-primary">Cancel</button>
+													</a>
+												</c:when>
+												<c:otherwise>
+													<a href="cancel">
+														<button type="button" class="btn btn-round btn-primary">Back</button>
+													</a>
+												</c:otherwise>
+											</c:choose>
+
+										</div>
+										<div class="clearfix"></div>
+									</form>
+
+
+
+
+
+
+
 								</div>
 							</div>
 						</div>

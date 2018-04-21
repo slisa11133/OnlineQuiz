@@ -20,12 +20,6 @@ import com.b3.model.QuestionAbility;
 @Service
 @Transactional
 public class QuestionComposite extends QuestionObject {
-	@Autowired
-	public QuestionDAO questionDAO;
-	@Autowired
-	public OptionDAO optionDAO;
-	@Autowired
-	public QuestionAbilityDAO questionAbilityDAO;
 	
 	List<QuestionObject> questions = new ArrayList<QuestionObject>();
 	
@@ -51,8 +45,14 @@ public class QuestionComposite extends QuestionObject {
 		}
 		return check;
 	}    
-	
+		
+	@Override
 	public List<QuestionObject> getQuestionSet() {
     	return questions;
 	}
+	
+	@Override
+	public void clearQuestionSet(){
+		questions.clear();
+    };
 }

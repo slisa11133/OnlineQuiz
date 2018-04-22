@@ -48,8 +48,10 @@
 						class="main_menu_side hidden-print main_menu">
 						<div class="menu_section">
 							<ul class="nav side-menu">
-								<li><a href="chooseTest"><i class="fa fa-edit"></i> Do
-										Test </a></li>
+								<li><a href="chooseTest?quizType=Test"><i
+										class="fa fa-edit"></i> Do Test </a></li>
+								<li><a href="chooseTest?quizType=Essay"><i
+										class="fa fa-edit"></i> Do Essay </a></li>
 							</ul>
 						</div>
 
@@ -180,12 +182,12 @@
 											<c:choose>
 												<c:when test="${StudentAnswers==null}">
 													<button id="send" type="submit" class="btn btn-success">Submit</button>
-													<a href="cancel">
+													<a href="cancel?quizType=Test">
 														<button type="button" class="btn btn-round btn-primary">Cancel</button>
 													</a>
 												</c:when>
 												<c:otherwise>
-													<a href="cancel">
+													<a href="cancel?quizType=Test">
 														<button type="button" class="btn btn-round btn-primary">Back</button>
 													</a>
 												</c:otherwise>

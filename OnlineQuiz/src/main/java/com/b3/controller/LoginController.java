@@ -59,7 +59,7 @@ public class LoginController {
 			if(user_role.equals("student")) {
 				//model.setViewName("StudentMainPage");
 				//return model;
-				return new ModelAndView("redirect:/DoTest/chooseTest");
+				return new ModelAndView("redirect:/DoTest/chooseTest?quizType=Test");
 			}
 			else {
 				return new ModelAndView("redirect:/QuizManage/SubjectList");

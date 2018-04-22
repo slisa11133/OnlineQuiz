@@ -65,6 +65,7 @@ public class QuestionServiceImpl implements QuestionService {
 		Qtypes.put("BFQ", "blank filling question(BFQ)");
 		Qtypes.put("TFQ", "true-false question(TFQ)");
 		Qtypes.put("MCQ", "multiple-choice question(MCQ)");
+		Qtypes.put("Essay", "Essay");
 		return Qtypes;
 	}
 	

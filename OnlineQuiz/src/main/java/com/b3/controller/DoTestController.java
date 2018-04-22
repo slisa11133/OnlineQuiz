@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,8 @@ import com.b3.service.question.BFQFactory;
 import com.b3.model.Subject;
 import com.b3.service.SubjectService;
 import com.b3.service.question.PaperFactory;
+import com.b3.model.question.QuestionEssay;
+import com.b3.service.question.EssayFactory;
 
 @Controller
 @RequestMapping("/DoTest")
@@ -50,8 +53,9 @@ public class DoTestController {
 	@Autowired
 	private SubjectService subjectService;
 
-	@RequestMapping(value = "/chooseTest")
-	public ModelAndView chooseTest(ModelAndView model) throws IOException {
+	@RequestMapping(value = "/chooseTest", method = RequestMethod.GET)
+	public ModelAndView chooseTest(HttpServletRequest request) throws IOException {
+		String quizType = request.getParameter("quizType");
 		List<Subject> listSubjects = subjectService.getAllSubjects();
 		Map<String, String> Qsubjects = new LinkedHashMap<String, String>();
 		for (int i = 0; i < listSubjects.size(); i++) {
@@ -71,10 +75,12 @@ public class DoTestController {
 		Qlevels.put("2", "medium");
 		Qlevels.put("3", "hard");
 
+		ModelAndView model = new ModelAndView("chooseTest");
 		model.addObject("Qsubjects", Qsubjects);
 		model.addObject("Qgrades", Qgrades);
 		model.addObject("Qlevels", Qlevels);
-		model.setViewName("chooseTest");
+		model.addObject("quizType", quizType);
+		// model.setViewName("chooseTest");
 		return model;
 	}
 
@@ -86,14 +92,18 @@ public class DoTestController {
 	private BFQFactory BFQFactory;
 	@Autowired
 	private PaperFactory PaperFactory;
+	@Autowired
+	private EssayFactory EssayFactory;
 	BaseQuestionFactory paperFactory;
 
 	@RequestMapping(value = "/generatePaper", method = RequestMethod.POST)
-	public ModelAndView generatePaper(HttpServletRequest request, ModelAndView model) throws IOException {
+	public ModelAndView generatePaper(HttpServletRequest request, ModelAndView model, HttpSession httpsession)
+			throws IOException {
 		int s_id = Integer.parseInt(request.getParameter("s_id"));
 		String grade = request.getParameter("grade");
 		String level = request.getParameter("level");
-
+		User u = (User) httpsession.getAttribute("current_user");
+		System.out.println(u.getId());
 		paperFactory = PaperFactory;
 
 		/** 4 MCQs **/
@@ -132,7 +142,7 @@ public class DoTestController {
 		Paper paper = paperFactory.getPaper();
 		List<String> answer = new ArrayList<String>();
 		for (int i = 0; i < paper.getQuestionSet().size(); i++) {
-			answer.add(request.getParameter("studentAnswers"+i));
+			answer.add(request.getParameter("studentAnswers" + i));
 		}
 		paper.setStudentAnswers(answer);
 
@@ -144,10 +154,45 @@ public class DoTestController {
 
 	}
 
+	BaseQuestionFactory essayFactory;
+
+	@RequestMapping(value = "/generateEssay", method = RequestMethod.POST)
+	public ModelAndView generateEssay(HttpServletRequest request, ModelAndView model, HttpSession httpsession)
+			throws IOException {
+		int s_id = Integer.parseInt(request.getParameter("s_id"));
+		String grade = request.getParameter("grade");
+		String level = request.getParameter("level");
+		User u = (User) httpsession.getAttribute("current_user");
+		System.out.println(u.getId());
+
+		/** 1 Essay **/
+		essayFactory = EssayFactory;
+		QuestionObject question = essayFactory.createQuestion(s_id, grade, level);
+
+		model = new ModelAndView("DoEssay");
+		model.addObject("question", question);
+		return model;
+	}
+	
+	@RequestMapping(value = "/submitEssay", method = RequestMethod.POST)
+	public ModelAndView submitEssay(HttpServletRequest request, ModelAndView model) throws IOException {
+		QuestionObject question = essayFactory.createQuestion(0, "", ""); // get exist essay(singleton)
+
+		model.addObject("question", question);
+		model.addObject("msg", "Essay is submitted!!");
+		model.setViewName("DoEssay");
+		return model;
+
+	}
+
 	@RequestMapping(value = "/cancel", method = RequestMethod.GET)
 	public ModelAndView Cancel(HttpServletRequest request) {
-		paperFactory.clearPaper();
-		return new ModelAndView("redirect:/DoTest/chooseTest");
+		String quizType = request.getParameter("quizType");
+		if (quizType.equals("Test"))
+			paperFactory.clearPaper();
+		else if (quizType.equals("Essay"))
+			essayFactory.clearQuestion();
+		return new ModelAndView("redirect:/DoTest/chooseTest?quizType="+quizType);
 	}
 
 }

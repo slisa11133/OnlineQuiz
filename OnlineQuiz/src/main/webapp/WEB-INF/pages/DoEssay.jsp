@@ -73,8 +73,8 @@
 							<li class=""><a href="javascript:;"
 								class="user-profile dropdown-toggle" data-toggle="dropdown"
 								aria-expanded="false"> <img
-									src="<c:url value="../template/images/img.jpg" />" alt="">${msg}
-									<span class=" fa fa-angle-down"></span>
+									src="<c:url value="../template/images/img.jpg" />" alt="">John
+									Doe <span class=" fa fa-angle-down"></span>
 							</a>
 								<ul class="dropdown-menu dropdown-usermenu pull-right">
 									<li><a href="javascript:;"> Profile</a></li>
@@ -118,7 +118,7 @@
 				<div class="">
 					<div class="page-title">
 						<div class="title_left">
-							<h3>Choose [${quizType}] Question</h3>
+							<h3>Quiz</h3>
 						</div>
 
 						<div class="title_right">
@@ -143,114 +143,35 @@
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
-									<c:if test="${quizType == 'Test'}">
-										<form:form action="generatePaper" method="post"
-											class="form-horizontal form-label-left">
-											<!-- subject -->
-											<div class="item form-group">
-												<label class="control-label col-md-3 col-sm-3 col-xs-12"
-													for="name">Subject <span class="required">*</span>
-												</label>
-												<div class="col-md-6 col-sm-6 col-xs-12">
-													<select id="s_id" class="form-control col-md-7 col-xs-12"
-														name="s_id" required="required">
-														<c:forEach var="subject" items="${Qsubjects}">
-															<option value="${subject.key}">${subject.value}</option>
-														</c:forEach>
-													</select>
-												</div>
-											</div>
-											<!-- grade -->
-											<div class="item form-group">
-												<label class="control-label col-md-3 col-sm-3 col-xs-12"
-													for="name">Grade <span class="required">*</span>
-												</label>
-												<div class="col-md-6 col-sm-6 col-xs-12">
-													<select id="grade" class="form-control col-md-7 col-xs-12"
-														name="grade" required="required">
-														<c:forEach var="grade" items="${Qgrades}">
-															<option value="${grade.key}">${grade.value}</option>
-														</c:forEach>
-													</select>
-												</div>
-											</div>
-											<!-- level -->
-											<div class="item form-group">
-												<label class="control-label col-md-3 col-sm-3 col-xs-12"
-													for="name">Level <span class="required">*</span>
-												</label>
-												<div class="col-md-6 col-sm-6 col-xs-12">
-													<select id="level" class="form-control col-md-7 col-xs-12"
-														name="level" required="required">
-														<c:forEach var="level" items="${Qlevels}">
-															<option value="${level.key}">${level.value}</option>
-														</c:forEach>
-													</select>
-												</div>
-											</div>
-											<div class="ln_solid"></div>
-											<div class="form-group">
-												<div class="col-md-6 col-md-offset-3">
+									<form action="submitEssay" method="post">
+										<div class="form-group">
+											<h2>${question.question}  ${msg}</h2>
+										</div>
+										<div class="form-group">
+											<textarea id="answer"
+												class="form-control" name="answer"
+												maxlength="1000"></textarea>
+										</div>
+										<div class="ln_solid"></div>
+										<div>
+										<c:choose>
+												<c:when test="${msg==null}">
 													<button id="send" type="submit" class="btn btn-success">Submit</button>
-												</div>
-											</div>
-										</form:form>
-									</c:if>
-									<c:if test="${quizType == 'Essay'}">
-										<form:form action="generateEssay" method="post"
-											class="form-horizontal form-label-left">
-											<!-- subject -->
-											<div class="item form-group">
-												<label class="control-label col-md-3 col-sm-3 col-xs-12"
-													for="name">Subject <span class="required">*</span>
-												</label>
-												<div class="col-md-6 col-sm-6 col-xs-12">
-													<select id="s_id" class="form-control col-md-7 col-xs-12"
-														name="s_id" required="required">
-														<c:forEach var="subject" items="${Qsubjects}">
-															<option value="${subject.key}">${subject.value}</option>
-														</c:forEach>
-													</select>
-												</div>
-											</div>
-											<!-- grade -->
-											<div class="item form-group">
-												<label class="control-label col-md-3 col-sm-3 col-xs-12"
-													for="name">Grade <span class="required">*</span>
-												</label>
-												<div class="col-md-6 col-sm-6 col-xs-12">
-													<select id="grade" class="form-control col-md-7 col-xs-12"
-														name="grade" required="required">
-														<c:forEach var="grade" items="${Qgrades}">
-															<option value="${grade.key}">${grade.value}</option>
-														</c:forEach>
-													</select>
-												</div>
-											</div>
-											<!-- level -->
-											<div class="item form-group">
-												<label class="control-label col-md-3 col-sm-3 col-xs-12"
-													for="name">Level <span class="required">*</span>
-												</label>
-												<div class="col-md-6 col-sm-6 col-xs-12">
-													<select id="level" class="form-control col-md-7 col-xs-12"
-														name="level" required="required">
-														<c:forEach var="level" items="${Qlevels}">
-															<option value="${level.key}">${level.value}</option>
-														</c:forEach>
-													</select>
-												</div>
-											</div>
-											<div class="ln_solid"></div>
-											<div class="form-group">
-												<div class="col-md-6 col-md-offset-3">
-													<button id="send" type="submit" class="btn btn-success">Submit</button>
-												</div>
-											</div>
-										</form:form>
-									</c:if>
+											<a href="cancel?quizType=Essay">
+												<button type="button" class="btn btn-round btn-primary">Cancel</button>
+											</a>
+												</c:when>
+												<c:otherwise>
+													<a href="cancel?quizType=Essay">
+														<button type="button" class="btn btn-round btn-primary">Back</button>
+													</a>
+												</c:otherwise>
+											</c:choose>
+											
 
-
+										</div>
+										<div class="clearfix"></div>
+									</form>
 								</div>
 							</div>
 						</div>

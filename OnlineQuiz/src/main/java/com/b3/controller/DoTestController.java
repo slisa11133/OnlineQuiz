@@ -21,12 +21,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.b3.model.question.QuestionObject;
 import com.b3.service.BaseReportFactory;
+import com.b3.service.EssayService;
 import com.b3.service.question.BaseQuestionFactory;
 import com.b3.model.question.QuestionMCQ;
 import com.b3.service.question.MCQFactory;
 import com.b3.model.question.QuestionTFQ;
 import com.b3.service.question.TFQFactory;
 import com.b3.model.Ability;
+import com.b3.model.Essay;
 import com.b3.model.Options;
 import com.b3.model.QuestionAbility;
 import com.b3.model.Report;
@@ -52,6 +54,8 @@ public class DoTestController {
 
 	@Autowired
 	private SubjectService subjectService;
+	@Autowired
+	private EssayService essayService;
 
 	@RequestMapping(value = "/chooseTest", method = RequestMethod.GET)
 	public ModelAndView chooseTest(HttpServletRequest request) throws IOException {
@@ -175,9 +179,18 @@ public class DoTestController {
 	}
 	
 	@RequestMapping(value = "/submitEssay", method = RequestMethod.POST)
-	public ModelAndView submitEssay(HttpServletRequest request, ModelAndView model) throws IOException {
+	public ModelAndView submitEssay(HttpServletRequest request, ModelAndView model, HttpSession httpsession) throws IOException {
 		QuestionObject question = essayFactory.createQuestion(0, "", ""); // get exist essay(singleton)
-
+		String answer = request.getParameter("answer");
+		User u = (User) httpsession.getAttribute("current_user");
+		
+		Essay essay = new Essay();
+		essay.setQ_id(question.getQ_id());
+		essay.setQuestion(question.getQuestion());
+		essay.setAnswer(answer);
+		essay.setU_id(u.getId());
+		essayService.addEssay(essay);
+		
 		model.addObject("question", question);
 		model.addObject("msg", "Essay is submitted!!");
 		model.setViewName("DoEssay");

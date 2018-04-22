@@ -76,6 +76,9 @@
                 <input type="text" class="form-control" name="reg_name" id="reg_name" placeholder="Realname" required="" />
               </div>
               <div>
+                <input type="text" class="form-control" name="email" id="email" placeholder="E-mail" required="" />
+              </div>
+              <div>
                 <input type="password" class="form-control" name="reg_pwd" id="reg_pwd" placeholder="Password" required="" />
               </div>
               <div>

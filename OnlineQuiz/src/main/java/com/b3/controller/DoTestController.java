@@ -58,7 +58,7 @@ public class DoTestController {
 	private EssayService essayService;
 
 	@RequestMapping(value = "/chooseTest", method = RequestMethod.GET)
-	public ModelAndView chooseTest(HttpServletRequest request) throws IOException {
+	public ModelAndView chooseTest(ModelAndView model, HttpServletRequest request, HttpSession httpsession) throws IOException {
 		String quizType = request.getParameter("quizType");
 		List<Subject> listSubjects = subjectService.getAllSubjects();
 		Map<String, String> Qsubjects = new LinkedHashMap<String, String>();
@@ -79,12 +79,15 @@ public class DoTestController {
 		Qlevels.put("2", "medium");
 		Qlevels.put("3", "hard");
 
-		ModelAndView model = new ModelAndView("chooseTest");
+		model.setViewName("chooseTest");
 		model.addObject("Qsubjects", Qsubjects);
 		model.addObject("Qgrades", Qgrades);
 		model.addObject("Qlevels", Qlevels);
 		model.addObject("quizType", quizType);
-		// model.setViewName("chooseTest");
+		
+		String name=(String)httpsession.getAttribute("username");
+		model.addObject("msg",name);
+		
 		return model;
 	}
 

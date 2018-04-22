@@ -33,6 +33,9 @@ public class User implements Serializable {
 	
 	@Column
 	private String is_open;
+	
+	@Column
+	private String email;
 
 	public String getId() {
 		return u_id;
@@ -80,6 +83,14 @@ public class User implements Serializable {
 
 	public void setIs_open(String is_open) {
 		this.is_open = is_open;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }

@@ -49,6 +49,9 @@ public class QuizManageController {
 		model.addObject("type", "Subject");
 		model.addObject("listSubject", listSubject);
 		model.setViewName("QuizManage");
+		
+		String name=(String)httpsession.getAttribute("username");
+		model.addObject("msg",name);
 		//User u=(User) httpsession.getAttribute("current_user");
 		//		System.out.println(u.getId());
 		return model;

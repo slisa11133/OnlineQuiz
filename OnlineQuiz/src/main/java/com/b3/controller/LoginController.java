@@ -55,17 +55,19 @@ public class LoginController {
 		if(!user_role.equals("false")) {
 			
 			httpsession.setAttribute("current_user", userService.getUser(username));
+			httpsession.setAttribute("username", userService.getUser(username).getName());
 			
 			if(user_role.equals("student")) {
 				//model.setViewName("StudentMainPage");
 				//return model;
 				return new ModelAndView("redirect:/DoTest/chooseTest?quizType=Test");
 			}
-			else {
+			else if(user_role.equals("teacher")){
 				return new ModelAndView("redirect:/QuizManage/SubjectList");
 			}
 		}
 		model.setViewName("login");
+		model.addObject("msg","login failed");
 		return model;
 	}
 	
@@ -75,12 +77,14 @@ public class LoginController {
         String password = request.getParameter("reg_pwd");
         String realname = request.getParameter("reg_name");
         String grade = request.getParameter("reg_grade");
+        String email = request.getParameter("email");
 		user.setId(username);
 		user.setName(realname);
         user.setPwd(password);
         user.setGrade(grade);
         user.setIs_open("T");
         user.setRole("student");
+        user.setEmail(email);
         
         /*userService.addUser(user);
         model.setViewName("login");

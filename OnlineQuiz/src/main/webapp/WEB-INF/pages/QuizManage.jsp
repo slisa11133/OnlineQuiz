@@ -73,16 +73,10 @@
 							<li class=""><a href="javascript:;"
 								class="user-profile dropdown-toggle" data-toggle="dropdown"
 								aria-expanded="false"> <img
-									src="<c:url value="../template/images/img.jpg" />" alt="">John
-									Doe <span class=" fa fa-angle-down"></span>
+									src="<c:url value="../template/images/img.jpg" />" alt="">${msg}<span class=" fa fa-angle-down"></span>
 							</a>
 								<ul class="dropdown-menu dropdown-usermenu pull-right">
-									<li><a href="javascript:;"> Profile</a></li>
-									<li><a href="javascript:;"> <span
-											class="badge bg-red pull-right">50%</span> <span>Settings</span>
-									</a></li>
-									<li><a href="javascript:;">Help</a></li>
-									<li><a href="login.html"><i
+									<li><a href="../"><i
 											class="fa fa-sign-out pull-right"></i> Log Out</a></li>
 								</ul></li>
 
@@ -94,7 +88,7 @@
 								<ul id="menu1" class="dropdown-menu list-unstyled msg_list"
 									role="menu">
 									<li><a> <span class="image"><img
-												src="<c:url value="../templateimages/img.jpg" />"
+												src="<c:url value="../template/images/img.jpg" />"
 												alt="Profile Image" /></span> <span> <span>John
 													Smith</span> <span class="time">3 mins ago</span>
 										</span> <span class="message"> Film festivals used to be

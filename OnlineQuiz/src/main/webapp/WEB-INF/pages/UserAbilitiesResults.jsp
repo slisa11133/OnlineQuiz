@@ -25,8 +25,7 @@
 <!-- Custom Theme Style -->
 <link href="<c:url value="../template/build/css/custom.min.css" />"
 	rel="stylesheet">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
 </head>
 

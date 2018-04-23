@@ -23,7 +23,7 @@ public class UserAbilityDAOImpl implements UserAbilityDAO {
 
 	@Override
 	public List<UserAbility> getUserAbilities(String userId) {
-		String sql = "SELECT * FROM user_ability where u_id = '" + userId + "'";
+		String sql = "SELECT * FROM userability where u_id = '" + userId + "'";
 		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql);
 		query.addEntity(UserAbility.class);
 		List<UserAbility> userAbilities = query.list();
@@ -34,7 +34,7 @@ public class UserAbilityDAOImpl implements UserAbilityDAO {
 	public List<Report> getUserReport(String userId) {
 		String sql = "SELECT a.u_id,b.name as userName,b.grade as userGrade";
 		sql += " ,b.is_open as userState,a.a_id,c.full_name as abilityName,a.result ";
-		sql += " FROM user_ability a";
+		sql += " FROM userability a";
 		sql += " LEFT JOIN user b on a.u_id = b.u_id";
 		sql += " LEFT JOIN ability c on a.a_id = c.a_id";
 		//sql += " group by a.a_id";
@@ -62,7 +62,7 @@ public class UserAbilityDAOImpl implements UserAbilityDAO {
 	public List<Report> getTeacherReport() {
 		String sql = "SELECT 'avg' as u_id,'avg' as userName,'avg' as userGrade";
 		sql += " ,'avg' as userState,a.a_id,c.full_name as abilityName,avg(a.result) as result ";
-		sql += " FROM user_ability a";
+		sql += " FROM userability a";
 		sql += " LEFT JOIN user b on a.u_id = b.u_id";
 		sql += " LEFT JOIN ability c on a.a_id = c.a_id";
 		sql += " group by a.a_id";

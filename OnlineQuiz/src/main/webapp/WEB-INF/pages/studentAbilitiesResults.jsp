@@ -26,6 +26,8 @@
 <link
 	href="<c:url value="../template/vendors/iCheck/skins/flat/green.css"/>"
 	rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
 </head>
 
 <body class="nav-md">
@@ -52,7 +54,7 @@
 										class="fa fa-edit"></i> Do Test </a></li>
 								<li><a href="chooseTest?quizType=Essay"><i
 										class="fa fa-edit"></i> Do Essay </a></li>
-								<li><a href="../user/getAbilitiesResults"><i
+								<li><a href="user/getAbilitiesResults"><i
 										class="fa fa-edit"></i> Show Abilities Report </a></li>
 							</ul>
 						</div>
@@ -75,16 +77,11 @@
 							<li class=""><a href="javascript:;"
 								class="user-profile dropdown-toggle" data-toggle="dropdown"
 								aria-expanded="false"> <img
-									src="<c:url value="../template/images/img.jpg" />" alt="">John
-									Doe <span class=" fa fa-angle-down"></span>
+									src="<c:url value="../template/images/img.jpg" />" alt="">${msg}
+									<span class=" fa fa-angle-down"></span>
 							</a>
 								<ul class="dropdown-menu dropdown-usermenu pull-right">
-									<li><a href="javascript:;"> Profile</a></li>
-									<li><a href="javascript:;"> <span
-											class="badge bg-red pull-right">50%</span> <span>Settings</span>
-									</a></li>
-									<li><a href="javascript:;">Help</a></li>
-									<li><a href="login.html"><i
+									<li><a href="../"><i
 											class="fa fa-sign-out pull-right"></i> Log Out</a></li>
 								</ul></li>
 
@@ -120,18 +117,12 @@
 				<div class="">
 					<div class="page-title">
 						<div class="title_left">
-							<h3>Quiz</h3>
+							<h3>Abilities Report</h3>
 						</div>
 
 						<div class="title_right">
 							<div
 								class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-								<div class="input-group">
-									<input type="text" class="form-control"
-										placeholder="Search for..."> <span
-										class="input-group-btn">
-										<button class="btn btn-default" type="button">Go!</button>
-									</span>
 								</div>
 							</div>
 						</div>
@@ -142,41 +133,95 @@
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
 								<div class="x_title">
+									<h2>User List</h2>
+									<div class="pull-right">
+										<a href="getAbilitiesResultsDiagram">
+											<button type="button" class="btn btn-round btn-primary">Show
+												Diagram</button>
+										</a>
+										<c:if test="${userAbilitiesResults.size() gt 0}">
+											<button type="button" id="d-pdf"
+												class="btn btn-round btn-primary">Download PDF</button>
+											<script>
+												var pdfDoc = new jsPDF();
+												$('#d-pdf')
+														.click(
+																function() {
+																	pdfDoc
+																			.fromHTML(
+																					$(
+																							'#as-pdf')
+																							.html(),
+																					15,
+																					15,
+																					{
+																						'width' : 1000
+																					});
+																	pdfDoc
+																			.save('user-abilities-results.pdf');
+																});
+											</script>
+										</c:if>
+									</div>
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
-									<form action="submitEssay" method="post">
-										<div class="form-group">
-											<h2>${question.question}  ${msg}</h2>
-										</div>
-										<div class="form-group">
-											<textarea id="answer"
-												class="form-control" name="answer"
-												maxlength="1000"></textarea>
-										</div>
-										<div class="ln_solid"></div>
-										<div>
-										<c:choose>
-												<c:when test="${msg==null}">
-													<button id="send" type="submit" class="btn btn-success">Submit</button>
-											<a href="cancel?quizType=Essay">
-												<button type="button" class="btn btn-round btn-primary">Cancel</button>
-											</a>
-												</c:when>
-												<c:otherwise>
-													<a href="cancel?quizType=Essay">
-														<button type="button" class="btn btn-round btn-primary">Back</button>
-													</a>
-												</c:otherwise>
-											</c:choose>
-											
-
-										</div>
-										<div class="clearfix"></div>
-									</form>
+									<div id="as-pdf">
+										<c:if test="${userAbilitiesResults.size() gt 0}">
+											<b> User ID : ${userAbilitiesResults[0].userD.getId()} <br />
+												User Name : ${userAbilitiesResults[0].userD.getName()}
+											</b>
+											<br />
+											<br />
+										</c:if>
+										<table id="datatable"
+											class="table table-striped table-bordered">
+											<thead>
+												<tr>
+													<th>Ability Name</th>
+													<th>Ability Result</th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach var="user" items="${userAbilitiesResults}">
+													<tr>
+														<td>${user.ability.getFullName()}</td>
+														<td>${user.result}</td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+										<!-- <h2>Student Report</h2>
+										<table id="datatable2"
+											class="table table-striped table-bordered">
+											<thead>
+												<tr>
+													<th>User ID</th>
+													<th>User Name</th>
+													<th>User Grade</th>
+													<th>User State</th>
+													<th>Ability Name</th>
+													<th>Ability Result</th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach var="Sreport" items="${Sreport}">
+													<tr>
+														<td>${Sreport.u_id}</td>
+														<td>${Sreport.userName}</td>
+														<td>${Sreport.userGrade}</td>
+														<td>${Sreport.userState}</td>
+														<td>${Sreport.abilityName}</td>
+														<td>${Sreport.result}</td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table> -->
+									</div>
 								</div>
 							</div>
 						</div>
+
 					</div>
 				</div>
 			</div>

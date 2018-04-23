@@ -7,13 +7,14 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 
 @Entity
-//@Table(name = "user_ability")
+@Table(name = "userability")
 public class UserAbility implements Serializable {
 
 	private static final long serialVersionUID = -3465813074586302847L;

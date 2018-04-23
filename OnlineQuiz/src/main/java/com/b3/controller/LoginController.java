@@ -33,12 +33,8 @@ public class LoginController {
 
 	@Autowired
 	private LoginService loginService;
-	private SubjectService subjectService;
-	private User user=new User();
 	@Autowired
 	private UserService userService;
-	@Autowired
-	private SessionFactory sessionFactory;
 
 	@RequestMapping(value = "/")
 	public ModelAndView listEmployee(ModelAndView model) throws IOException {
@@ -78,33 +74,10 @@ public class LoginController {
         String realname = request.getParameter("reg_name");
         String grade = request.getParameter("reg_grade");
         String email = request.getParameter("email");
-		user.setId(username);
-		user.setName(realname);
-        user.setPwd(password);
-        user.setGrade(grade);
-        user.setIs_open("T");
-        user.setRole("student");
-        user.setEmail(email);
-        
-        /*userService.addUser(user);
-        model.setViewName("login");
-		return model;*/
 		
-		if (userService.getUser(user.getId()) == null) { // if user id is 0 then creating the
-			// user other updating the user
-			userService.addUser(user);
-			model.addObject("msg","registration successful");
-			model.setViewName("login");
-			return model;
-		}
-
-		else {
-			// userService.updateUser(user);
-			model.addObject("msg", "Account already exist!");
-			model.setViewName("login");
-			return model;
-
-		}
+        model.addObject("msg",userService.registerUser(username, realname, grade, password, email));
+        model.setViewName("login");
+        return model;
 		
 	}
 }

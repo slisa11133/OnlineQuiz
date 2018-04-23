@@ -15,4 +15,6 @@ public interface UserService {
 	public User getUser(String userid);
 
 	public User updateUser(User user);
+	
+	public String registerUser(String username, String realname, String grade, String pwd, String email);
 }

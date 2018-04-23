@@ -43,6 +43,24 @@ public class UserServiceImpl implements UserService {
 		return userDAO.updateUser(user);
 	}
 
+	public String registerUser(String username, String realname, String grade, String pwd, String email) {
+		// TODO Auto-generated method stub
+		User u = new User();
+		u.setId(username);
+		u.setName(realname);
+		u.setGrade(grade);
+		u.setEmail(email);
+		u.setPwd(pwd);
+		u.setIs_open("T");
+		u.setRole("student");
+		
+		if (this.getUser(u.getId()) == null) {
+			this.addUser(u);
+			return "registration successful";
+		}
+		return "Account already exist!";
+	}
+
 	/**public void setUserDAO(UserDAO userDAO) {
 		this.userDAO = userDAO;
 	}**/

@@ -129,8 +129,8 @@ public class UserController {
 		
 		
 		
-		// ModelAndView model = new ModelAndView("studentAbilitiesResults");
-		ModelAndView model = new ModelAndView("UserAbilitiesResults");
+		ModelAndView model = new ModelAndView("studentAbilitiesResults");
+		// ModelAndView model = new ModelAndView("UserAbilitiesResults");
 		model.addObject("userAbilitiesResults", userAbilitiesResults);
 		model.addObject("Sreport", Sreport);
 		model.addObject("Treport", Treport);

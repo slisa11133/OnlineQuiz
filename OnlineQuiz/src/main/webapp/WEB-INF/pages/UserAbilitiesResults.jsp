@@ -134,13 +134,6 @@
 						<div class="title_left">
 							<h3>User Management</h3>
 							<br />
-							<br />
-							<form method="GET">
-								<input name="id" type="text" placeholder="Enter User ID"
-									style="padding: 7px" />
-							</form>
-							<br />
-							<br />
 						</div>
 					</div>
 

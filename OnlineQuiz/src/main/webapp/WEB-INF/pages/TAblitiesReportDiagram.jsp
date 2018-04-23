@@ -141,11 +141,7 @@
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
 								<div class="x_title">
-									<h2>User List</h2>
-									<br/><br/>
-									<form method="GET">
-										<input name="id" type="text" placeholder="Enter User ID" style="padding:7px"/>
-									</form>
+									<h2>Teacher Reprot diagram</h2>
 									<br/><br/>
 									<div class="pull-right">
 										<a href="getAbilitiesResults"><button type="button"

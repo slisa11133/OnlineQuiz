@@ -27,6 +27,7 @@ import com.b3.model.question.QuestionMCQ;
 import com.b3.service.question.MCQFactory;
 import com.b3.model.question.QuestionTFQ;
 import com.b3.service.question.TFQFactory;
+import com.b3.memento.EssayCareTaker;
 import com.b3.model.Ability;
 import com.b3.model.Essay;
 import com.b3.model.Options;
@@ -42,6 +43,8 @@ import com.b3.service.SubjectService;
 import com.b3.service.question.PaperFactory;
 import com.b3.model.question.QuestionEssay;
 import com.b3.service.question.EssayFactory;
+import com.b3.memento.EssayMemento;
+import com.b3.memento.EssayOriginator;
 
 @Controller
 @RequestMapping("/DoTest")
@@ -56,9 +59,12 @@ public class DoTestController {
 	private SubjectService subjectService;
 	@Autowired
 	private EssayService essayService;
+	@Autowired
+	private EssayCareTaker essayCareTaker;
 
 	@RequestMapping(value = "/chooseTest", method = RequestMethod.GET)
-	public ModelAndView chooseTest(ModelAndView model, HttpServletRequest request, HttpSession httpsession) throws IOException {
+	public ModelAndView chooseTest(ModelAndView model, HttpServletRequest request, HttpSession httpsession)
+			throws IOException {
 		String quizType = request.getParameter("quizType");
 		List<Subject> listSubjects = subjectService.getAllSubjects();
 		Map<String, String> Qsubjects = new LinkedHashMap<String, String>();
@@ -79,15 +85,19 @@ public class DoTestController {
 		Qlevels.put("2", "medium");
 		Qlevels.put("3", "hard");
 
+		User u = (User) httpsession.getAttribute("current_user");
+		boolean memento_exist = essayCareTaker.checkExist(u.getId());
+
 		model.setViewName("chooseTest");
 		model.addObject("Qsubjects", Qsubjects);
 		model.addObject("Qgrades", Qgrades);
 		model.addObject("Qlevels", Qlevels);
 		model.addObject("quizType", quizType);
-		
-		String name=(String)httpsession.getAttribute("username");
-		model.addObject("msg",name);
-		
+		model.addObject("memento_exist", memento_exist);
+
+		String name = (String) httpsession.getAttribute("username");
+		model.addObject("msg", name);
+
 		return model;
 	}
 
@@ -172,30 +182,82 @@ public class DoTestController {
 		User u = (User) httpsession.getAttribute("current_user");
 		System.out.println(u.getId());
 
-		/** 1 Essay **/
+		/** create 1 Essay **/
 		essayFactory = EssayFactory;
 		QuestionObject question = essayFactory.createQuestion(s_id, grade, level);
 
+		/** add to memento **/
+		EssayOriginator originator = new EssayOriginator();
+		originator.setU_id(u.getId());
+		originator.setQ_id(question.getQ_id());
+		originator.setQuestion(question.getQuestion());
+		originator.setAnswer("");
+		EssayMemento essayMemento = originator.saveToMemento();
+		essayCareTaker.addMemento(essayMemento);
+
 		model = new ModelAndView("DoEssay");
 		model.addObject("question", question);
+		model.addObject("state", "new");
 		return model;
 	}
-	
+
+	@RequestMapping(value = "/EssayMemento")
+	public ModelAndView EssayMemento(ModelAndView model, HttpSession httpsession) throws IOException {
+		User u = (User) httpsession.getAttribute("current_user");
+		EssayMemento essayMemento = essayCareTaker.getMemento(u.getId());
+		EssayOriginator originator = new EssayOriginator();
+		originator.undoFromMemento(essayMemento);
+		EssayMemento result = originator.getMemento();
+
+		model = new ModelAndView("DoEssay");
+		model.addObject("question", result);
+		model.addObject("state", "memento");
+		return model;
+	}
+
 	@RequestMapping(value = "/submitEssay", method = RequestMethod.POST)
-	public ModelAndView submitEssay(HttpServletRequest request, ModelAndView model, HttpSession httpsession) throws IOException {
-		QuestionObject question = essayFactory.createQuestion(0, "", ""); // get exist essay(singleton)
+	public ModelAndView submitEssay(HttpServletRequest request, ModelAndView model, HttpSession httpsession)
+			throws IOException {
+		String action = request.getParameter("action");
 		String answer = request.getParameter("answer");
 		User u = (User) httpsession.getAttribute("current_user");
-		
+		EssayMemento essayMemento = essayCareTaker.getMemento(u.getId());
+
 		Essay essay = new Essay();
-		essay.setQ_id(question.getQ_id());
-		essay.setQuestion(question.getQuestion());
+		essay.setQ_id(essayMemento.getQ_id());
+		essay.setQuestion(essayMemento.getQuestion());
+		
+		essayCareTaker.removeMemento(essayMemento); // delete memento after submit essay
 		essay.setAnswer(answer);
 		essay.setU_id(u.getId());
 		essayService.addEssay(essay);
-		
-		model.addObject("question", question);
-		model.addObject("msg", "Essay is submitted!!");
+
+		model.addObject("question", essayMemento);
+		model.addObject("submit", "Essay is submitted!!");
+		model.setViewName("DoEssay");
+		return model;
+
+	}
+
+	@RequestMapping(value = "/saveToMemento", method = RequestMethod.POST)
+	public ModelAndView saveToMemento(HttpServletRequest request, ModelAndView model, HttpSession httpsession)
+			throws IOException {
+		String action = request.getParameter("action");
+		String answer = request.getParameter("answer");
+		User u = (User) httpsession.getAttribute("current_user");
+		EssayMemento essayMemento = essayCareTaker.getMemento(u.getId());
+
+		/** add to memento **/
+		EssayOriginator originator = new EssayOriginator();
+		originator.setU_id(u.getId());
+		originator.setQ_id(essayMemento.getQ_id());
+		originator.setQuestion(essayMemento.getQuestion());
+		originator.setAnswer(answer);
+		EssayMemento result = originator.saveToMemento();
+		essayCareTaker.addMemento(result);
+
+		model.addObject("question", result);
+		model.addObject("save", "saved");
 		model.setViewName("DoEssay");
 		return model;
 
@@ -204,11 +266,15 @@ public class DoTestController {
 	@RequestMapping(value = "/cancel", method = RequestMethod.GET)
 	public ModelAndView Cancel(HttpServletRequest request) {
 		String quizType = request.getParameter("quizType");
+		String state = request.getParameter("state");
 		if (quizType.equals("Test"))
 			paperFactory.clearPaper();
-		else if (quizType.equals("Essay"))
-			essayFactory.clearQuestion();
-		return new ModelAndView("redirect:/DoTest/chooseTest?quizType="+quizType);
+		else if (quizType.equals("Essay")) {
+			if (state.equals("new"))
+				essayFactory.clearQuestion();
+		}
+
+		return new ModelAndView("redirect:/DoTest/chooseTest?quizType=" + quizType);
 	}
 
 }

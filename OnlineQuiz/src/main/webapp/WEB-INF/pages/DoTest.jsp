@@ -156,25 +156,64 @@
 													<c:when test="${!empty question.options}">
 														<c:forEach var="options" items="${question.options}"
 															varStatus="Oloop">
-															<input type="radio" class="form-control flat" required
-																name="studentAnswers${Qloop.index}"
-																id="studentAnswers${Qloop.index}" value="${options.id}" /> ${options.option}
-													<br />
+															<c:choose>
+																<c:when
+																	test="${StudentAnswers!=null&&options.id==StudentAnswers[Qloop.index]}">
+																	<input type="radio" class="form-control flat" required
+																		checked name="studentAnswers${Qloop.index}"
+																		id="studentAnswers${Qloop.index}"
+																		value="${options.id}" /> ${options.option}
+												</c:when>
+																<c:otherwise>
+																	<input type="radio" class="form-control flat" required
+																		name="studentAnswers${Qloop.index}"
+																		id="studentAnswers${Qloop.index}"
+																		value="${options.id}" /> ${options.option}
+												</c:otherwise>
+															</c:choose>
+															<c:if
+																test="${StudentAnswers!=null&&options.id==CorrectAnswers[Qloop.index].answer}">
+													(correct answer)
+												</c:if>
+															<br />
 															<br />
 														</c:forEach>
 													</c:when>
 													<c:otherwise>
 														<div class="form-group">
-															<input id="studentAnswers${Qloop.index}"
-																class="form-control col-md-7 col-xs-12"
-																name="studentAnswers${Qloop.index}" type="text" required />
+															<c:choose>
+																<c:when test="${StudentAnswers!=null}">
+																	<input id="studentAnswers${Qloop.index}"
+																		class="form-control col-md-7 col-xs-12"
+																		value="${StudentAnswers[Qloop.index]}"
+																		name="studentAnswers${Qloop.index}" type="text"
+																		required />
+																</c:when>
+																<c:otherwise>
+																	<input id="studentAnswers${Qloop.index}"
+																		class="form-control col-md-7 col-xs-12"
+																		name="studentAnswers${Qloop.index}" type="text"
+																		required />
+																</c:otherwise>
+															</c:choose>
+
+															<c:if
+																test="${StudentAnswers!=null}">
+																<h2>Correct Answer: ${CorrectAnswers[Qloop.index].answer}</h2>
+															</c:if>
 														</div>
 													</c:otherwise>
 
 												</c:choose>
 												<c:if test="${StudentAnswers!=null}">
-													<h2>You choose:${StudentAnswers[Qloop.index]}</h2>
-													<h2>Answer:${CorrectAnswers[Qloop.index].answer}</h2>
+													<c:if
+														test="${StudentAnswers[Qloop.index]==CorrectAnswers[Qloop.index].answer}">
+														<h2>correct!!</h2>
+													</c:if>
+													<c:if
+														test="${StudentAnswers[Qloop.index]!=CorrectAnswers[Qloop.index].answer}">
+														<h2>wrong!!</h2>
+													</c:if>
 												</c:if>
 
 											</div>

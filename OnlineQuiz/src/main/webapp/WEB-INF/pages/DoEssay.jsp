@@ -147,29 +147,33 @@
 								<div class="x_content">
 									<form action="submitEssay" method="post">
 										<div class="form-group">
-											<h2>${question.question}  ${msg}</h2>
+											<h2>${question.question}  ${submit}${save}</h2>
 										</div>
 										<div class="form-group">
-											<textarea id="answer"
-												class="form-control" name="answer"
-												maxlength="1000"></textarea>
+											<input type="hidden" id="state" class="form-control"
+												name="state" value="${state}"></input>
+										</div>
+										<div class="form-group">
+											<textarea id="answer" class="form-control" name="answer"
+												maxlength="1000" rows="10">${question.answer}</textarea>
 										</div>
 										<div class="ln_solid"></div>
 										<div>
-										<c:choose>
-												<c:when test="${msg==null}">
-													<button id="send" type="submit" class="btn btn-success">Submit</button>
-											<a href="cancel?quizType=Essay">
-												<button type="button" class="btn btn-round btn-primary">Cancel</button>
-											</a>
+											<c:choose>
+												<c:when test="${submit==null}">
+													<button id="action" name="action" type="submit" value="send" class="btn btn-success">Submit</button>
+													<button id="action" name="action" type="submit" onclick="form.action='saveToMemento';" class="btn btn-success">Save</button>
+													<a href="cancel?quizType=Essay&state=${state}">
+														<button type="button" class="btn btn-round btn-primary">Cancel</button>
+													</a>
 												</c:when>
 												<c:otherwise>
-													<a href="cancel?quizType=Essay">
+													<a href="cancel?quizType=Essay&state=${state}">
 														<button type="button" class="btn btn-round btn-primary">Back</button>
 													</a>
 												</c:otherwise>
 											</c:choose>
-											
+
 
 										</div>
 										<div class="clearfix"></div>

@@ -50,9 +50,9 @@
 						class="main_menu_side hidden-print main_menu">
 						<div class="menu_section">
 							<ul class="nav side-menu">
-								<li><a href="chooseTest?quizType=Test"><i
+								<li><a href="../DoTest/chooseTest?quizType=Test"><i
 										class="fa fa-edit"></i> Do Test </a></li>
-								<li><a href="chooseTest?quizType=Essay"><i
+								<li><a href="../DoTest/chooseTest?quizType=Essay"><i
 										class="fa fa-edit"></i> Do Essay </a></li>
 								<li><a href="user/getAbilitiesResults"><i
 										class="fa fa-edit"></i> Show Abilities Report </a></li>

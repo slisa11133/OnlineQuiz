@@ -52,6 +52,8 @@
 										class="fa fa-edit"></i> Do Test </a></li>
 								<li><a href="chooseTest?quizType=Essay"><i
 										class="fa fa-edit"></i> Do Essay </a></li>
+								<li><a href="../user/getAbilitiesResults"><i
+										class="fa fa-edit"></i> Show Abilities Report </a></li>
 							</ul>
 						</div>
 
@@ -77,8 +79,8 @@
 									<span class=" fa fa-angle-down"></span>
 							</a>
 								<ul class="dropdown-menu dropdown-usermenu pull-right">
-									<li><a href="../"><i
-											class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+									<li><a href="../"><i class="fa fa-sign-out pull-right"></i>
+											Log Out</a></li>
 								</ul></li>
 
 							<li role="presentation" class="dropdown"><a
@@ -239,7 +241,14 @@
 											<div class="ln_solid"></div>
 											<div class="form-group">
 												<div class="col-md-6 col-md-offset-3">
-													<button id="send" type="submit" class="btn btn-success">Submit</button>
+													<c:if test="${memento_exist == true}">
+														<a href="EssayMemento">
+															<button type="button" class="btn btn-round btn-primary">Continue
+																Essay</button>
+														</a>
+													</c:if>
+													<button id="send" type="submit" class="btn btn-success">Create
+														New Essay</button>
 												</div>
 											</div>
 										</form:form>

@@ -52,6 +52,7 @@ public class LoginController {
 			
 			httpsession.setAttribute("current_user", userService.getUser(username));
 			httpsession.setAttribute("username", userService.getUser(username).getName());
+			httpsession.setAttribute("userId", userService.getUser(username).getId());
 			
 			if(user_role.equals("student")) {
 				//model.setViewName("StudentMainPage");

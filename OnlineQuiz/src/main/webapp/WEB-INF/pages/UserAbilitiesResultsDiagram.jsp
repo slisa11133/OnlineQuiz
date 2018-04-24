@@ -142,11 +142,6 @@
 							<div class="x_panel">
 								<div class="x_title">
 									<h2>User List</h2>
-									<br/><br/>
-									<form method="GET">
-										<input name="id" type="text" placeholder="Enter User ID" style="padding:7px"/>
-									</form>
-									<br/><br/>
 									<div class="pull-right">
 										<a href="getAbilitiesResults"><button type="button"
 												class="btn btn-round btn-primary">Back</button></a>

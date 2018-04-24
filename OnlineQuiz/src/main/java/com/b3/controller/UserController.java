@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,8 +118,8 @@ public class UserController {
 	private TeacherReportFactory TeacherreportFactory;
 	
 	@RequestMapping(value = "/getAbilitiesResults", method = RequestMethod.GET)
-	public ModelAndView getUserAbilitiesResults(HttpServletRequest request) {
-		String userId = request.getParameter("id");
+	public ModelAndView getUserAbilitiesResults(HttpSession httpsession, HttpServletRequest request) {
+		String userId = (String) httpsession.getAttribute("userId"); // request.getParameter("id");
 		List<UserAbility> userAbilitiesResults = userAbilityService.getUserAbilities(userId);
 		BaseReportFactory reportFactory;
 		reportFactory = StudentreportFactory;
@@ -128,19 +129,33 @@ public class UserController {
 		
 		
 		
-		ModelAndView model = new ModelAndView("UserAbilitiesResults");
+		ModelAndView model = new ModelAndView("studentAbilitiesResults");
+		// ModelAndView model = new ModelAndView("UserAbilitiesResults");
 		model.addObject("userAbilitiesResults", userAbilitiesResults);
 		model.addObject("Sreport", Sreport);
 		model.addObject("Treport", Treport);
 		return model;
 	}
 	
+	
+	
 	@RequestMapping(value = "/getAbilitiesResultsDiagram", method = RequestMethod.GET)
-	public ModelAndView getUserAbilitiesResultsDiagram(HttpServletRequest request) {
-		String userId = request.getParameter("id");
+	public ModelAndView getUserAbilitiesResultsDiagram(HttpSession httpsession, HttpServletRequest request) {
+		String userId = (String) httpsession.getAttribute("userId");// request.getParameter("id");
 		List<UserAbility> userAbilitiesResults = userAbilityService.getUserAbilities(userId);
 		ModelAndView model = new ModelAndView("UserAbilitiesResultsDiagram");
 		model.addObject("userAbilitiesResults", userAbilitiesResults);
+		return model;
+	}
+	
+	@RequestMapping(value = "/getTeacherAbilitiesResultsDiagram", method = RequestMethod.GET)
+	public ModelAndView getTeacherAbilitiesResultsDiagram(HttpSession httpsession, HttpServletRequest request) {
+		String userId = (String) httpsession.getAttribute("userId");// request.getParameter("id");
+		BaseReportFactory reportFactory;
+		reportFactory = TeacherreportFactory;
+		List<Report> Treport = reportFactory.createReport();
+		ModelAndView model = new ModelAndView("TAblitiesReportDiagram");
+		model.addObject("Treport", Treport);
 		return model;
 	}
 

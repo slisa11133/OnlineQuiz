@@ -23,7 +23,8 @@ public class UserAbilityDAOImpl implements UserAbilityDAO {
 
 	@Override
 	public List<UserAbility> getUserAbilities(String userId) {
-		String sql = "SELECT * FROM user_ability where u_id = '" + userId + "'";
+		String sql = "SELECT * FROM user_ability WHERE u_id = '" + userId + "'";
+		System.out.println(sql);
 		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql);
 		query.addEntity(UserAbility.class);
 		List<UserAbility> userAbilities = query.list();
@@ -84,6 +85,14 @@ public class UserAbilityDAOImpl implements UserAbilityDAO {
 			userAbilities.add(re);
 		}
 		return userAbilities;
+	}
+	@Override
+	public void setUserAbilities(List<UserAbility> userability, String uid) {
+		for(UserAbility ua:userability ) {
+			String sql = "UPDATA user_ability SET result='"+ua.getResult()+"' WHERE u_id='"+uid+"' AND a_id='"+ua.getAId()+"'";
+			SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql);
+		}
+		
 	}
 
 }

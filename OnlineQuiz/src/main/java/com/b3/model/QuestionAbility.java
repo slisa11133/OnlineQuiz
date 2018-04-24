@@ -8,17 +8,18 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-
+//
 //@Entity
 //@Table(name = "question_ability")
 public class QuestionAbility implements Serializable {
 
 	private static final long serialVersionUID = -3465813074586302847L;
-	
+	 
 	@Id
 	private int qa_id;
 	

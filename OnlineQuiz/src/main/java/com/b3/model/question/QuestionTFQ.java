@@ -34,6 +34,7 @@ public class QuestionTFQ extends QuestionObject {
 		List<Options> options = optionDAO.getAllOptionsByQ(question.getId());
 		String answer = String.valueOf(optionDAO.getAnswerByQ(question.getId()).getId());
 		List<QuestionAbility> Qabilities = questionAbilityDAO.getAllQuestionAbilitiesByQ(question.getId());
+		List<String> abilitieslist = questionAbilityDAO.getAllQuestionAbilities(question.getId());
 		if(question!=null) {
 			questionResult.setQ_id(question.getId());
 			questionResult.setS_id(question.getSubId());
@@ -43,6 +44,7 @@ public class QuestionTFQ extends QuestionObject {
 			questionResult.setOptions(options);
 			questionResult.setAnswer(answer);
 			questionResult.setAbilities(Qabilities);
+			questionResult.setAbilitieslist(abilitieslist);
 		}
 		else
 			questionResult = null;

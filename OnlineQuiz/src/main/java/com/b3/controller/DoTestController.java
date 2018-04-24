@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.b3.model.question.QuestionObject;
 import com.b3.service.BaseReportFactory;
 import com.b3.service.EssayService;
+import com.b3.service.GradeService;
 import com.b3.service.question.BaseQuestionFactory;
 import com.b3.model.question.QuestionMCQ;
 import com.b3.service.question.MCQFactory;
@@ -54,8 +55,8 @@ public class DoTestController {
 
 	@Autowired
 	private SubjectService subjectService;
-	@Autowired
-	private EssayService essayService;
+//	@Autowired
+//	private EssayService essayService;
 
 	@RequestMapping(value = "/chooseTest", method = RequestMethod.GET)
 	public ModelAndView chooseTest(ModelAndView model, HttpServletRequest request, HttpSession httpsession) throws IOException {
@@ -67,7 +68,7 @@ public class DoTestController {
 			String s_name = listSubjects.get(i).getName();
 			Qsubjects.put(s_id, s_name);
 		}
-
+ 
 		Map<String, String> Qgrades = new LinkedHashMap<String, String>();
 		Qgrades.put("1", "1");
 		Qgrades.put("2", "2");
@@ -143,20 +144,40 @@ public class DoTestController {
 		model.addObject("questions", paper.getQuestionSet());
 		return model;
 	}
+	
+	@Autowired
+	private GradeService gradeservice = new GradeService();
 
 	@RequestMapping(value = "/submitAnswer", method = RequestMethod.POST)
-	public ModelAndView submitAnswer(HttpServletRequest request, ModelAndView model) throws IOException {
+	public ModelAndView submitAnswer(HttpServletRequest request, ModelAndView model, HttpSession httpsession) throws IOException {
 		Paper paper = paperFactory.getPaper();
 		List<String> answer = new ArrayList<String>();
 		for (int i = 0; i < paper.getQuestionSet().size(); i++) {
 			answer.add(request.getParameter("studentAnswers" + i));
 		}
 		paper.setStudentAnswers(answer);
+		User u = (User) httpsession.getAttribute("current_user");
+		int result = gradeservice.gradecomputation(paper, u.getId());
+		Map<String, Float> current = gradeservice.CurrentAbility(paper, u.getId());
+		ArrayList<Float> currentnum = new ArrayList<Float>();
+		int num = 5;
+		while(num>0) {
+			if(current.containsKey(String.valueOf(num))){
+				currentnum.add(current.get(String.valueOf(num)));
+			}else {
+				currentnum.add((float) 0);
+			}
+			num--;
+		}
+		
+		model.addObject("current", currentnum);
 
 		model.addObject("questions", paper.getQuestionSet());
 		model.addObject("CorrectAnswers", paper.getQuestionSet());
 		model.addObject("StudentAnswers", paper.getStudentAnswers());
-		model.setViewName("DoTest");
+		
+		model.addObject("grade",result);
+		model.setViewName("ShowResult");
 		return model;
 
 	}
@@ -181,18 +202,21 @@ public class DoTestController {
 		return model;
 	}
 	
+	
 	@RequestMapping(value = "/submitEssay", method = RequestMethod.POST)
 	public ModelAndView submitEssay(HttpServletRequest request, ModelAndView model, HttpSession httpsession) throws IOException {
 		QuestionObject question = essayFactory.createQuestion(0, "", ""); // get exist essay(singleton)
 		String answer = request.getParameter("answer");
 		User u = (User) httpsession.getAttribute("current_user");
 		
-		Essay essay = new Essay();
-		essay.setQ_id(question.getQ_id());
-		essay.setQuestion(question.getQuestion());
-		essay.setAnswer(answer);
-		essay.setU_id(u.getId());
-		essayService.addEssay(essay);
+
+		
+		//Essay essay = new Essay();
+//		essay.setQ_id(question.getQ_id());
+//		essay.setQuestion(question.getQuestion());
+//		essay.setAnswer(answer);
+//		essay.setU_id(u.getId());
+//		essayService.addEssay(essay);
 		
 		model.addObject("question", question);
 		model.addObject("msg", "Essay is submitted!!");

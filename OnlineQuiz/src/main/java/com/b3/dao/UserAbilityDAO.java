@@ -12,4 +12,6 @@ public interface UserAbilityDAO {
 	public List<Report> getUserReport(String userId);
 	
 	public List<Report> getTeacherReport();
+	
+	public void setUserAbilities(List<UserAbility> userability, String uid);
 }

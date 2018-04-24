@@ -35,6 +35,7 @@ public class QuestionBFQ extends QuestionObject {
 		//List<Options> options = optionDAO.getAllOptionsByQ(question.getId());
 		String answer = optionDAO.getAnswerByQ(question.getId()).getOption();
 		List<QuestionAbility> Qabilities = questionAbilityDAO.getAllQuestionAbilitiesByQ(question.getId());
+		List<String> abilitieslist = questionAbilityDAO.getAllQuestionAbilities(question.getId());
 		if(question!=null) {
 			questionResult.setQ_id(question.getId());
 			questionResult.setS_id(question.getSubId());
@@ -44,6 +45,7 @@ public class QuestionBFQ extends QuestionObject {
 			questionResult.setOptions(new ArrayList<Options>()); //no options
 			questionResult.setAnswer(answer);
 			questionResult.setAbilities(Qabilities);
+			questionResult.setAbilitieslist(abilitieslist);
 		}
 		else
 			questionResult = null;

@@ -26,8 +26,16 @@ public abstract class QuestionObject {
 	
 	protected List<QuestionAbility> abilities;
 	
+	protected List<String> abilitieslist;
+	
 	public int getQ_id() {
 		return q_id;
+	}
+	public List<String> getAbilitieslist() {
+		return abilitieslist;
+	}
+	public void setAbilitieslist(List<String> abilitieslist) {
+		this.abilitieslist = abilitieslist;
 	}
 	public void setQ_id(int q_id) {
 		this.q_id = q_id;

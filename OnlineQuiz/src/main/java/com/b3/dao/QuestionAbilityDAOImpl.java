@@ -52,13 +52,28 @@ public class QuestionAbilityDAOImpl implements QuestionAbilityDAO {
 		String sql = "SELECT * FROM question_ability WHERE q_id = :q_id";
 		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql);
 		query.setParameter("q_id", questionId);
-		// query.addEntity(QuestionAbility.class);
-		List questionabilities = query.list();
+		//query.addEntity(QuestionAbility.class);
+		List<QuestionAbility> questionabilities = query.list();
 
 		return questionabilities;
 
 	}
 
+//	public List<String> getAllQuestionAbilitiesByQuestion(Integer questionId) {
+//
+//		// return sessionFactory.getCurrentSession().createQuery("from
+//		// questionability").list();
+//
+//		String sql = "SELECT * FROM question_ability WHERE q_id = :q_id";
+//		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql);
+//		query.setParameter("q_id", questionId);
+//		//query.addEntity(QuestionAbility.class);
+//		List<String> questionabilities = query.list();
+//
+//		return questionabilities;
+//
+//	}
+	
 	public List<String> getAllQuestionAbilities(Integer questionId) {
 
 		// return sessionFactory.getCurrentSession().createQuery("from

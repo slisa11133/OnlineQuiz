@@ -20,13 +20,13 @@ import com.b3.model.question.Paper;
 import com.b3.model.question.QuestionObject;
 import com.b3.service.QuestionAbilityService;
 @Service
-@Transactional
+//@Transactional
 public class EasyLevelGrade implements GradeStrategy {
 
 	@Autowired
-	private UserAbilityDAO userabilitydao;
+	public UserAbilityDAO userabilitydao;
 	@Autowired
-	private UserAbilityService uas ;
+	public UserAbilityService uas ;
 
 
 	@Override
@@ -61,7 +61,7 @@ public class EasyLevelGrade implements GradeStrategy {
 
 	}
 	@Override
-	@Transactional
+	//@Transactional
 	public Map<String,Float> currentability(Paper paper, String u_id){
 		System.out.println("-----tz----"+u_id);
 		Map<String, Float> currentability = new HashMap<String, Float>();

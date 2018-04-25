@@ -2,6 +2,7 @@ package com.b3.service;
 
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,7 +13,6 @@ import com.b3.service.GradeStrategy;
 @Service
 @Transactional
 public class GradeService {
-	
 	
 	@Transactional
 	public int gradecomputation(Paper paper, String u_id) {

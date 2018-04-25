@@ -29,6 +29,20 @@
 </head>
 
 <body class="nav-md">
+	<script>
+		window.onload = function() {
+			setInterval("getMessage()", 10000)
+			
+			//setTimeout('document.getElementById("saveMsg").innerHTML = ""', 3000)
+		}
+
+		function getMessage() {
+			document.getElementById("saveMsg").innerHTML = "Saved!";
+			document.getElementById('save').click();
+		}
+	</script>
+
+
 	<div class="container body">
 		<div class="main_container">
 			<div class="col-md-3 left_col">
@@ -121,8 +135,9 @@
 					<div class="page-title">
 						<div class="title_left">
 							<h3>Quiz</h3>
+							<div id="saveMsg"></div>
 						</div>
-
+						
 						<div class="title_right">
 							<div
 								class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
@@ -147,8 +162,9 @@
 								<div class="x_content">
 									<form action="submitEssay" method="post">
 										<div class="form-group">
-											<h2>${question.question}  ${submit}${save}</h2>
+											<h2>${question.question}${submit}</h2>
 										</div>
+
 										<div class="form-group">
 											<input type="hidden" id="state" class="form-control"
 												name="state" value="${state}"></input>
@@ -161,8 +177,11 @@
 										<div>
 											<c:choose>
 												<c:when test="${submit==null}">
-													<button id="action" name="action" type="submit" value="send" class="btn btn-success">Submit</button>
-													<button id="action" name="action" type="submit" onclick="form.action='saveToMemento';" class="btn btn-success">Save</button>
+													<button id="action" name="action" type="submit"
+														value="send" class="btn btn-success">Submit</button>
+													<button id="save" name="action" type="submit"
+														onclick="form.action='saveToMemento';"
+														class="btn btn-success">Save</button>
 													<a href="cancel?quizType=Essay&state=${state}">
 														<button type="button" class="btn btn-round btn-primary">Cancel</button>
 													</a>

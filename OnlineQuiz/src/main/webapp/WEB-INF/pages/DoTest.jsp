@@ -197,9 +197,9 @@
 																</c:otherwise>
 															</c:choose>
 
-															<c:if
-																test="${StudentAnswers!=null}">
-																<h2>Correct Answer: ${CorrectAnswers[Qloop.index].answer}</h2>
+															<c:if test="${StudentAnswers!=null}">
+																<h2>Correct Answer:
+																	${CorrectAnswers[Qloop.index].answer}</h2>
 															</c:if>
 														</div>
 													</c:otherwise>

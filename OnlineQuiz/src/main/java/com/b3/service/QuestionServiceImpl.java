@@ -96,5 +96,9 @@ public class QuestionServiceImpl implements QuestionService {
 		}
 		return Qability;
 	}
+	
+	public String isDuplicatedQuestion(String question) {
+		return questionDAO.isDuplicatedQuestion(question);
+	}
 
 }

@@ -114,5 +114,21 @@ public class QuestionDAOImpl implements QuestionDAO {
 		
 		return question;
 	}
+	
+	@Override
+	public String isDuplicatedQuestion(String question) {
+
+		String sql = "SELECT * FROM question WHERE question = :question";
+		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql);
+		query.setParameter("question", question);
+		query.addEntity(Question.class);
+		List questions = query.list();
+		if(questions.isEmpty()) {
+			return "True";
+		}
+		else {
+			return "False";
+		}	
+    }
 
 }

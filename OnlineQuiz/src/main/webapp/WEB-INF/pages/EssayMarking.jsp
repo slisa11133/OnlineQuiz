@@ -22,10 +22,6 @@
 <!-- Custom Theme Style -->
 <link href="<c:url value="../template/build/css/custom.min.css" />"
 	rel="stylesheet">
-<!-- iCheck -->
-<link
-	href="<c:url value="../template/vendors/iCheck/skins/flat/green.css"/>"
-	rel="stylesheet">
 </head>
 
 <body class="nav-md">
@@ -34,8 +30,8 @@
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="index.html" class="site_title"><i class="fa fa-paw"></i>
-							<span>Online Quiz</span></a>
+						<a href="../" class="site_title"><i class="fa fa-paw"></i> <span>Online
+								Quiz</span></a>
 					</div>
 
 					<div class="clearfix"></div>
@@ -48,12 +44,12 @@
 						class="main_menu_side hidden-print main_menu">
 						<div class="menu_section">
 							<ul class="nav side-menu">
-								<li><a href="../user/list"><i class="fa fa-home"></i>
+								<li><a href="../user"><i class="fa fa-home"></i>
 										User Management </a></li>
 								<li><a href="../QuizManage/SubjectList"><i
 										class="fa fa-edit"></i> Quiz Management </a></li>
-								<li><a href="../AbilityManage/AbilityList"><i
-										class="fa fa-edit"></i> Ability Management </a></li>
+								<li><a href="../AbilityManage/AbilityList"><i class="fa fa-edit"></i>
+										Ability Management </a></li>
 								<li><a href="../EssayForm/EssayList"><i class="fa fa-edit"></i>
 										Essay Marking </a></li>
 							</ul>
@@ -116,13 +112,12 @@
 				</div>
 			</div>
 			<!-- /top navigation -->
-
 			<!-- page content -->
 			<div class="right_col" role="main">
 				<div class="">
 					<div class="page-title">
 						<div class="title_left">
-							<h3>Ability Form</h3>
+							<h3>Essay Marking</h3>
 						</div>
 
 						<div class="title_right">
@@ -139,67 +134,102 @@
 						</div>
 					</div>
 					<div class="clearfix"></div>
-
+					
 					<div class="row">
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
 								<div class="x_title">
-									<h2>${operation}</h2>
+									<h2>Marking</h2>
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
-									<form:form action="saveAbility" method="post"
-										modelAttribute="ability"
+									<h2>${msg}</h2>
+									<form:form action="saveMarking" method="post"
+										modelAttribute="essay"
 										class="form-horizontal form-label-left">
-										<form:hidden path="" />
-										<div class="item form-group">
+										
+									<!-- Question -->
+									<div class="item form-group">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12"
+												for="name">Question 
+										</label>
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<form:input path="question" id="question"
+												class="form-control col-md-7 col-xs-12" name="question"
+												readonly="true" type="text" />
+										</div>
+									</div>
+									
+									<!-- Answer -->
+									<div class="item form-group">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12"
+												for="name">Answer 
+										</label>
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<form:input path="answer" id="answer"
+												class="form-control col-md-7 col-xs-12" name="answer"
+												readonly="true" type="text" />
+										</div>
+									</div>
+									
+									<!-- Ability -->
+																																									
+									<c:forEach var="Qability" items="${Qability}"> 	
+										<div class="item form-group">									
 											<label class="control-label col-md-3 col-sm-3 col-xs-12"
-												for="name">Id </label>
-											<div class="col-md-6 col-sm-6 col-xs-12">
-												<form:input path="id" id="id"
-													class="form-control col-md-7 col-xs-12" name="id"
-													readonly="true" type="text" />
-											</div>
-										</div>
-										<div class="item form-group">
-											<label class="control-label col-md-3 col-sm-3 col-xs-12"
-												for="name">Short Name <span class="required">*</span>
-											</label>
-											<div class="col-md-6 col-sm-6 col-xs-12">
-												<form:input path="shortName" id="short_name"
-													class="form-control col-md-7 col-xs-12" name="short_name"
-													placeholder="please enter ability short name" required="required"
-													type="text" maxlength="20" />
-											</div>
-										</div>
-										<div class="item form-group">
-											<label class="control-label col-md-3 col-sm-3 col-xs-12"
-												for="name">Full Name <span class="required">*</span>
-											</label>
-											<div class="col-md-6 col-sm-6 col-xs-12">
-												<form:input path="fullName" id="full_name"
-													class="form-control col-md-7 col-xs-12" name="full_name"
-													placeholder="please enter ability full name" required="required"
-													type="text" maxlength="50" />
-											</div>
-										</div>
-										<div class="ln_solid"></div>
-										<div class="form-group">
-											<div class="col-md-6 col-md-offset-3">
-												<a href="cancel"><button type="button"
-														class="btn btn-primary">Cancel</button></a>
-												<button id="send" type="submit" class="btn btn-success">Submit</button>
-											</div>
-										</div>
-									</form:form>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- /page content -->
+												for="name">
+												${Qability}
+											 </label>
 
+											<div class="col-md-6 col-sm-6 col-xs-12">
+												<form:input path="" id=""
+													class="form-control col-md-10" name="result"
+												    type="text" />
+											</div>
+										</div>
+									</c:forEach>
+									
+									<!-- Marker -->
+									<div class="item form-group">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12"
+												for="name">Marker 
+										</label>
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<form:input path="" id=""
+												class="form-control col-md-7 col-xs-12" name=""
+												readonly="true" type="text" />
+										</div>
+									</div>
+														
+									<!-- Feedback -->
+										<div class="item form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12"
+												for="name">Feedback <span class="required">*</span>
+											</label>
+											<div class="col-md-6 col-sm-6 col-xs-12">
+												<form:input path="feedback" id="feedback"
+													class="form-control col-md-7 col-xs-12" name="feedback"
+													placeholder="please give your feedback" required="required"
+													type="text" maxlength="1000" />
+											</div>
+											
+										</div>																					
+												
+											
+										<div class="ln_solid"></div>
+												<div class="form-group">
+													<div class="col-md-6 col-md-offset-3">
+														<a href="back"><button type="button"
+																class="btn btn-primary">Cancel</button></a>
+														<button id="send" type="submit" class="btn btn-success">Submit</button>
+													</div>
+												</div>
+											</form:form>
+							</div>
+			</div>	
+							</div>
+			</div>					
+            <!-- /page content -->
 			<!-- footer content -->
 			<footer>
 				<div class="pull-right">
@@ -210,6 +240,8 @@
 			</footer>
 			<!-- /footer content -->
 		</div>
+	</div>
+			</div>
 	</div>
 
 	<!-- jQuery -->
@@ -224,9 +256,7 @@
 	<!-- validator -->
 	<script
 		src="<c:url value="../template/vendors/validator/validator.js" />"></script>
-	<!-- iCheck -->
-	<script
-		src="<c:url value="../template/vendors/iCheck/icheck.min.js" />"></script>
+
 	<!-- Custom Theme Scripts -->
 	<script src="<c:url value="../template/build/js/custom.min.js" />"></script>
 

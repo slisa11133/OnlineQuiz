@@ -22,5 +22,6 @@ public interface QuestionDAO {
 	
 	public Question getQuestionByType(String type,int s_id,String grade,String level);
 	
+	public String isDuplicatedQuestion(String question);
 
 }

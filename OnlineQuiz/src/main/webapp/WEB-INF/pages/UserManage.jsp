@@ -52,6 +52,8 @@
 										Quiz Management </a></li>
 								<li><a href="../AbilityManage/AbilityList"><i class="fa fa-edit"></i>
 										Ability Management </a></li>
+								<li><a href="../EssayForm/EssayList"><i class="fa fa-edit"></i>
+										Essay Marking </a></li>
 							</ul>
 						</div>
 
@@ -147,7 +149,8 @@
 												<th>Name</th>
 												<th>Grade</th>
 												<th>Role</th>
-												<th>State</th>
+												<th>Email</th>
+												<th>State</th>												
 												<th>Action</th>
 											</tr>
 										</thead>
@@ -159,6 +162,7 @@
 													<td>${user.name}</td>
 													<td>${user.grade}</td>
 													<td>${user.role}</td>
+													<td>${user.email}</td>
 													<td>${user.is_open}</td>
 													<td><a href="editUser?id=${user.id}"><button
 																type="button" class="btn btn-round btn-primary">Edit</button></a>

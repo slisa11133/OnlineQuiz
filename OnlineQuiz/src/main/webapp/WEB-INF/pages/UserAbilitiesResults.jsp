@@ -52,6 +52,8 @@
 										Management </a></li>
 								<li><a href="../QuizManage/SubjectList"><i
 										class="fa fa-edit"></i> Quiz Management </a></li>
+								<li><a href="../EssayForm/EssayList"><i class="fa fa-edit"></i>
+										Essay Marking </a></li>
 								<li><a><i class="fa fa-table"></i> Tables <span
 										class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">

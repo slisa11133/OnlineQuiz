@@ -52,6 +52,9 @@
 										Quiz Management </a></li>
 								<li><a href="../AbilityManage/AbilityList"><i
 										class="fa fa-edit"></i> Ability Management </a></li>
+								<li><a href="../EssayForm/EssayList"><i class="fa fa-edit"></i>
+										Essay Marking </a></li>
+								
 							</ul>
 						</div>
 
@@ -127,6 +130,10 @@
 									<c:when test="${type == 'Subject'}">
 										<div class="x_title">
 											<h2>${type}List</h2>
+											<div class="pull-right">
+												<a href="feedQuestion"><button type="button"
+														class="btn btn-round btn-primary">Feed Questions</button></a>
+											</div>
 											<div class="pull-right">
 												<a href="newSubject"><button type="button"
 														class="btn btn-round btn-primary">Add New ${type}</button></a>

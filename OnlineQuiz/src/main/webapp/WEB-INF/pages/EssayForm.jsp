@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -9,7 +8,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Gentelella Alela! |</title>
+<title>DataTables | Gentelella</title>
 
 <!-- Bootstrap -->
 <link
@@ -19,12 +18,12 @@
 <link
 	href="<c:url value="../template/vendors/font-awesome/css/font-awesome.min.css" />"
 	rel="stylesheet">
+<!-- Datatables -->
+<link
+	href="<c:url value="../template/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" />"
+	rel="stylesheet">
 <!-- Custom Theme Style -->
 <link href="<c:url value="../template/build/css/custom.min.css" />"
-	rel="stylesheet">
-<!-- iCheck -->
-<link
-	href="<c:url value="../template/vendors/iCheck/skins/flat/green.css"/>"
 	rel="stylesheet">
 </head>
 
@@ -34,12 +33,11 @@
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="index.html" class="site_title"><i class="fa fa-paw"></i>
-							<span>Online Quiz</span></a>
+						<a href="login" class="site_title"><i class="fa fa-paw"></i> <span>Online
+								Quiz</span></a>
 					</div>
 
 					<div class="clearfix"></div>
-
 
 					<br />
 
@@ -50,11 +48,12 @@
 							<ul class="nav side-menu">
 								<li><a href="../user/list"><i class="fa fa-home"></i>
 										User Management </a></li>
-								<li><a href="../QuizManage/SubjectList"><i
-										class="fa fa-edit"></i> Quiz Management </a></li>
-								<li><a href="../AbilityManage/AbilityList"><i
-										class="fa fa-edit"></i> Ability Management </a></li>
-								<li><a href="../EssayForm/EssayList"><i class="fa fa-edit"></i>
+										<li><a href="../QuizManage/SubjectList"><i class="fa fa-edit"></i>
+										Quiz Management </a></li>
+								<li><a href="../AbilityManage/AbilityList"><i class="fa fa-edit"></i>
+										Ability Management </a></li>
+								
+								<li><a href="../EssayForm"><i class="fa fa-edit"></i>
 										Essay Marking </a></li>
 							</ul>
 						</div>
@@ -98,11 +97,13 @@
 								<ul id="menu1" class="dropdown-menu list-unstyled msg_list"
 									role="menu">
 									<li><a> <span class="image"><img
-												src="images/img.jpg" alt="Profile Image" /></span> <span> <span>John
+												src="<c:url value="../templateimages/img.jpg" />"
+												alt="Profile Image" /></span> <span> <span>John
 													Smith</span> <span class="time">3 mins ago</span>
 										</span> <span class="message"> Film festivals used to be
 												do-or-die moments for movie makers. They were where... </span>
 									</a></li>
+
 									<li>
 										<div class="text-center">
 											<a> <strong>See All Alerts</strong> <i
@@ -122,94 +123,67 @@
 				<div class="">
 					<div class="page-title">
 						<div class="title_left">
-							<h3>Ability Form</h3>
-						</div>
-
-						<div class="title_right">
-							<div
-								class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-								<div class="input-group">
-									<input type="text" class="form-control"
-										placeholder="Search for..."> <span
-										class="input-group-btn">
-										<button class="btn btn-default" type="button">Go!</button>
-									</span>
-								</div>
-							</div>
+							<h3>Essay Management</h3>
 						</div>
 					</div>
+
 					<div class="clearfix"></div>
 
 					<div class="row">
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
 								<div class="x_title">
-									<h2>${operation}</h2>
+									<h2>Essay List</h2>
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
-									<form:form action="saveAbility" method="post"
-										modelAttribute="ability"
-										class="form-horizontal form-label-left">
-										<form:hidden path="" />
-										<div class="item form-group">
-											<label class="control-label col-md-3 col-sm-3 col-xs-12"
-												for="name">Id </label>
-											<div class="col-md-6 col-sm-6 col-xs-12">
-												<form:input path="id" id="id"
-													class="form-control col-md-7 col-xs-12" name="id"
-													readonly="true" type="text" />
-											</div>
-										</div>
-										<div class="item form-group">
-											<label class="control-label col-md-3 col-sm-3 col-xs-12"
-												for="name">Short Name <span class="required">*</span>
-											</label>
-											<div class="col-md-6 col-sm-6 col-xs-12">
-												<form:input path="shortName" id="short_name"
-													class="form-control col-md-7 col-xs-12" name="short_name"
-													placeholder="please enter ability short name" required="required"
-													type="text" maxlength="20" />
-											</div>
-										</div>
-										<div class="item form-group">
-											<label class="control-label col-md-3 col-sm-3 col-xs-12"
-												for="name">Full Name <span class="required">*</span>
-											</label>
-											<div class="col-md-6 col-sm-6 col-xs-12">
-												<form:input path="fullName" id="full_name"
-													class="form-control col-md-7 col-xs-12" name="full_name"
-													placeholder="please enter ability full name" required="required"
-													type="text" maxlength="50" />
-											</div>
-										</div>
-										<div class="ln_solid"></div>
-										<div class="form-group">
-											<div class="col-md-6 col-md-offset-3">
-												<a href="cancel"><button type="button"
-														class="btn btn-primary">Cancel</button></a>
-												<button id="send" type="submit" class="btn btn-success">Submit</button>
-											</div>
-										</div>
-									</form:form>
+									<table id="datatable"
+										class="table table-striped table-bordered">
+										<thead>
+											<tr>
+												<th>Question</th>
+												<th>User</th>
+												<th>Answer</th>
+												<th>Action</th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach var="essay" items="${listEssay}">
+												<tr>
+													<td>${essay[2]}</td>
+													<td>${essay[3]}</td>
+													<td>${essay[4]}</td>
+													<td><a href="EssayMarking?id=${essay[0]}"><button
+																type="button" class="btn btn-round btn-primary">Marking</button></a>
+														&nbsp;&nbsp;&nbsp;&nbsp; <a
+														href="javascript:if(confirm('Do you want to delete this entry?'))location='deleteEssay?id=${essay[0]}'"><button type="button"
+																class="btn btn-round btn-primary">Delete</button></a>&nbsp;&nbsp;&nbsp;&nbsp;
+										
+													
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
 								</div>
 							</div>
 						</div>
+
 					</div>
 				</div>
 			</div>
-			<!-- /page content -->
-
-			<!-- footer content -->
-			<footer>
-				<div class="pull-right">
-					Gentelella - Bootstrap Admin Template by <a
-						href="https://colorlib.com">Colorlib</a>
-				</div>
-				<div class="clearfix"></div>
-			</footer>
-			<!-- /footer content -->
 		</div>
+		<!-- /page content -->
+
+		<!-- footer content -->
+		<footer>
+			<div class="pull-right">
+				Gentelella - Bootstrap Admin Template by <a
+					href="https://colorlib.com">Colorlib</a>
+			</div>
+			<div class="clearfix"></div>
+		</footer>
+		<!-- /footer content -->
+	</div>
 	</div>
 
 	<!-- jQuery -->
@@ -221,12 +195,15 @@
 	<!-- FastClick -->
 	<script
 		src="<c:url value="../template/vendors/fastclick/lib/fastclick.js" />"></script>
-	<!-- validator -->
+	<!-- Datatables -->
 	<script
-		src="<c:url value="../template/vendors/validator/validator.js" />"></script>
-	<!-- iCheck -->
+		src="<c:url value="../template/vendors/datatables.net/js/jquery.dataTables.min.js" />"></script>
 	<script
-		src="<c:url value="../template/vendors/iCheck/icheck.min.js" />"></script>
+		src="<c:url value="../template/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js" />"></script>
+	<script
+		src="<c:url value="../template/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js" />"></script>
+
+
 	<!-- Custom Theme Scripts -->
 	<script src="<c:url value="../template/build/js/custom.min.js" />"></script>
 

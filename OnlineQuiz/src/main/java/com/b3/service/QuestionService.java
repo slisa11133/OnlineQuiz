@@ -25,4 +25,6 @@ public interface QuestionService {
 	public Map<String, String> getQlevels();
 	
 	public Map<String, String> getQability();
+	
+	public String isDuplicatedQuestion(String question);
 }

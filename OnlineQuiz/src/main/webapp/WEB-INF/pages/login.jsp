@@ -40,8 +40,9 @@
                 <input type="password" class="form-control" name="pwd" id="pwd" placeholder="Password" required="" />
               </div>
               <div>
-                <!-- <a class="btn btn-default submit" href="QuizManage/SubjectList">Log in</a> -->
-                <input type="submit" name="submit" value="  login  "> 
+                 <!-- <a class="btn btn-default submit" href="QuizManage/SubjectList">Log in</a> -->
+                <!--input type="submit" name="submit" value="  login  "> -->
+                <button type="submit" class="btn btn-success">Login</button>
               </div>
               <div>
 			  	<font color="red">${msg}</font>
@@ -92,7 +93,10 @@
               </div>
               <div>
                 <!-- <a class="btn btn-default submit" href="index.html">Submit</a> -->
-                <input type="submit" name="submit" value="register"> 
+                <!-- input type="submit" name="submit" value="register">--> 
+                <br/>
+                <br/>
+                <button type="submit" class="btn btn-success">Register</button>
               </div>
               <div class="clearfix"></div>
 

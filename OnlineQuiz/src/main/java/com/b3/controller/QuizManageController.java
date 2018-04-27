@@ -10,16 +10,23 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FilenameUtils;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.b3.model.Subject;
 import com.b3.service.SubjectService;
+import com.b3.service.feed.CSVReader;
+import com.b3.service.feed.FeedAdapter;
+import com.b3.service.feed.JSONReader;
+import com.b3.service.feed.XMLReader;
 import com.b3.model.Question;
 import com.b3.service.QuestionService;
 import com.b3.model.QuestionAbility;
@@ -193,6 +200,89 @@ public class QuizManageController {
 		model.addObject("Qlevels", questionService.getQlevels());
 		return model;
 	}
+	
+	@RequestMapping(value = "/feedQuestion", method = RequestMethod.GET)
+	public String showFeedPage(HttpServletRequest request) {
+		return "feedQuestion";
+		//return new ModelAndView("feedQuestion");
+	}
+
+	@RequestMapping(value = "/doUpload", method = RequestMethod.POST)
+	public ModelAndView feedQuestion(HttpServletRequest request, @RequestParam CommonsMultipartFile[] fileUpload)
+			throws Exception {
+		if (fileUpload != null && fileUpload.length > 0) {
+			for (CommonsMultipartFile aFile : fileUpload) {
+				String fileName = aFile.getFileItem().getName();
+				String ext = FilenameUtils.getExtension(fileName);	
+				FeedAdapter feedAdapter;
+				ArrayList<String[]> lines;
+				switch(ext) {
+				case "csv":
+					feedAdapter = new CSVReader();									
+					break;
+				
+				case "xml":
+					feedAdapter = new XMLReader();	
+					break;
+				
+				
+				case "json":
+					feedAdapter = new JSONReader();	
+					break;
+								
+				default: 
+					ModelAndView model = new ModelAndView();
+					model.addObject("msg", "The format of the file you uploaded is not supported.");
+					model.setViewName("feedQuestion");
+					return model;			
+				}//switch
+				lines = feedAdapter.readFile(fileName);		
+				Question question = new Question();
+				for (String[] line : lines) {	
+					String  bl = questionService.isDuplicatedQuestion(line[1]);	
+					//i++;
+					if (line.length == 5) {	
+						if (bl == "True") {
+							System.out.println(line[0]);
+							System.out.println(line[1]);
+							System.out.println(line[2]);
+							System.out.println(line[3]);
+							System.out.println(line[4]);
+							
+							question.setSubId(Integer.parseInt(line[0]));
+							question.setQuestion(line[1]);
+							question.setType(line[2]);
+							question.setGrade(line[3]);
+							question.setLevel(line[4]);
+							questionService.addQuestion(question);
+
+						}//if (bl == "True") 
+						else {
+							ModelAndView model = new ModelAndView();
+							model.addObject("msg", "Following question cannot be fed because already exists in database:\n"
+									+ line[1]);
+							model.setViewName("feedQuestion");
+							return model;
+						}//else
+					}//if (line.length == 5)
+					else {
+						//return "feedFailed";
+						ModelAndView model = new ModelAndView();
+						model.addObject("msg", "Feeding failed due to invalid number of columns!");
+						model.setViewName("feedQuestion");
+						return model;
+					}//else		
+					
+				}//for (String[] line : lines1)
+			}//for (CommonsMultipartFile aFile : fileUpload) {														
+		}//if (fileUpload != null && fileUpload.length > 0)
+		
+		ModelAndView model = new ModelAndView();
+		model.addObject("msg", "File has been fed to database successfully!");
+		model.setViewName("feedQuestion");
+		return model;
+	}
+	//End of feeding questions
 
 	@RequestMapping(value = "/QuestionAbility", method = RequestMethod.GET)
 	public ModelAndView QuestionAbility(HttpServletRequest request) {

@@ -15,8 +15,8 @@ public class Ability implements Serializable {
 	private static final long serialVersionUID = -3465813074586302847L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int a_id;
+	//@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer a_id;
 	
 	@Column
 	private String short_name;
@@ -25,11 +25,11 @@ public class Ability implements Serializable {
 	private String full_name;
 	
 	
-	public int getId() {
+	public Integer getId() {
 		return this.a_id;
 	}
 	
-	public void setId(int pId) {
+	public void setId(Integer pId) {
 		this.a_id = pId;
 	}
 	

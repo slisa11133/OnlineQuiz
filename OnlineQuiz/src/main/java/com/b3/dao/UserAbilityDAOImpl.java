@@ -1,12 +1,18 @@
 package com.b3.dao;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
+
+import javax.management.Query;
 
 import org.hibernate.SQLQuery;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -87,12 +93,13 @@ public class UserAbilityDAOImpl implements UserAbilityDAO {
 		return userAbilities;
 	}
 	@Override
-	public void setUserAbilities(List<UserAbility> userability, String uid) {
-		for(UserAbility ua:userability ) {
-			String sql = "UPDATA user_ability SET result='"+ua.getResult()+"' WHERE u_id='"+uid+"' AND a_id='"+ua.getAId()+"'";
-			SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql);
-		}
-		
+	public void setUserAbilities(UserAbility ua) {
+		String sql = "UPDATE user_ability SET result = :result WHERE ua_id=:ua_id";
+		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql);
+		query.setParameter("result", ua.getResult());
+		query.setParameter("ua_id", ua.getUa_id());
+		query.executeUpdate();
+		sessionFactory.getCurrentSession().clear();
 	}
 
 }

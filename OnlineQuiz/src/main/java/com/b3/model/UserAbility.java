@@ -5,6 +5,8 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -20,14 +22,15 @@ public class UserAbility implements Serializable {
 	private static final long serialVersionUID = -3465813074586302847L;
 	
 	@Id
-	private int ua_id;
+	//@GeneratedValue(strategy = GenerationType.AUTO)
+ 	private Integer ua_id;
 	
 	
 	@Column
 	private String u_id;
 	
 	@Column
-	private int a_id;
+	private Integer a_id;
 
 	@Column
 	private float result;
@@ -40,6 +43,18 @@ public class UserAbility implements Serializable {
 	@JoinColumn(name="u_id", insertable = false, updatable = false)
 	private User userD;
 	
+	
+	
+	public Integer getUa_id() {
+		return ua_id;
+	}
+
+
+	public void setUa_id(Integer ua_id) {
+		this.ua_id = ua_id;
+	}
+
+
 	public String getUId() {
 		return this.u_id;
 	}
@@ -50,11 +65,11 @@ public class UserAbility implements Serializable {
 	}
 	
 	
-	public int getAId() {
+	public Integer getAId() {
 		return this.a_id;
 	}
 	
-	public void setAId(int pAId) {
+	public void setAId(Integer pAId) {
 		this.a_id = pAId;
 	}
 	

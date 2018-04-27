@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,6 +29,7 @@ import com.b3.model.question.QuestionMCQ;
 import com.b3.service.question.MCQFactory;
 import com.b3.model.question.QuestionTFQ;
 import com.b3.service.question.TFQFactory;
+import com.b3.dao.UserAbilityDAO;
 import com.b3.model.Ability;
 import com.b3.model.Essay;
 import com.b3.model.Options;
@@ -40,6 +42,7 @@ import com.b3.model.question.QuestionBFQ;
 import com.b3.service.question.BFQFactory;
 import com.b3.model.Subject;
 import com.b3.service.SubjectService;
+import com.b3.service.UserAbilityService;
 import com.b3.service.question.PaperFactory;
 import com.b3.model.question.QuestionEssay;
 import com.b3.service.question.EssayFactory;
@@ -146,8 +149,10 @@ public class DoTestController {
 	}
 	
 	@Autowired
-	private GradeService gradeservice = new GradeService();
-
+	private GradeService gradeservice;
+	@Autowired
+	private UserAbilityDAO uasdao;
+	@Transactional
 	@RequestMapping(value = "/submitAnswer", method = RequestMethod.POST)
 	public ModelAndView submitAnswer(HttpServletRequest request, ModelAndView model, HttpSession httpsession) throws IOException {
 		Paper paper = paperFactory.getPaper();
@@ -169,6 +174,17 @@ public class DoTestController {
 			}
 			num--;
 		}
+		List<UserAbility> userability  = uasdao.getUserAbilities(u.getId());
+		
+		for(UserAbility ua: userability) {
+			if (current.containsKey(String.valueOf(ua.getAId()))) {
+				ua.setResult(ua.getResult()+current.get(String.valueOf(ua.getAId())));
+			}
+		}
+		for(UserAbility ua: userability) {
+			uasdao.setUserAbilities(ua);
+		}
+
 		
 		model.addObject("current", currentnum);
 

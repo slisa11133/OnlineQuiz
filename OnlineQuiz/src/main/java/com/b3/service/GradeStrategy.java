@@ -8,5 +8,5 @@ import com.b3.model.question.Paper;
 
 public interface GradeStrategy {
 	int generateGrade(Paper paper, String u_id);
-	public Map<String,Float> currentability(Paper paper, String u_id);
-}
+	Map<String,Float> currentability(Paper paper, String u_id);
+} 

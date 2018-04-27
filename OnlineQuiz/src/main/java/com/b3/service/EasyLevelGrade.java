@@ -2,6 +2,7 @@ package com.b3.service;
 
 
 import java.lang.reflect.Field;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,14 +20,15 @@ import com.b3.model.UserAbility;
 import com.b3.model.question.Paper;
 import com.b3.model.question.QuestionObject;
 import com.b3.service.QuestionAbilityService;
+
 @Service
 @Transactional
 public class EasyLevelGrade implements GradeStrategy {
 
-	@Autowired
-	private UserAbilityDAO userabilitydao;
-	@Autowired
-	private UserAbilityService uas ;
+//	@Autowired
+//	private UserAbilityDAO userabilitydao;
+//	@Autowired
+//	private UserAbilityService uas ;
 
 
 	@Override

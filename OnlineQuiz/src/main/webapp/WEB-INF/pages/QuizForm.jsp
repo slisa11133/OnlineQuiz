@@ -54,6 +54,8 @@
 										class="fa fa-edit"></i> Quiz Management </a></li>
 								<li><a href="../AbilityManage/AbilityList"><i class="fa fa-edit"></i>
 										Ability Management </a></li>
+								<li><a href="../EssayForm/EssayList"><i class="fa fa-edit"></i>
+										Essay Marking </a></li>
 							</ul>
 						</div>
 

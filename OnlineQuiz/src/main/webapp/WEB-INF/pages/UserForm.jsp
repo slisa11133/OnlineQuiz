@@ -52,6 +52,8 @@
 										class="fa fa-edit"></i> Quiz Management </a></li>
 								<li><a href="../AbilityManage/AbilityList"><i class="fa fa-edit"></i>
 										Ability Management </a></li>
+								<li><a href="../EssayForm/EssayList"><i class="fa fa-edit"></i>
+										Essay Marking </a></li>
 							</ul>
 						</div>
 
@@ -223,7 +225,20 @@
 												</form:select>
 
 											</div>
-										</div>
+										</div>	
+										
+										<!-- Email -->
+										<div class="item form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12"
+												for="name">Email <span class="required">*</span>
+											</label>
+											<div class="col-md-6 col-sm-6 col-xs-12">
+												<form:input path="email" id="email"
+													class="form-control col-md-7 col-xs-12" name="email"
+													placeholder="please enter email" required="required"
+													type="text" maxlength="30" />
+											</div>
+										</div>								
 
 										<!-- State -->
 										<div class="item form-group">
@@ -238,13 +253,11 @@
 													required="required" value="F" class="flat" />
 												Disable
 
-											</div>
-											
-											
-							
-																						
-											
+											</div>	
 										</div>
+										
+										
+										
 										<div class="ln_solid"></div>
 										<div class="form-group">
 											<div class="col-md-6 col-md-offset-3">

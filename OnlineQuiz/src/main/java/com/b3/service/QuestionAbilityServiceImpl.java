@@ -1,6 +1,7 @@
 package com.b3.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,12 @@ public class QuestionAbilityServiceImpl implements QuestionAbilityService {
 	@Transactional
 	public List<String> getAllQuestionAbilities(Integer questionId) {
 		return questionabilityDAO.getAllQuestionAbilities(questionId);
+	}
+	
+	@Override
+	@Transactional
+	public Map<String, String> getAllEssayAbilities(Integer questionId) {
+		return questionabilityDAO.getAllEssayAbilities(questionId);
 	}
 
 	@Override

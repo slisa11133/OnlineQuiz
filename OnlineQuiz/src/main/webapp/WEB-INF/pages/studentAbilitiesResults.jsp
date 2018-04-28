@@ -54,7 +54,7 @@
 										class="fa fa-edit"></i> Do Test </a></li>
 								<li><a href="../DoTest/chooseTest?quizType=Essay"><i
 										class="fa fa-edit"></i> Do Essay </a></li>
-								<li><a href="user/getAbilitiesResults"><i
+								<li><a href="getAbilitiesResults"><i
 										class="fa fa-edit"></i> Show Abilities Report </a></li>
 							</ul>
 						</div>

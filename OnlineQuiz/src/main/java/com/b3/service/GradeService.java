@@ -14,6 +14,10 @@ import com.b3.service.GradeStrategy;
 @Transactional
 public class GradeService {
 	
+
+	GradeStrategy grade;
+	
+	
 	@Transactional
 	public int gradecomputation(Paper paper, String u_id) {
 		int level = Integer.valueOf( paper.getQuestionSet().get(0).getLevel());
@@ -21,13 +25,13 @@ public class GradeService {
 		System.out.println("level+"+level);
 		
 		if (level == 1) {
-			GradeStrategy grade = new EasyLevelGrade();
+			grade = new EasyLevelGrade();
 			result = grade.generateGrade(paper, u_id);
 		}else if(level == 2) {
-			GradeStrategy grade = new MediumLevelGrade();
+			grade = new MediumLevelGrade();
 			result = grade.generateGrade(paper, u_id);
 		}else if(level == 3) {
-			GradeStrategy grade = new HardLevelGrade();
+			grade = new HardLevelGrade();
 			result = grade.generateGrade(paper, u_id);
 		}
 		return result;
@@ -39,13 +43,13 @@ public class GradeService {
 		System.out.println("level+"+level);
 		
 		if (level == 1) {
-			GradeStrategy grade = new EasyLevelGrade();
+			grade = new EasyLevelGrade();
 			result = grade.currentability(paper, u_id);
 		}else if(level == 2) {
-			GradeStrategy grade = new MediumLevelGrade();
+			grade = new MediumLevelGrade();
 			result = grade.currentability(paper, u_id);
 		}else if(level == 3) {
-			GradeStrategy grade = new HardLevelGrade();
+			grade = new HardLevelGrade();
 			result = grade.currentability(paper, u_id);
 		}
 		return result;

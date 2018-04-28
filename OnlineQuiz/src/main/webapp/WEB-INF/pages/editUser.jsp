@@ -22,6 +22,12 @@
 <!-- Custom Theme Style -->
 <link href="<c:url value="../template/build/css/custom.min.css" />"
 	rel="stylesheet">
+<!-- iCheck -->
+<link 
+	href="<c:url value="../template/vendors/iCheck/skins/flat/green.css"/>" 
+	rel="stylesheet">
+</head>
+
 </head>
 
 <body class="nav-md">
@@ -30,12 +36,11 @@
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="../" class="site_title"><i class="fa fa-paw"></i> <span>Online
-								Quiz</span></a>
+						<a href="index.html" class="site_title"><i class="fa fa-paw"></i>
+							<span>Online Quiz</span></a>
 					</div>
 
 					<div class="clearfix"></div>
-
 
 					<br />
 
@@ -48,8 +53,18 @@
 										User Management </a></li>
 								<li><a href="../QuizManage/SubjectList"><i
 										class="fa fa-edit"></i> Quiz Management </a></li>
-								<li><a href="../AbilityManage/AbilityList"><i class="fa fa-edit"></i>
-										Ability Management </a></li>
+								<li><a><i class="fa fa-table"></i> Tables <span
+										class="fa fa-chevron-down"></span></a>
+									<ul class="nav child_menu">
+										<li><a href="tables.html">Tables</a></li>
+										<li><a href="tables_dynamic.html">Table Dynamic</a></li>
+									</ul></li>
+								<li><a><i class="fa fa-clone"></i>Layouts <span
+										class="fa fa-chevron-down"></span></a>
+									<ul class="nav child_menu">
+										<li><a href="fixed_sidebar.html">Fixed Sidebar</a></li>
+										<li><a href="fixed_footer.html">Fixed Footer</a></li>
+									</ul></li>
 							</ul>
 						</div>
 
@@ -61,7 +76,7 @@
 
 			<!-- top navigation -->
 			<div class="top_nav">
-				<div class="nav_menu">
+								<div class="nav_menu">
 					<nav>
 						<div class="nav toggle">
 							<a id="menu_toggle"><i class="fa fa-bars"></i></a>
@@ -109,6 +124,9 @@
 					</nav>
 				</div>
 			</div>
+
+			</div>
+
 			<!-- /top navigation -->
 			<!-- page content -->
 			<div class="right_col" role="main">
@@ -137,7 +155,7 @@
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
 								<div class="x_title">
-									<h2>${operation}</h2>
+									<h2>Edit User</h2>
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
@@ -152,7 +170,8 @@
 												<!-- Account -->
 												<div class="item form-group">
 													<label class="control-label col-md-3 col-sm-3 col-xs-12"
-														for="name">Account </label>
+														for="name">Account<span class="required">*</span>
+													</label>
 													<div class="col-md-6 col-sm-6 col-xs-12">
 														<form:input path="id" id="id"
 															class="form-control col-md-7 col-xs-12" name="id"
@@ -162,7 +181,7 @@
 												<!-- Password -->
 												<div class="item form-group">
 													<label class="control-label col-md-3 col-sm-3 col-xs-12"
-														for="name">Password <span class="required">*</span>
+														for="name">Password<span class="required">*</span>
 													</label>
 													<div class="col-md-6 col-sm-6 col-xs-12">
 														<form:input path="pwd" id="pwd"
@@ -222,18 +241,33 @@
 													</div>
 												</div>
 												
+												<!-- Email -->
+													<div class="item form-group">
+														<label class="control-label col-md-3 col-sm-3 col-xs-12"
+															for="name">Email <span class="required">*</span>
+														</label>
+														<div class="col-md-6 col-sm-6 col-xs-12">
+															<form:input path="email" id="email"
+																class="form-control col-md-7 col-xs-12" name="email"
+																placeholder="please enter email" required="required"
+																type="text" maxlength="30" />
+														</div>
+													</div>
 												<!-- State -->
 												<div class="item form-group">
 													<label class="control-label col-md-3 col-sm-3 col-xs-12"
 														for="name">State <span class="required">*</span>
 													</label>
-													<div class="col-md-6 col-sm-6 col-xs-12">
-														<form:radiobutton path="is_open" id="is_open"
-															name="is_open" required="required" value="T"/>Enable   
-														<form:radiobutton path="is_open" id="is_open"
-															name="is_open" required="required" value="F"/>Disable  
-  
-													</div>
+																							<div class="col-md-6 col-sm-6 col-xs-12">
+												<form:radiobutton path="is_open" id="is_open" name="is_open"
+													required="required" value="T" class="flat" checked="true" />
+												Enable
+												<form:radiobutton path="is_open" id="is_open" name="is_open"
+													required="required" value="F" class="flat" />
+												Disable
+
+											</div>
+																	
 												</div>
 												<div class="ln_solid"></div>
 												<div class="form-group">
@@ -275,7 +309,9 @@
 	<!-- validator -->
 	<script
 		src="<c:url value="../template/vendors/validator/validator.js" />"></script>
-
+	<!-- iCheck -->
+    <script 
+    	src="<c:url value="../template/vendors/iCheck/icheck.min.js" />"></script>
 	<!-- Custom Theme Scripts -->
 	<script src="<c:url value="../template/build/js/custom.min.js" />"></script>
 

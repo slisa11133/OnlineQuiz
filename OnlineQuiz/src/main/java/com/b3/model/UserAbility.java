@@ -68,6 +68,16 @@ public class UserAbility implements Serializable {
 	}
 	
 	
+	public int getUa_id() {
+		return ua_id;
+	}
+
+
+	public void setUa_id(int ua_id) {
+		this.ua_id = ua_id;
+	}
+
+
 	public Ability getAbility() {
 		return this.ability;
 	}

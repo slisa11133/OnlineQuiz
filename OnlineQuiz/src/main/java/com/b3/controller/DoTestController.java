@@ -10,6 +10,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +23,16 @@ import org.springframework.web.servlet.ModelAndView;
 import com.b3.model.question.QuestionObject;
 import com.b3.service.BaseReportFactory;
 import com.b3.service.EssayService;
+import com.b3.service.GeneratePaperService;
+import com.b3.service.GeneratePaperServiceImpl;
+import com.b3.service.GeneratePaperServiceImpl2;
 import com.b3.service.GradeService;
 import com.b3.service.question.BaseQuestionFactory;
 import com.b3.model.question.QuestionMCQ;
 import com.b3.service.question.MCQFactory;
 import com.b3.model.question.QuestionTFQ;
 import com.b3.service.question.TFQFactory;
+import com.b3.dao.UserAbilityDAO;
 import com.b3.memento.EssayCareTaker;
 import com.b3.model.Ability;
 import com.b3.model.Essay;
@@ -62,6 +67,12 @@ public class DoTestController {
 	private EssayService essayService;
 	@Autowired
 	private EssayCareTaker essayCareTaker;
+	@Autowired
+	private GeneratePaperService generatePaperServiceImpl = new GeneratePaperServiceImpl();
+	@Autowired
+	private GeneratePaperService generatePaperServiceImpl2 = new GeneratePaperServiceImpl2();
+	// @Autowired
+	// private GeneratePaperService generateEssayService;
 
 	@RequestMapping(value = "/chooseTest", method = RequestMethod.GET)
 	public ModelAndView chooseTest(ModelAndView model, HttpServletRequest request, HttpSession httpsession)
@@ -122,45 +133,54 @@ public class DoTestController {
 		String level = request.getParameter("level");
 		User u = (User) httpsession.getAttribute("current_user");
 		System.out.println(u.getId());
-		paperFactory = PaperFactory;
-
-		/** 4 MCQs **/
-		while (paperFactory.getQuestionSet().size() < 4) {
-			BaseQuestionFactory questionFactory = MCQFactory;
-			QuestionObject question = questionFactory.createQuestion(s_id, grade, level);
-			/** if add failed, then clean questonObject **/
-			if (!paperFactory.addQuestion(question))
-				questionFactory.clearQuestion();
-		}
-		/** 3 TFQs **/
-		while (paperFactory.getQuestionSet().size() < 7) {
-			BaseQuestionFactory questionFactory = TFQFactory;
-			QuestionObject question = questionFactory.createQuestion(s_id, grade, level);
-			/** if add failed, then clean questonObject **/
-			if (!paperFactory.addQuestion(question))
-				questionFactory.clearQuestion();
-		}
-		/** 3 BFQs **/
-		while (paperFactory.getQuestionSet().size() < 10) {
-			BaseQuestionFactory questionFactory = BFQFactory;
-			QuestionObject question = questionFactory.createQuestion(s_id, grade, level);
-			/** if add failed, then clean questonObject **/
-			if (!paperFactory.addQuestion(question))
-				questionFactory.clearQuestion();
-		}
-		Paper paper = paperFactory.getPaper();
+		// paperFactory = PaperFactory;
+		//
+		// /** 4 MCQs **/
+		// while (paperFactory.getQuestionSet().size() < 4) {
+		// BaseQuestionFactory questionFactory = MCQFactory;
+		// QuestionObject question = questionFactory.createQuestion(s_id, grade, level);
+		// /** if add failed, then clean questonObject **/
+		// if (!paperFactory.addQuestion(question))
+		// questionFactory.clearQuestion();
+		// }
+		// /** 3 TFQs **/
+		// while (paperFactory.getQuestionSet().size() < 7) {
+		// BaseQuestionFactory questionFactory = TFQFactory;
+		// QuestionObject question = questionFactory.createQuestion(s_id, grade, level);
+		// /** if add failed, then clean questonObject **/
+		// if (!paperFactory.addQuestion(question))
+		// questionFactory.clearQuestion();
+		// }
+		// /** 3 BFQs **/
+		// while (paperFactory.getQuestionSet().size() < 10) {
+		// BaseQuestionFactory questionFactory = BFQFactory;
+		// QuestionObject question = questionFactory.createQuestion(s_id, grade, level);
+		// /** if add failed, then clean questonObject **/
+		// if (!paperFactory.addQuestion(question))
+		// questionFactory.clearQuestion();
+		// }
+		// Paper paper = paperFactory.getPaper();
 
 		model = new ModelAndView("DoTest");
+
+		// model.addObject("questions", paper.getQuestionSet());
+		httpsession.setAttribute("paperFactory", generatePaperServiceImpl.generatePaper(u, s_id, grade, level));
+
+		Paper paper = generatePaperServiceImpl.generatePaper(u, s_id, grade, level).getPaper();
 		model.addObject("questions", paper.getQuestionSet());
 		return model;
 	}
 
 	@Autowired
 	private GradeService gradeservice;
+	@Autowired
+	private UserAbilityDAO uasdao;
 
+	@Transactional
 	@RequestMapping(value = "/submitAnswer", method = RequestMethod.POST)
 	public ModelAndView submitAnswer(HttpServletRequest request, ModelAndView model, HttpSession httpsession)
 			throws IOException {
+		paperFactory = (BaseQuestionFactory) httpsession.getAttribute("paperFactory");
 		Paper paper = paperFactory.getPaper();
 		List<String> answer = new ArrayList<String>();
 		for (int i = 0; i < paper.getQuestionSet().size(); i++) {
@@ -179,6 +199,17 @@ public class DoTestController {
 				currentnum.add((float) 0);
 			}
 			num--;
+		}
+
+		List<UserAbility> userability = uasdao.getUserAbilities(u.getId());
+
+		for (UserAbility ua : userability) {
+			if (current.containsKey(String.valueOf(ua.getAId()))) {
+				ua.setResult(ua.getResult() + current.get(String.valueOf(ua.getAId())));
+			}
+		}
+		for (UserAbility ua : userability) {
+			uasdao.setUserAbilities(ua);
 		}
 
 		model.addObject("current", currentnum);
@@ -204,11 +235,24 @@ public class DoTestController {
 		User u = (User) httpsession.getAttribute("current_user");
 		System.out.println(u.getId());
 
-		/** create 1 Essay **/
-		essayFactory = EssayFactory;
-		QuestionObject question = essayFactory.createQuestion(s_id, grade, level);
+		// /** create 1 Essay **/
+		// essayFactory = EssayFactory;
+		// QuestionObject question = essayFactory.createQuestion(s_id, grade, level);
+		//
+		// /** add to memento **/
+		// EssayOriginator originator = new EssayOriginator();
+		// originator.setU_id(u.getId());
+		// originator.setQ_id(question.getQ_id());
+		// originator.setQuestion(question.getQuestion());
+		// originator.setAnswer("");
+		// EssayMemento essayMemento = originator.saveToMemento();
+		// essayCareTaker.addMemento(essayMemento);
 
-		/** add to memento **/
+		model = new ModelAndView("DoEssay");
+		// model.addObject("question", question);
+		QuestionObject question = generatePaperServiceImpl2.generatePaper(u, s_id, grade, level).createQuestion(s_id,
+				grade, level);
+
 		EssayOriginator originator = new EssayOriginator();
 		originator.setU_id(u.getId());
 		originator.setQ_id(question.getQ_id());
@@ -217,7 +261,6 @@ public class DoTestController {
 		EssayMemento essayMemento = originator.saveToMemento();
 		essayCareTaker.addMemento(essayMemento);
 
-		model = new ModelAndView("DoEssay");
 		model.addObject("question", question);
 		model.addObject("state", "new");
 		return model;

@@ -61,7 +61,7 @@ public class GeneratePaperServiceImpl2 extends GeneratePaperService {
 	}
 	
 	@Override
-	@Transactional
+	@Transactional 
 	public void ability_analysis() {
 		//this.list=user_ability.getUserAbilities(this.user.getId());
 		//this.a_thi=

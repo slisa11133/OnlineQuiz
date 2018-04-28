@@ -169,8 +169,6 @@
 														&nbsp;&nbsp;&nbsp;&nbsp; <a
 														href="javascript:if(confirm('Do you want to delete this user?'))location='deleteUser?id=${user.id}'"><button type="button"
 																class="btn btn-round btn-primary">Delete</button></a>&nbsp;&nbsp;&nbsp;&nbsp;
-																<a href="getAbilitiesResults?id=${user.id}"><button
-																type="button" class="btn btn-round btn-primary">Abilities</button></a>
 													
 												</tr>
 											</c:forEach>

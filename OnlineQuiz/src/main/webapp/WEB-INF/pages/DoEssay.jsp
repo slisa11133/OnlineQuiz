@@ -182,9 +182,9 @@
 													<button id="save" name="action" type="submit"
 														onclick="form.action='saveToMemento';"
 														class="btn btn-success">Save</button>
-													<a href="cancel?quizType=Essay&state=${state}">
+													<!-- <a href="cancel?quizType=Essay&state=${state}">
 														<button type="button" class="btn btn-round btn-primary">Cancel</button>
-													</a>
+													</a> -->
 												</c:when>
 												<c:otherwise>
 													<a href="cancel?quizType=Essay&state=${state}">

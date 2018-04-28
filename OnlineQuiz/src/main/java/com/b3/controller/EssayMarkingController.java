@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,17 +47,16 @@ public class EssayMarkingController {
 	}
 
 	@Autowired
-	private EssayService essayService;	
-	
+	private EssayService essayService;
+
 	@Autowired
-	private QuestionService questionService;	
-	
+	private QuestionService questionService;
+
 	@Autowired
-	private AbilityService abilityService;	
-	
+	private AbilityService abilityService;
+
 	@Autowired
-	private UserAbilityService userAbilityService;	
-	
+	private UserAbilityService userAbilityService;
 
 	@Autowired
 	private QuestionAbilityService questionAbilityService;
@@ -69,13 +69,12 @@ public class EssayMarkingController {
 		return model;
 	}
 
-
 	@RequestMapping(value = "/back", method = RequestMethod.GET)
 	public ModelAndView back(ModelAndView model) {
 		return new ModelAndView("redirect:/EssayForm/EssayList");
 
 	}
-	
+
 	@RequestMapping(value = "/deleteEssay", method = RequestMethod.GET)
 	public ModelAndView deleteUser(HttpServletRequest request) {
 		Integer essayId = Integer.parseInt(request.getParameter("id"));
@@ -83,35 +82,39 @@ public class EssayMarkingController {
 		return new ModelAndView("redirect:/EssayForm/EssayList");
 	}
 
-
+	@Transactional
 	@RequestMapping(value = "/saveMarking", method = RequestMethod.POST)
 	public ModelAndView saveUpdate(HttpServletRequest request, @ModelAttribute Essay essay) {
-		Integer abilityCount = Integer.parseInt(request.getParameter("abilityCount"));
+		String[] a_ids = request.getParameterValues("a_id");
+		String[] results = request.getParameterValues("result");
 		List<UserAbility> userAbility = new ArrayList<UserAbility>();
-		for(int i = 0;i<abilityCount;i++)
-		{
-			Integer a_id = Integer.parseInt(request.getParameter("a_id"+i));
-			float result = Float.parseFloat(request.getParameter("result"+i));
+		for (int i = 0; i < a_ids.length; i++) {
+
+			Integer a_id = Integer.parseInt(a_ids[i]);
+			float result = Float.parseFloat(results[i]);
 			UserAbility ability = new UserAbility();
 			ability.setUId(essay.getU_id());
 			ability.setAId(a_id);
 			ability.setResult(result);
 			userAbility.add(ability);
 		}
+		essayService.updateUserAbility(userAbility);
 		essayService.updateEssay(essay);
+		
 		return new ModelAndView("redirect:/EssayForm/EssayList");
 
 	}
-		
+
 	@RequestMapping(value = "/EssayMarking", method = RequestMethod.GET)
 	public ModelAndView essayMarking(HttpServletRequest request, HttpSession httpsession) {
 		User u = (User) httpsession.getAttribute("current_user");
-		Integer essayId = Integer.parseInt(request.getParameter("id"));	
+		Integer essayId = Integer.parseInt(request.getParameter("id"));
 		Essay essay = essayService.getEssayById(essayId);
 		essay.setMarker_id(u.getId());
 		Integer quesId = essay.getQ_id();
-		//System.out.println("Question Id is "+ quesId);		
-		//List<QuestionAbility> listAbility = questionAbilityService.getAllQuestionAbilitiesByQ(quesId);
+		// System.out.println("Question Id is "+ quesId);
+		// List<QuestionAbility> listAbility =
+		// questionAbilityService.getAllQuestionAbilitiesByQ(quesId);
 		Map<String, String> listAbility = questionAbilityService.getAllEssayAbilities(quesId);
 		UserAbility userAbility = new UserAbility();
 		ModelAndView model = new ModelAndView("EssayMarking");
@@ -119,16 +122,12 @@ public class EssayMarkingController {
 		model.addObject("userAbility", userAbility);
 		/** question ability options **/
 		model.addObject("Qability", listAbility);
-		model.addObject("abilityCount", listAbility.size());
 		return model;
 	}
-	
-	
-	
+
 	@RequestMapping(value = "/login")
 	public ModelAndView login() {
 		return new ModelAndView("redirect:/");
 	}
-
 
 }

@@ -146,7 +146,20 @@
 									<h2>${msg}</h2>
 									<form:form action="saveMarking" method="post"
 										modelAttribute="essay" class="form-horizontal form-label-left">
-
+										<!-- e_id -->
+										<form:input path="e_id" id="e_id" name="e_id" type="hidden" />
+										<!-- q_id -->
+										<form:input path="q_id" id="q_id" name="q_id" type="hidden" />
+										<!-- StudentId -->
+										<div class="item form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12"
+												for="name">Student </label>
+											<div class="col-md-6 col-sm-6 col-xs-12">
+												<form:input path="u_id" id="u_id"
+													class="form-control col-md-7 col-xs-12" name="u_id"
+													readonly="true" type="text" />
+											</div>
+										</div>
 										<!-- Question -->
 										<div class="item form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12"
@@ -170,18 +183,18 @@
 										</div>
 
 										<!-- Ability -->
-										<form:input path="" id="abilityCount" name="abilityCount"
-											type="hidden" value="${abilityCount}" />
-										<c:forEach var="Qability" items="${Qability}">
+										<c:forEach var="ability" items="${Qability}">
 											<div class="item form-group">
+											
 												<label class="control-label col-md-3 col-sm-3 col-xs-12"
-													for="name"> ${Qability.value} </label>
+													for="name"><span class="required">*</span> ${ability.value} </label>
 
 												<div class="col-md-6 col-sm-6 col-xs-12">
-													<form:input path="" id="a_id" name="a_id"
-														type="hidden" value="${Qability.key}" />
-													<form:input path="" id="result" class="form-control col-md-10"
-														name="result" type="text" />
+													<form:input path="" id="a_id" name="a_id" type="hidden"
+														value="${ability.key}" />
+														
+													<form:input path="" id="result" required="required"
+														class="form-control col-md-10" name="result" type="text" />
 												</div>
 											</div>
 										</c:forEach>
@@ -200,12 +213,12 @@
 										<!-- Feedback -->
 										<div class="item form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12"
-												for="name">Feedback <span class="required">*</span>
+												for="name">Feedback 
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
 												<form:input path="feedback" id="feedback"
 													class="form-control col-md-7 col-xs-12" name="feedback"
-													placeholder="please give your feedback" required="required"
+													placeholder="please give your feedback" 
 													type="text" maxlength="1000" />
 											</div>
 

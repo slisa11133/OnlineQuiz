@@ -248,6 +248,7 @@ public class DoTestController {
 		// EssayMemento essayMemento = originator.saveToMemento();
 		// essayCareTaker.addMemento(essayMemento);
 
+		httpsession.setAttribute("essayFactory", generatePaperServiceImpl2.generatePaper(u, s_id, grade, level));
 		model = new ModelAndView("DoEssay");
 		// model.addObject("question", question);
 		QuestionObject question = generatePaperServiceImpl2.generatePaper(u, s_id, grade, level).createQuestion(s_id,
@@ -283,6 +284,7 @@ public class DoTestController {
 	@RequestMapping(value = "/submitEssay", method = RequestMethod.POST)
 	public ModelAndView submitEssay(HttpServletRequest request, ModelAndView model, HttpSession httpsession)
 			throws IOException {
+		essayFactory = (BaseQuestionFactory) httpsession.getAttribute("essayFactory");
 		String answer = request.getParameter("answer");
 		User u = (User) httpsession.getAttribute("current_user");
 		EssayMemento essayMemento = essayCareTaker.getMemento(u.getId());

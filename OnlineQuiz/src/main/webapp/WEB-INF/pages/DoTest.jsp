@@ -223,9 +223,9 @@
 											<c:choose>
 												<c:when test="${StudentAnswers==null}">
 													<button id="send" type="submit" class="btn btn-success">Submit</button>
-													<a href="cancel?quizType=Test">
+													<!-- <a href="cancel?quizType=Test">
 														<button type="button" class="btn btn-round btn-primary">Cancel</button>
-													</a>
+													</a> -->
 												</c:when>
 												<c:otherwise>
 													<a href="cancel?quizType=Test">

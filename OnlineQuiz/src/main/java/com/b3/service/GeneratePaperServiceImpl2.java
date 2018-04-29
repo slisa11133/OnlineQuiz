@@ -31,8 +31,8 @@ public class GeneratePaperServiceImpl2 extends GeneratePaperService {
 	private String level;
 	private User user;
 	private List<UserAbility> userAbility;
-	private int weak_ability_id;
-	private float weak_ability;
+	private int weak_ability_id=1;
+	private float weak_ability=0;
 	private float ability1;
 	private float ability2;
 	private float ability3;
@@ -55,10 +55,10 @@ public class GeneratePaperServiceImpl2 extends GeneratePaperService {
 	private EssayCareTaker essayCareTaker;
 	BaseQuestionFactory paperFactory;
 	BaseQuestionFactory essayFactory;
-	AnalysisAbility analysisability;
+	AnalysisAbility analysisability= new AnalysisAbility();
 	
-	public BaseQuestionFactory generatePaper(User u, String type, int id, String grade, String level) {
-		this.paper_type=type;
+	public BaseQuestionFactory generatePaper(User u, int id, String grade, String level) {
+		//this.paper_type=type;
 		this.id=id;
 		this.user=u;
 		this.grade=grade;

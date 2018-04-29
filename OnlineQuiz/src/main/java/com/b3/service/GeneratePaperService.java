@@ -21,8 +21,8 @@ public abstract class GeneratePaperService {
 	private String level;
 	private User user;
 	private List<UserAbility> userAbility;
-	private int weak_ability_id;
-	private float weak_ability;
+	private int weak_ability_id=1;
+	private float weak_ability=0;
 	private float ability1;
 	private float ability2;
 	private float ability3;

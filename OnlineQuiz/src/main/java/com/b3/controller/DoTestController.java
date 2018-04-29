@@ -334,7 +334,8 @@ public class DoTestController {
 		if (quizType.equals("Test"))
 			paperFactory.clearPaper();
 		else if (quizType.equals("Essay")) {
-			if (state.equals("new"))
+			//if (state.equals("new"))
+			if (essayFactory != null)
 				essayFactory.clearQuestion();
 		}
 

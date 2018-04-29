@@ -19,6 +19,10 @@ public abstract class BaseQuestionFactory {
 	public QuestionObject createQuestion(int s_id, String grade, String level) {
 		throw new UnsupportedOperationException("Cannot return QuestionObject.");
 	};
+	
+	public QuestionObject createQuestionByAbility(int s_id, String grade, String level, int a_id) {
+		throw new UnsupportedOperationException("Cannot return QuestionObject.");
+	};
 
 	public void clearQuestion() {
 		throw new UnsupportedOperationException("Cannot clear QuestionObject.");

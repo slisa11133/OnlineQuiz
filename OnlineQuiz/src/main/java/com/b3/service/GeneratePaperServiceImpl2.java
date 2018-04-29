@@ -30,7 +30,17 @@ public class GeneratePaperServiceImpl2 extends GeneratePaperService {
 	private String grade;
 	private String level;
 	private User user;
+	private List<UserAbility> userAbility;
+	private int weak_ability_id;
+	private float weak_ability;
+	private float ability1;
+	private float ability2;
+	private float ability3;
+	private float ability4;
+	private float ability5;
 	
+	@Autowired
+	private UserAbilityService userAbilityService;
 	@Autowired
 	private MCQFactory MCQFactory;
 	@Autowired
@@ -45,9 +55,7 @@ public class GeneratePaperServiceImpl2 extends GeneratePaperService {
 	private EssayCareTaker essayCareTaker;
 	BaseQuestionFactory paperFactory;
 	BaseQuestionFactory essayFactory;
-	
-	@Autowired
-	private UserAbilityService user_ability;
+	AnalysisAbility analysisability;
 	
 	public BaseQuestionFactory generatePaper(User u, String type, int id, String grade, String level) {
 		this.paper_type=type;
@@ -55,21 +63,34 @@ public class GeneratePaperServiceImpl2 extends GeneratePaperService {
 		this.user=u;
 		this.grade=grade;
 		this.level=level;
+		this.userAbility=userAbilityService.getUserAbilities(this.user.getId());
 		this.ability_analysis();
-		this.getQuestion();
 		return this.generateTest();
 	}
 	
 	@Override
 	@Transactional 
 	public void ability_analysis() {
-		//this.list=user_ability.getUserAbilities(this.user.getId());
-		//this.a_thi=
-	};
-	@Override
-	@Transactional
-	public void getQuestion() {
-		
+		for(int i=0; i<this.userAbility.size(); i++) {
+			switch (this.userAbility.get(i).getAId()) {
+				case 1:
+					this.ability1=this.userAbility.get(i).getResult();
+					break;
+				case 2:
+					this.ability2=this.userAbility.get(i).getResult();
+					break;
+				case 3:
+					this.ability3=this.userAbility.get(i).getResult();
+					break;
+				case 4:
+					this.ability4=this.userAbility.get(i).getResult();
+					break;
+				case 5:
+					this.ability5=this.userAbility.get(i).getResult();
+					break;
+			}
+		}
+		this.weak_ability=this.analysisability.analysisAbility(ability1, ability2, ability3, ability4, ability5);
 	};
 	@Override
 	@Transactional
@@ -77,8 +98,6 @@ public class GeneratePaperServiceImpl2 extends GeneratePaperService {
 		System.out.println("essay=====================================");
 		essayFactory = EssayFactory;
 		//QuestionObject question = essayFactory.createQuestion(this.id, this.grade, this.level);
-		
-
 		//List<QuestionObject> list = null;
 		//list.add(question);
 		return essayFactory;		

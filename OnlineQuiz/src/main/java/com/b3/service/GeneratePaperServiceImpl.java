@@ -29,7 +29,17 @@ public class GeneratePaperServiceImpl extends GeneratePaperService {
 	private String grade;
 	private String level;
 	private User user;
+	private List<UserAbility> userAbility;
+	private int weak_ability_id;
+	private float weak_ability;
+	private float ability1=0;
+	private float ability2=0;
+	private float ability3=0;
+	private float ability4=0;
+	private float ability5=0;
 	
+	@Autowired
+	private UserAbilityService userAbilityService;
 	@Autowired
 	private MCQFactory MCQFactory;
 	@Autowired
@@ -44,36 +54,63 @@ public class GeneratePaperServiceImpl extends GeneratePaperService {
 	private EssayCareTaker essayCareTaker;
 	BaseQuestionFactory paperFactory;
 	BaseQuestionFactory essayFactory;
-	
-	@Autowired
-	private UserAbilityService user_ability;
+	AnalysisAbility analysisability;
 	
 	public BaseQuestionFactory generatePaper(User u, int id, String grade, String level) {
 		this.id=id;
 		this.user=u;
 		this.grade=grade;
 		this.level=level;
+		this.userAbility=userAbilityService.getUserAbilities(this.user.getId());
 		this.ability_analysis();
-		this.getQuestion();
 		return this.generateTest();
 	}
 	
 	@Override
 	@Transactional
 	public void ability_analysis() {
-		//this.list=user_ability.getUserAbilities(this.user.getId());
-		//this.a_thi=
+		for(int i=0; i<this.userAbility.size(); i++) {
+			switch (this.userAbility.get(i).getAId()) {
+				case 1:
+					this.ability1=this.userAbility.get(i).getResult();
+					break;
+				case 2:
+					this.ability2=this.userAbility.get(i).getResult();
+					break;
+				case 3:
+					this.ability3=this.userAbility.get(i).getResult();
+					break;
+				case 4:
+					this.ability4=this.userAbility.get(i).getResult();
+					break;
+				case 5:
+					this.ability5=this.userAbility.get(i).getResult();
+					break;
+			}
+		}
+		this.weak_ability=this.analysisability.analysisAbility(ability1, ability2, ability3, ability4, ability5);
+		if(this.weak_ability==this.ability1) {this.weak_ability_id=1;}
+		if(this.weak_ability==this.ability2) {this.weak_ability_id=2;}
+		if(this.weak_ability==this.ability3) {this.weak_ability_id=3;}
+		if(this.weak_ability==this.ability4) {this.weak_ability_id=4;}
+		if(this.weak_ability==this.ability5) {this.weak_ability_id=5;}
 	};
-	@Override
-	@Transactional
-	public void getQuestion() {
-		
-	};
+
 	@Override
 	@Transactional
 	public BaseQuestionFactory generateTest() {
 		System.out.println("paper=============================================");
 		paperFactory = PaperFactory;
+		
+		
+		while (paperFactory.getQuestionSet().size() < 1) {
+			BaseQuestionFactory questionFactory = MCQFactory;
+			QuestionObject question = questionFactory.createQuestionByAbility(this.id, this.grade, this.level,this.weak_ability_id);
+			if (!paperFactory.addQuestion(question))
+				questionFactory.clearQuestion();
+		}
+		
+		
 		while (paperFactory.getQuestionSet().size() < 4) {
 			BaseQuestionFactory questionFactory = MCQFactory;
 			QuestionObject question = questionFactory.createQuestion(this.id, this.grade, this.level);

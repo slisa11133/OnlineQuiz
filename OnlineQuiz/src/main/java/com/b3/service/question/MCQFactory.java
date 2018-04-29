@@ -33,6 +33,19 @@ public class MCQFactory extends BaseQuestionFactory {
 	}
 	
 	@Override
+	public QuestionObject createQuestionByAbility(int s_id, String grade, String level, int a_id) {
+		if(this.question == null) {
+			this.question = MCQ;
+			question.setS_id(s_id);
+			question.setGrade(grade);
+			question.setLevel(level);
+			question = question.choose();
+		}
+		
+		return question;
+	}
+	
+	@Override
 	public void clearQuestion() {
 			this.question = null;
 		

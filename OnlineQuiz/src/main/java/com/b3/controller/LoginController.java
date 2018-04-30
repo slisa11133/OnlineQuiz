@@ -62,6 +62,9 @@ public class LoginController {
 			else if(user_role.equals("teacher")){
 				return new ModelAndView("redirect:/QuizManage/SubjectList");
 			}
+			else if(user_role.equals("manager")){
+				return new ModelAndView("redirect:/user/list");
+			}
 		}
 		model.setViewName("login");
 		model.addObject("msg","login failed");

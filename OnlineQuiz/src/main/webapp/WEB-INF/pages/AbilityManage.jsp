@@ -46,8 +46,6 @@
 						class="main_menu_side hidden-print main_menu">
 						<div class="menu_section">
 							<ul class="nav side-menu">
-								<li><a href="../user/list"><i class="fa fa-home"></i>
-										User Management </a></li>
 								<li><a href="../QuizManage/SubjectList"><i
 										class="fa fa-edit"></i> Quiz Management </a></li>
 								<li><a href="AbilityList"><i class="fa fa-edit"></i>
@@ -75,7 +73,7 @@
 							<li class=""><a href="javascript:;"
 								class="user-profile dropdown-toggle" data-toggle="dropdown"
 								aria-expanded="false"> <img
-									src="<c:url value="../template/images/img.jpg" />" alt="">${msg}
+									src="<c:url value="../template/images/img.jpg" />" alt="">${name}
 									<span class=" fa fa-angle-down"></span>
 							</a>
 								<ul class="dropdown-menu dropdown-usermenu pull-right">

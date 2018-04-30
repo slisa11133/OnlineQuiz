@@ -36,8 +36,8 @@
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="index.html" class="site_title"><i class="fa fa-paw"></i>
-							<span>Online Quiz</span></a>
+						<a href="../" class="site_title"><i class="fa fa-paw"></i> <span>Online
+								Quiz</span></a>
 					</div>
 
 					<div class="clearfix"></div>
@@ -49,22 +49,9 @@
 						class="main_menu_side hidden-print main_menu">
 						<div class="menu_section">
 							<ul class="nav side-menu">
-								<li><a href="../user/list"><i class="fa fa-home"></i>
-										User Management </a></li>
-								<li><a href="../QuizManage/SubjectList"><i
-										class="fa fa-edit"></i> Quiz Management </a></li>
-								<li><a><i class="fa fa-table"></i> Tables <span
-										class="fa fa-chevron-down"></span></a>
-									<ul class="nav child_menu">
-										<li><a href="tables.html">Tables</a></li>
-										<li><a href="tables_dynamic.html">Table Dynamic</a></li>
-									</ul></li>
-								<li><a><i class="fa fa-clone"></i>Layouts <span
-										class="fa fa-chevron-down"></span></a>
-									<ul class="nav child_menu">
-										<li><a href="fixed_sidebar.html">Fixed Sidebar</a></li>
-										<li><a href="fixed_footer.html">Fixed Footer</a></li>
-									</ul></li>
+								<li><a href="list"><i class="fa fa-home"></i> User
+										Management </a></li>
+								
 							</ul>
 						</div>
 
@@ -181,15 +168,11 @@
 														for="name">Grade <span class="required">*</span>
 													</label>
 													<div class="col-md-6 col-sm-6 col-xs-12">
-														<form:select path="grade" id="grade"
+													<form:select path="grade" id="grade"
 															class="form-control col-md-7 col-xs-12" name="grade"
-															placeholder="please enter subject name"
-															required="required" type="text" maxlength="30">			
- 															<option value="1">1</option>  
-												            <option value="2">2</option>  
-												            <option value="3">3</option>  
-												            <option value="4">4</option>  
-		           											</form:select>  																								
+															required="required">
+															<form:options items="${Ugrades}" />
+														</form:select>
 													</div>												
 												</div>
 												
@@ -201,13 +184,9 @@
 													<div class="col-md-6 col-sm-6 col-xs-12">
 														<form:select path="role" id="role"
 															class="form-control col-md-7 col-xs-12" name="role"
-															placeholder="please enter subject name"
-															required="required" type="text" maxlength="30">
-																								
-												             <option value="student">Student</option>  
-												             <option value="teacher">Teacher</option>  
-												             <option value="manager">Manager</option>  
-												           </form:select>							
+															required="required">
+															<form:options items="${Urole}" />
+														</form:select>						
 													
 													</div>
 												</div>

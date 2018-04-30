@@ -108,7 +108,7 @@ public class DoTestController {
 		model.addObject("memento_exist", memento_exist);
 
 		String name = (String) httpsession.getAttribute("username");
-		model.addObject("msg", name);
+		model.addObject("name", name);
 
 		return model;
 	}
@@ -163,6 +163,9 @@ public class DoTestController {
 
 		model = new ModelAndView("DoTest");
 
+		String name=(String)httpsession.getAttribute("username");
+		model.addObject("name",name);
+		
 		// model.addObject("questions", paper.getQuestionSet());
 		httpsession.setAttribute("paperFactory", generatePaperServiceImpl.generatePaper(u, s_id, grade, level));
 
@@ -220,6 +223,10 @@ public class DoTestController {
 
 		model.addObject("grade", result);
 		model.setViewName("ShowResult");
+		
+		String name=(String)httpsession.getAttribute("username");
+		model.addObject("name",name);
+		
 		return model;
 
 	}
@@ -264,6 +271,10 @@ public class DoTestController {
 
 		model.addObject("question", question);
 		model.addObject("state", "new");
+		
+		String name=(String)httpsession.getAttribute("username");
+		model.addObject("name",name);
+		
 		return model;
 	}
 
@@ -278,6 +289,10 @@ public class DoTestController {
 		model = new ModelAndView("DoEssay");
 		model.addObject("question", result);
 		model.addObject("state", "memento");
+		
+		String name=(String)httpsession.getAttribute("username");
+		model.addObject("name",name);
+		
 		return model;
 	}
 
@@ -300,6 +315,8 @@ public class DoTestController {
 
 		model.addObject("question", essayMemento);
 		model.addObject("submit", "Essay is submitted!!");
+		String name=(String)httpsession.getAttribute("username");
+		model.addObject("name",name);
 		model.setViewName("DoEssay");
 		return model;
 
@@ -322,6 +339,8 @@ public class DoTestController {
 		essayCareTaker.addMemento(result);
 
 		model.addObject("question", result);
+		String name=(String)httpsession.getAttribute("username");
+		model.addObject("name",name);
 		model.setViewName("DoEssay");
 		return model;
 

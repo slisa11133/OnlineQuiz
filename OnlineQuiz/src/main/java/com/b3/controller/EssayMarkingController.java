@@ -62,10 +62,12 @@ public class EssayMarkingController {
 	private QuestionAbilityService questionAbilityService;
 
 	@RequestMapping(value = "/EssayList")
-	public ModelAndView listEssay(ModelAndView model) throws IOException {
+	public ModelAndView listEssay(ModelAndView model, HttpSession httpsession) throws IOException {
 		List<Essay> listEssay = essayService.getAllEssayNotMark();
 		model.addObject("listEssay", listEssay);
 		model.setViewName("EssayForm");
+		String name=(String)httpsession.getAttribute("username");
+		model.addObject("name",name);
 		return model;
 	}
 
@@ -122,6 +124,8 @@ public class EssayMarkingController {
 		model.addObject("userAbility", userAbility);
 		/** question ability options **/
 		model.addObject("Qability", listAbility);
+		String name=(String)httpsession.getAttribute("username");
+		model.addObject("name",name);
 		return model;
 	}
 

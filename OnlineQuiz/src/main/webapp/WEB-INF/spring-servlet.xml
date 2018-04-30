@@ -54,6 +54,13 @@
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
+	
+	<!-- multipartResolver -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">    
+	   <!--  the maximum size of an uploaded file in bytes -->
+	   <!-- <property name="maxUploadSize" value="10000000"/> -->
+	   <property name="maxUploadSize" value="10000000"/>
+	</bean> 
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
 </beans>

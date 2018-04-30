@@ -46,14 +46,12 @@
 						class="main_menu_side hidden-print main_menu">
 						<div class="menu_section">
 							<ul class="nav side-menu">
-								<li><a href="../user/list"><i class="fa fa-home"></i>
-										User Management </a></li>
-										<li><a href="../QuizManage/SubjectList"><i class="fa fa-edit"></i>
-										Quiz Management </a></li>
-								<li><a href="../AbilityManage/AbilityList"><i class="fa fa-edit"></i>
-										Ability Management </a></li>
-								<li><a href="../EssayForm/EssayList"><i class="fa fa-edit"></i>
-										Essay Marking </a></li>
+								<li><a href="../QuizManage/SubjectList"><i
+										class="fa fa-edit"></i> Quiz Management </a></li>
+								<li><a href="../AbilityManage/AbilityList"><i
+										class="fa fa-edit"></i> Ability Management </a></li>
+								<li><a href="../EssayForm/EssayList"><i
+										class="fa fa-edit"></i> Essay Marking </a></li>
 							</ul>
 						</div>
 
@@ -75,7 +73,7 @@
 							<li class=""><a href="javascript:;"
 								class="user-profile dropdown-toggle" data-toggle="dropdown"
 								aria-expanded="false"> <img
-									src="<c:url value="../template/images/img.jpg" />" alt="">${msg}
+									src="<c:url value="../template/images/img.jpg" />" alt="">${name}
 									<span class=" fa fa-angle-down"></span>
 							</a>
 								<ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -90,52 +88,53 @@
 			<!-- /top navigation -->
 
 			<!-- page content -->
-						<div class="right_col" role="main">
-					<div class="page-title">
-						<div class="title_left">
-							<h3>Feed Questions</h3>
-						</div>
-
+			<div class="right_col" role="main">
+				<div class="page-title">
+					<div class="title_left">
+						<h3>Feed Questions</h3>
 					</div>
-					<div class="clearfix"></div>
-					<div class="row">
-						<div class="col-md-12 col-sm-12 col-xs-12">
-							<div class="x_panel">
-								<div class="x_title">
-									<h2>Select a file to feed:</h2>
-									<div class="clearfix"></div>
-								</div>
-								<br>
-								<h2>${msg}</h2>
-								<br>								
-								<div class="x_content">
-							   									      
-							  	     <form action = "doUpload" method = "post" enctype = "multipart/form-data">
-								         <input type = "file" class="file" name = "fileUpload" size = "50" placeholder="please select a file"
-															required="required"/>						         
-								         <br>
-								       	 <br>
-								         <!--button id="send" type="submit" class="btn btn-success">Start to feed</button>  -->
-								      	 <input type="submit" value="Start to feed" id="send" class="btn btn-success"/>
-							      	 </form>							      
-							    </div>
-							  </div>
+
+				</div>
+				<div class="clearfix"></div>
+				<div class="row">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+						<div class="x_panel">
+							<div class="x_title">
+								<h2>Select a file to feed:</h2>
+								<div class="clearfix"></div>
+							</div>
+							<br>
+							<h2>${msg}</h2>
+							<br>
+							<div class="x_content">
+
+								<form action="doUpload" method="post"
+									enctype="multipart/form-data">
+									<input type="file" class="file" name="fileUpload" size="50"
+										placeholder="please select a file" required="required" /> <br>
+									<br>
+									<!--button id="send" type="submit" class="btn btn-success">Start to feed</button>  -->
+									<input type="submit" value="Start to feed" id="send"
+										class="btn btn-success" />
+								</form>
+							</div>
 						</div>
-					</div>					
+					</div>
+				</div>
 			</div>
-			
+
 			<!-- /page content -->
 
-		<!-- footer content -->
-		<footer>
-			<div class="pull-right">
-				Gentelella - Bootstrap Admin Template by <a
-					href="https://colorlib.com">Colorlib</a>
-			</div>
-			<div class="clearfix"></div>
-		</footer>
-		<!-- /footer content -->
-	</div>
+			<!-- footer content -->
+			<footer>
+				<div class="pull-right">
+					Gentelella - Bootstrap Admin Template by <a
+						href="https://colorlib.com">Colorlib</a>
+				</div>
+				<div class="clearfix"></div>
+			</footer>
+			<!-- /footer content -->
+		</div>
 	</div>
 
 	<!-- jQuery -->

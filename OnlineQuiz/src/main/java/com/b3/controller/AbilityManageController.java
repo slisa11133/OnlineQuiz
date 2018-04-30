@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,16 +34,23 @@ public class AbilityManageController {
 	private AbilityService abilityService;
 
 	@RequestMapping(value = "/AbilityList")
-	public ModelAndView listAbility(ModelAndView model) throws IOException {
+	public ModelAndView listAbility(ModelAndView model, HttpSession httpsession) throws IOException {
 		List<Ability> listAbility = abilityService.getAllAbility();
+		String name=(String)httpsession.getAttribute("username");
+		model.addObject("name",name);
+		
 		model.addObject("listAbility", listAbility);
 		model.setViewName("AbilityManage");
 		return model;
 	}
 
 	@RequestMapping(value = "/newAbility", method = RequestMethod.GET)
-	public ModelAndView newContact(ModelAndView model) {
+	public ModelAndView newContact(ModelAndView model,HttpSession httpsession) {
 		Ability ability = new Ability();
+		
+		String name=(String)httpsession.getAttribute("username");
+		model.addObject("name",name);
+		
 		model.addObject("ability", ability);
 		model.addObject("operation", "Add New Ability");
 		model.setViewName("AbilityForm");
@@ -68,12 +76,15 @@ public class AbilityManageController {
 	}
 
 	@RequestMapping(value = "/editAbility", method = RequestMethod.GET)
-	public ModelAndView editAbility(HttpServletRequest request) {
+	public ModelAndView editAbility(HttpServletRequest request,HttpSession httpsession) {
 		int abilityId = Integer.parseInt(request.getParameter("id"));
 		Ability ability = abilityService.getAbility(abilityId);
 		ModelAndView model = new ModelAndView("AbilityForm");
 		model.addObject("ability", ability);
 		model.addObject("operation", "Edit Ability");
+		String name=(String)httpsession.getAttribute("username");
+		model.addObject("name",name);
+		
 		return model;
 	}
 

@@ -23,8 +23,8 @@ import com.b3.service.QuestionAbilityService;
 @Transactional
 public class HardLevelGrade implements GradeStrategy {
 
-	@Autowired
-	private UserAbilityDAO userabilitydao;
+	//@Autowired
+	//private UserAbilityDAO userabilitydao;
 	@Autowired
 	private UserAbilityService uas ;
 
@@ -37,8 +37,8 @@ public class HardLevelGrade implements GradeStrategy {
 		ArrayList<String> standardAnswerList = new ArrayList<String>();
 		List<QuestionObject> questionlist = paper.getQuestionSet();
 		List<String> answerlist = paper.getStudentAnswers();
-		List<UserAbility> userability = userabilitydao.getUserAbilities(u_id);
-		System.out.println(userability.size());
+		//List<UserAbility> userability = userabilitydao.getUserAbilities(u_id);
+		//System.out.println(userability.size());
 		//Map<String, Float> currentability = new HashMap<String, Float>();
 		int result = 0;
 		for(QuestionObject p:questionlist) {

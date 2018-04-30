@@ -58,24 +58,26 @@ public class QuizManageController {
 		model.setViewName("QuizManage");
 		
 		String name=(String)httpsession.getAttribute("username");
-		model.addObject("msg",name);
+		model.addObject("name",name);
 		//User u=(User) httpsession.getAttribute("current_user");
 		//		System.out.println(u.getId());
 		return model;
 	}
 
 	@RequestMapping(value = "/newSubject", method = RequestMethod.GET)
-	public ModelAndView newContact(ModelAndView model) {
+	public ModelAndView newContact(ModelAndView model,HttpSession httpsession) {
 		Subject subject = new Subject();
 		model.addObject("subject", subject);
 		model.addObject("type", "Subject");
 		model.addObject("operation", "Add New Subject");
 		model.setViewName("QuizForm");
+		String name=(String)httpsession.getAttribute("username");
+		model.addObject("name",name);
 		return model;
 	}
 
 	@RequestMapping(value = "/saveSubject", method = RequestMethod.POST)
-	public ModelAndView saveSubject(@ModelAttribute Subject subject) {
+	public ModelAndView saveSubject(@ModelAttribute Subject subject, HttpSession httpsession) {
 		// if true then creating the subject, false showing "already exist" message
 		if (subject.getId() == 0) {
 			if (subjectService.addSubject(subject) == true) {
@@ -85,6 +87,8 @@ public class QuizManageController {
 				model.addObject("type", "Subject");
 				model.addObject("operation", "Add New Subject");
 				model.addObject("msg", "Subject already exist!");
+				String name=(String)httpsession.getAttribute("username");
+				model.addObject("name",name);
 				model.setViewName("QuizForm");
 				return model;
 			}
@@ -103,13 +107,15 @@ public class QuizManageController {
 	}
 
 	@RequestMapping(value = "/editSubject", method = RequestMethod.GET)
-	public ModelAndView editSubject(HttpServletRequest request) {
+	public ModelAndView editSubject(HttpServletRequest request, HttpSession httpsession) {
 		int subjectId = Integer.parseInt(request.getParameter("id"));
 		Subject subject = subjectService.getSubject(subjectId);
 		ModelAndView model = new ModelAndView("QuizForm");
 		model.addObject("subject", subject);
 		model.addObject("type", "Subject");
 		model.addObject("operation", "Edit Subject");
+		String name=(String)httpsession.getAttribute("username");
+		model.addObject("name",name);
 		return model;
 	}
 
@@ -121,7 +127,7 @@ public class QuizManageController {
 	private AbilityService abilityService;
 
 	@RequestMapping(value = "/QuestionList", method = RequestMethod.GET)
-	public ModelAndView listQuestion(HttpServletRequest request) {
+	public ModelAndView listQuestion(HttpServletRequest request,HttpSession httpsession) {
 		int subjectId = Integer.parseInt(request.getParameter("s_id"));
 		s_id = subjectId;
 		Subject subject = subjectService.getSubject(s_id);
@@ -132,6 +138,8 @@ public class QuizManageController {
 		model.addObject("s_id", subjectId);
 		model.addObject("s_name", s_name);
 		model.addObject("listQuestion", listQuestion);
+		String name=(String)httpsession.getAttribute("username");
+		model.addObject("name",name);
 		model.setViewName("QuizManage");
 
 		// List<QuestionAbility> listQuestionAbility =
@@ -140,7 +148,7 @@ public class QuizManageController {
 	}
 
 	@RequestMapping(value = "/newQuestion", method = RequestMethod.GET)
-	public ModelAndView newQuestion(ModelAndView model) {
+	public ModelAndView newQuestion(ModelAndView model, HttpSession httpsession) {
 		Subject subject = subjectService.getSubject(s_id);
 		String s_name = subject.getName();
 		Question question = new Question();
@@ -156,6 +164,9 @@ public class QuizManageController {
 		/** question level options **/
 		model.addObject("Qlevels", questionService.getQlevels());
 
+		String name=(String)httpsession.getAttribute("username");
+		model.addObject("name",name);
+		
 		return model;
 	}
 	
@@ -182,7 +193,7 @@ public class QuizManageController {
 	}
 
 	@RequestMapping(value = "/editQuestion", method = RequestMethod.GET)
-	public ModelAndView editQuestion(HttpServletRequest request) {
+	public ModelAndView editQuestion(HttpServletRequest request, HttpSession httpsession) {
 		int questionId = Integer.parseInt(request.getParameter("id"));
 		Question question = questionService.getQuestion(questionId);
 		Subject subject = subjectService.getSubject(s_id);
@@ -198,6 +209,10 @@ public class QuizManageController {
 		model.addObject("Qgrades", questionService.getQgrades());
 		/** question level options **/
 		model.addObject("Qlevels", questionService.getQlevels());
+		
+		String name=(String)httpsession.getAttribute("username");
+		model.addObject("name",name);
+		
 		return model;
 	}
 	
@@ -285,7 +300,7 @@ public class QuizManageController {
 	//End of feeding questions
 
 	@RequestMapping(value = "/QuestionAbility", method = RequestMethod.GET)
-	public ModelAndView QuestionAbility(HttpServletRequest request) {
+	public ModelAndView QuestionAbility(HttpServletRequest request,HttpSession httpsession) {
 		int questionId = Integer.parseInt(request.getParameter("q_id"));
 		q_id = questionId;
 		List<String> listAbility = questionabilityService.getAllQuestionAbilities(questionId);
@@ -304,6 +319,8 @@ public class QuizManageController {
 		model.addObject("q_content", q_content);
 		/** question ability options **/
 		model.addObject("Qability", questionService.getQability());
+		String name=(String)httpsession.getAttribute("username");
+		model.addObject("name",name);
 		return model;
 	}
 
@@ -320,7 +337,7 @@ public class QuizManageController {
 	private OptionService optionService;
 
 	@RequestMapping(value = "/OptionList", method = RequestMethod.GET)
-	public ModelAndView listOption(HttpServletRequest request) {
+	public ModelAndView listOption(HttpServletRequest request, HttpSession httpsession) {
 		int questionId = Integer.parseInt(request.getParameter("q_id"));
 		q_id = questionId;
 		Subject subject = subjectService.getSubject(s_id);
@@ -336,11 +353,13 @@ public class QuizManageController {
 		model.addObject("q_content", q_content);
 		model.addObject("listOption", listOption);
 		model.setViewName("QuizManage");
+		String name=(String)httpsession.getAttribute("username");
+		model.addObject("name",name);
 		return model;
 	}
 
 	@RequestMapping(value = "/newOption", method = RequestMethod.GET)
-	public ModelAndView newOption(ModelAndView model) {
+	public ModelAndView newOption(ModelAndView model,HttpSession httpsession) {
 		Subject subject = subjectService.getSubject(s_id);
 		String s_name = subject.getName();
 		Question question = questionService.getQuestion(q_id);
@@ -352,6 +371,8 @@ public class QuizManageController {
 		model.addObject("s_name", s_name);
 		model.addObject("q_content", q_content);
 		model.setViewName("QuizForm");
+		String name=(String)httpsession.getAttribute("username");
+		model.addObject("name",name);
 		return model;
 	}
 
@@ -379,7 +400,7 @@ public class QuizManageController {
 	}
 
 	@RequestMapping(value = "/editOption", method = RequestMethod.GET)
-	public ModelAndView editOption(HttpServletRequest request) {
+	public ModelAndView editOption(HttpServletRequest request,HttpSession httpsession) {
 		int optionId = Integer.parseInt(request.getParameter("id"));
 		Subject subject = subjectService.getSubject(s_id);
 		String s_name = subject.getName();
@@ -392,6 +413,8 @@ public class QuizManageController {
 		model.addObject("operation", "Edit Option");
 		model.addObject("s_name", s_name);
 		model.addObject("q_content", q_content);
+		String name=(String)httpsession.getAttribute("username");
+		model.addObject("name",name);
 		return model;
 	}
 

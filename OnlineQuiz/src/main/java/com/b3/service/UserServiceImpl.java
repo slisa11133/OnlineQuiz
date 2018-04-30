@@ -1,6 +1,8 @@
 package com.b3.service;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,8 +63,21 @@ public class UserServiceImpl implements UserService {
 		return "Account already exist!";
 	}
 
-	/**public void setUserDAO(UserDAO userDAO) {
-		this.userDAO = userDAO;
-	}**/
+	public Map<String, String> getUgrades(){
+		Map<String, String> Ugrades = new LinkedHashMap<String, String>();
+		Ugrades.put("1", "1");
+		Ugrades.put("2", "2");
+		Ugrades.put("3", "3");
+		Ugrades.put("4", "4");
+		return Ugrades;
+	}
+	
+	public Map<String, String> getUrole(){
+		Map<String, String> Urole = new LinkedHashMap<String, String>();
+		Urole.put("student", "Student");
+		Urole.put("teacher", "Teacher");
+		Urole.put("manager", "Manager");
+		return Urole;
+	}
 
 }

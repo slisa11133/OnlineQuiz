@@ -42,18 +42,22 @@ public class UserController {
 	private UserAbilityService userAbilityService;
 
 	@RequestMapping(value = "/list")
-	public ModelAndView listUser(ModelAndView model) throws IOException {
+	public ModelAndView listUser(ModelAndView model,HttpSession httpsession) throws IOException {
 		List<User> listUser = userService.getAllUsers();
 		model.addObject("listUser", listUser);
 		model.setViewName("UserManage");
+		String name=(String)httpsession.getAttribute("username");
+		model.addObject("name",name);
 		return model;
 	}
 
 	@RequestMapping(value = "/newUser", method = RequestMethod.GET)
-	public ModelAndView newContact(ModelAndView model) {
+	public ModelAndView newContact(ModelAndView model,HttpSession httpsession) {
 		User user = new User();
 		model.addObject("user", user);
 		model.setViewName("UserForm");
+		String name=(String)httpsession.getAttribute("username");
+		model.addObject("name",name);
 		return model;
 	}
 
@@ -96,7 +100,10 @@ public class UserController {
 		User user = userService.getUser(userId);
 		ModelAndView model = new ModelAndView("editUser");
 		model.addObject("user", user);
-
+		/** user grade options **/
+		model.addObject("Ugrades", userService.getUgrades());
+		/** user role options **/
+		model.addObject("Urole", userService.getUrole());
 		return model;
 	}
 

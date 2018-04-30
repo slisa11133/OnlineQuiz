@@ -33,7 +33,7 @@
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="login" class="site_title"><i class="fa fa-paw"></i> <span>Online
+						<a href="../" class="site_title"><i class="fa fa-paw"></i> <span>Online
 								Quiz</span></a>
 					</div>
 
@@ -46,14 +46,9 @@
 						class="main_menu_side hidden-print main_menu">
 						<div class="menu_section">
 							<ul class="nav side-menu">
-								<li><a href="list"><i class="fa fa-home"></i>
-										User Management </a></li>
-										<li><a href="../QuizManage/SubjectList"><i class="fa fa-edit"></i>
-										Quiz Management </a></li>
-								<li><a href="../AbilityManage/AbilityList"><i class="fa fa-edit"></i>
-										Ability Management </a></li>
-								<li><a href="../EssayForm/EssayList"><i class="fa fa-edit"></i>
-										Essay Marking </a></li>
+								<li><a href="list"><i class="fa fa-home"></i> User
+										Management </a></li>
+								
 							</ul>
 						</div>
 
@@ -75,7 +70,7 @@
 							<li class=""><a href="javascript:;"
 								class="user-profile dropdown-toggle" data-toggle="dropdown"
 								aria-expanded="false"> <img
-									src="<c:url value="../template/images/img.jpg" />" alt="">${msg}
+									src="<c:url value="../template/images/img.jpg" />" alt="">${name}
 									<span class=" fa fa-angle-down"></span>
 							</a>
 								<ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -122,7 +117,7 @@
 												<th>Grade</th>
 												<th>Role</th>
 												<th>Email</th>
-												<th>State</th>												
+												<th>State</th>
 												<th>Action</th>
 											</tr>
 										</thead>
@@ -139,8 +134,9 @@
 													<td><a href="editUser?id=${user.id}"><button
 																type="button" class="btn btn-round btn-primary">Edit</button></a>
 														&nbsp;&nbsp;&nbsp;&nbsp; <a
-														href="javascript:if(confirm('Do you want to delete this user?'))location='deleteUser?id=${user.id}'"><button type="button"
-																class="btn btn-round btn-primary">Delete</button></a>&nbsp;&nbsp;&nbsp;&nbsp;
+														href="javascript:if(confirm('Do you want to delete this user?'))location='deleteUser?id=${user.id}'"><button
+																type="button" class="btn btn-round btn-primary">Delete</button></a>&nbsp;&nbsp;&nbsp;&nbsp;
+
 													
 												</tr>
 											</c:forEach>
